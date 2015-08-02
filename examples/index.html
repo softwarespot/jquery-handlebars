@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>.handlebars() demo</title>
+
+    <!--Mobile Specific Metas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+    <div id="content">
+        <script id="template" type="text/x-handlebars-template">
+            Hello, {{name}}, how are you? My name is {{developer}} and I am a developer.
+        </script>
+
+        <script>
+            // This will be removed from the DOM by the .handlebars() plugin
+            document.getElementById('content');
+        </script>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
+    <script src="handlebars.js"></script>
+
+    <script>
+        $(function() {
+
+            $('#content').handlebars('#template', {
+                name: 'Alan',
+                developer: 'Ian'
+            });
+
+            $('#content').handlebars('#template', {
+                name: 'Bob',
+                developer: 'Jim'
+            });
+
+            // This one will show in the content div
+            // Notice how how all content before has been removed
+            $('#content').handlebars('#template', {
+                name: 'Cathy',
+                developer: 'Kim'
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+{
+    "name" : "jquery-handlebars",
+    "version" : "1.0.0",
+    "license": "MIT",
+    "repository": "https://github.com/softwarespot/jquery-handlebars",
+    "devDependencies" : {
+        "grunt" :                       "latest",
+        "grunt-contrib-uglify":         "*",
+        "grunt-contrib-jshint":         "*",
+        "grunt-contrib-watch":          "*",
+        "matchdep":                     "*"
+    }
+}

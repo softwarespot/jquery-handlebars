@@ -1,0 +1,19 @@
+{
+  "name": "softwarespot/jquery-handlebars",
+  "version": "1.0.0",
+  "homepage": "https://github.com/softwarespot/jquery-handlebars/",
+  "description": "TODO",
+  "main": "jquery-handlebars.min.js",
+  "keywords": [
+    "handlebarjs",
+    "templating"
+  ],
+  "license": "MIT",
+  "ignore": [
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.0"
+  },
+  "devDependencies": {
+  }
+}
