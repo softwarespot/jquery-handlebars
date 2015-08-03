@@ -155,7 +155,8 @@
         // Allow the option of adding multiple templates inside an element
         refill: true,
 
-        // Remove the previous contents though excluding handlebarsjs templates
+        // Remove the previous contents excluding handlebarsjs templates and misc
+        // Only used when refill is set to false and no elements exist
         remove: false,
 
         // Type of writing: fill, refill, append (default)
