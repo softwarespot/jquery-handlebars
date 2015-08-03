@@ -86,14 +86,18 @@
     });
 
     // Fields (Private)
+
+    // Store the compiled templates, using the selector string as the identifier i.e. key
     var compiled = {};
 
     // Methods (Private)
 
     // Helper function for setting an element with a template
+    // Variables are called self instead of this, to avoid conflict
     var setElement = function(self, $self, compiled) {
         // Empty the previous contents of this, excluding all Handlebarjs template script elements
-
+        //
+        // Previous implementations
         // $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
         // $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
