@@ -35,11 +35,15 @@
             $('#content').handlebars('#template', {
                 name: 'Alan',
                 developer: 'Ian'
+            }, {
+                remove: true
             });
 
             $('#content').handlebars('#template', {
                 name: 'Bob',
                 developer: 'Jim'
+            }, {
+                remove: true
             });
 
             // This one will show in the content div
@@ -47,6 +51,8 @@
             $('#content').handlebars('#template', {
                 name: 'Cathy',
                 developer: 'Kim'
+            }, {
+                remove: true
             });
 
         });
