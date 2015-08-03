@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>.handlebars() demo</title>
+    <title>jQuery Handlebarsjs Example</title>
 
     <!--Mobile Specific Metas-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,11 +19,15 @@
             // This will be removed from the DOM by the .handlebars() plugin
             document.getElementById('content');
         </script>
+
+        This TEXT node will be destroyed each time the plugin is called
+
+        <p>This ELEMENT node will destroyed</p>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
-    <script src="handlebars.js"></script>
+    <script src="../jquery-handlebars.js"></script>
 
     <script>
         $(function() {
