@@ -10,7 +10,7 @@
             // The data object literal must contain data
             if ($.isEmptyObject(data)) {
 
-                console.log('Data was not passed or is an empty plain object');
+                console.log('jquery-handlebars: Data was not passed or is an empty plain object');
                 return this;
 
             }
@@ -32,7 +32,7 @@
                 if (typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log(template + ' already exists');
+                    console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
                     return setElement(this, $this, options, compiled[template](data));
@@ -63,7 +63,7 @@
                 if (template !== null && typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log(template + ' already exists');
+                    console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
                     return setElement(this, $this, options, compiled[template](data));
@@ -75,7 +75,7 @@
             if ($selector === null || template === null || $selector.length === 0) {
 
                 // Debugging only
-                console.log('Template cannot be found');
+                console.log('jquery-handlebars: Template cannot be found');
                 return this;
 
             }
@@ -114,27 +114,52 @@
             return this.nodeName !== '#comment' && this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template' && /[^\t\n\r ]/.test(this.textContent);
         });
 
-        // If set to not overwrite nodes exist, then return this
-        if (!options.overwrite && filtered.length > 0) {
+        // If set to not refill and nodes exist, then return this
+        if (!options.refill && filtered.length > 0) {
 
             // Debugging only
-            console.log('Overwrite has been set to false and the content element is not empty');
+            console.log('jquery-handlebars: Refill has been set to false and the content element is not empty');
+
             return self;
 
         }
 
-        // Remove from the DOM
-        filtered.remove();
+        // Remove from the DOM if allowed
+        if (options.remove) {
 
-        // Append to this
-        $self.append(compiled);
+            // Remove from the DOM
+            filtered.remove();
+
+            // Debugging only
+            console.log('jquery-handlebars: Removed previous content, ' + options.remove);
+
+        }
+
+        // Append to this by checking the type. Default is append
+        switch (options.type) {
+            case 'fill':
+            case 'refill':
+                $self.html(compiled); // Dangerous to do if handlebarsjs templates are embedded inside the element
+                break;
+
+            default:
+                $self.append(compiled);
+                break;
+        }
 
         return self;
     };
 
     // Defaults
     $.fn.handlebars.options = {
-        overwrite: true
+        // Allow the option of adding multiple templates inside an element
+        refill: true,
+
+        // Remove the previous contents though excluding handlebarsjs templates
+        remove: false,
+
+        // Type of writing: fill, refill, append (default)
+        type: 'append'
     };
 
 })(jQuery);
