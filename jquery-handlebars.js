@@ -111,7 +111,7 @@
         // Get all nodes apart from the Handlebarjs template script elements
         var filtered = $self.contents().filter(function() {
             // Only filter those which don't have the handlebarsjs type and SCRIPT node name and not whitespace
-            return this.nodeName !== '#comment' && this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template' && /[^\t\n\r ]/.test(this.textContent);
+            return this.nodeType !== Node.COMMENT_NODE && this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template' && /[^\t\n\r ]/.test(this.textContent);
         });
 
         // If set to not refill and nodes exist, then return this
