@@ -14,7 +14,7 @@
 
             // Set our options from the defaults, overriding with the
             // parameter we pass into this function
-            // options = $.extend({}, $.fn.handlebars.options, options);
+            options = $.extend({}, $.fn.handlebars.options, options);
 
             // jQuery object reference
             var $selector = null,
@@ -32,7 +32,7 @@
                     console.log(template + ' already exists');
 
                     // Return to continue chaining
-                    return setElement(this, $this, compiled[template](data));
+                    return setElement(this, $this, options, compiled[template](data));
 
                 }
 
@@ -63,7 +63,7 @@
                     console.log(template + ' already exists');
 
                     // Return to continue chaining
-                    return setElement(this, $this, compiled[template](data));
+                    return setElement(this, $this, options, compiled[template](data));
 
                 }
             }
@@ -80,7 +80,7 @@
             compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return setElement(this, $this, compiled[template](data));
+            return setElement(this, $this, options, compiled[template](data));
         }
 
     });
@@ -94,19 +94,26 @@
 
     // Helper function for setting an element with a template
     // Variables are called self instead of this, to avoid conflict
-    var setElement = function(self, $self, compiled) {
+    var setElement = function(self, $self, options, compiled) {
         // Empty the previous contents of this, excluding all Handlebarjs template script elements
         //
         // Previous implementations
         // $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
         // $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
-        $self.contents().filter(function() {
-            // Only filter those which don't have the handlebars type and SCRIPT node name
-            return this.nodeName !== 'SCRIPT' || this.type !== 'text/x-handlebars-template';
+        // Get all nodes apart from the Handlebarjs template script elements
+        var filtered = $self.contents().filter(function() {
+            // Only filter those which don't have the handlebarsjs type and SCRIPT node name and not whitespace
+            return this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template' && /[^\t\n\r ]/.test(this.textContent);
+        });
 
-            // Remove from the DOM
-        }).remove();
+        // If set to not overwrite nodes exist, then return this
+        if (!options.overwrite && filtered.length > 0) {
+            return self;
+        }
+
+        // Remove from the DOM
+        filtered.remove();
 
         // Append to this
         $self.append(compiled);
@@ -115,8 +122,8 @@
     };
 
     // Defaults
-    // $.fn.handlebars.options = {
-
-    // };
+    $.fn.handlebars.options = {
+        overwrite: true
+    };
 
 })(jQuery);
