@@ -9,7 +9,10 @@
 
             // The data object literal must contain data
             if ($.isEmptyObject(data)) {
+
+                console.log('Data was not passed or is an empty plain object');
                 return this;
+
             }
 
             // Set our options from the defaults, overriding with the
@@ -70,7 +73,11 @@
 
             // If an invalid selector, then return this to continue chaining
             if ($selector === null || template === null || $selector.length === 0) {
+
+                // Debugging only
+                console.log('Template cannot be found');
                 return this;
+
             }
 
             // Get the HTML of the template only
@@ -109,7 +116,11 @@
 
         // If set to not overwrite nodes exist, then return this
         if (!options.overwrite && filtered.length > 0) {
+
+            // Debugging only
+            console.log('Overwrite has been set to false and the content element is not empty');
             return self;
+
         }
 
         // Remove from the DOM
