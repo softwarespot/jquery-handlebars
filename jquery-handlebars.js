@@ -7,17 +7,17 @@
 
         handlebars: function(template, data, options) {
 
+            // Set our options from the defaults, overriding with the
+            // parameter we pass into this function
+            options = $.extend({}, $.fn.handlebars.options, options);
+
             // The data object literal must contain data
-            if ($.isEmptyObject(data)) {
+            if (options.validate && $.isEmptyObject(data)) {
 
                 console.log('jquery-handlebars: Data was not passed or is an empty plain object');
                 return this;
 
             }
-
-            // Set our options from the defaults, overriding with the
-            // parameter we pass into this function
-            options = $.extend({}, $.fn.handlebars.options, options);
 
             // jQuery object reference
             var $selector = null,
@@ -160,7 +160,10 @@
         remove: false,
 
         // Type of writing: fill, refill, append (default)
-        type: 'append'
+        type: 'append',
+
+        // Check whether the data passed is empty
+        validate: true
     };
 
 })(jQuery);
