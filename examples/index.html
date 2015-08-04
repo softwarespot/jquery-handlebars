@@ -13,6 +13,7 @@
     <div id="content">
         <script id="template" type="text/x-handlebars-template">
             Hello, {{name}}, how are you? My name is {{developer}} and I am a developer.
+            <br/>
         </script>
 
         <script>
@@ -32,14 +33,17 @@
     <script>
         $(function() {
 
-            $('#content').handlebars('#template', {
+            // Cache the jQuery object
+            var $content = $('#content');
+
+            $content.handlebars('#template', {
                 name: 'Alan',
                 developer: 'Ian'
             }, {
                 remove: true
             });
 
-            $('#content').handlebars('#template', {
+            $content.handlebars('#template', {
                 name: 'Bob',
                 developer: 'Jim'
             }, {
@@ -48,7 +52,7 @@
 
             // This one will show in the content div
             // Notice how how all content before has been removed
-            $('#content').handlebars('#template', {
+            $content.handlebars('#template', {
                 name: 'Cathy',
                 developer: 'Kim'
             }, {
