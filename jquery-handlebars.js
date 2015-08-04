@@ -5,11 +5,21 @@
     // Plugin Logic
     $.fn.extend({
 
-        handlebars: function(template, data, options) {
+        handlebars: function(templateOrAction, data, options) {
+
+            // actions = remove, clear
 
             // Set our options from the defaults, overriding with the
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
+
+            // Check if the option type is a string
+            if (typeof options.type === 'string') {
+
+                // Set as uppercase
+                options.type = options.type.toUpperCase();
+
+            }
 
             // The data object literal must contain data
             if (options.validate && $.isEmptyObject(data)) {
@@ -35,7 +45,7 @@
                     console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
-                    return setElement(this, $this, options, compiled[template](data));
+                    return setElement(this, $this, options, template, data);
 
                 }
 
@@ -66,7 +76,7 @@
                     console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
-                    return setElement(this, $this, options, compiled[template](data));
+                    return setElement(this, $this, options, template, data);
 
                 }
             }
@@ -87,7 +97,7 @@
             compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return setElement(this, $this, options, compiled[template](data));
+            return setElement(this, $this, options, template, data);
         }
 
     });
@@ -101,7 +111,7 @@
 
     // Helper function for setting an element with a template
     // Variables are called self instead of this, to avoid conflict
-    var setElement = function(self, $self, options, compiled) {
+    var setElement = function(self, $self, options, template, data) {
         // Empty the previous contents of this, excluding all Handlebarjs template script elements
 
         // Previous implementations
@@ -109,13 +119,15 @@
         // $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
         // Get all nodes apart from the Handlebarjs template script elements
-        var filtered = $self.contents().filter(function() {
+        // var filtered = $self.contents().filter(function() {
 
-            return this.nodeType !== Node.COMMENT_NODE && // Not a comment
-                (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
-                ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
+        //    return this.nodeType !== Node.COMMENT_NODE && // Not a comment
+        //        (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
+        //        ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
 
-        });
+        // });
+
+        var filtered = $self.find('div[' + DATA_ATTRIBUTE + ']');
 
         // If set to not refill and nodes exist, then return this
         if (!options.refill && filtered.length > 0) {
@@ -140,20 +152,33 @@
 
         // Append to this by checking the type. Default is append
         switch (options.type) {
-            case 'fill':
-            case 'refill':
-                $self.html(compiled); // Dangerous to do if handlebarsjs templates are embedded inside the element
+            case 'FILL':
+            case 'REFILL':
+                $self.html(compiled[template](data)); // Dangerous to do if handlebarsjs templates are embedded inside the element
                 break;
 
             default:
-                $self.append(compiled);
+                // Create a div element with the template appended
+                // This contains a data-* attribute called data-jquery-handlebars for easy association
+                // that it's a template
+                var $div = $('<div/>')
+                    .attr(DATA_ATTRIBUTE, template)
+                    .append(compiled[template](data));
+
+                // Append the div to self i.e. the content block
+                $self.append($div)
                 break;
         }
 
         return self;
     };
 
+    // Constants
+
+    var DATA_ATTRIBUTE = 'data-jquery-handlebars';
+
     // Defaults
+
     $.fn.handlebars.options = {
         // Allow the option of adding multiple templates inside an element
         refill: true,
