@@ -22,8 +22,8 @@
         </script>
 
         <!--The following nodes should be destroyed-->
-        This TEXT node will be destroyed each time the plugin is called
-        <p>This ELEMENT node will be destroyed</p>
+        This TEXT node will NOT be destroyed each time the plugin is called
+        <p>This ELEMENT node will NOT be destroyed</p>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
@@ -36,14 +36,14 @@
             // Cache the jQuery object
             var $content = $('#content');
 
-            $content.handlebars('#template', {
+            $content.handlebars('add', '#template', {
                 name: 'Alan',
                 developer: 'Ian'
             }, {
-                remove: true
+                remove: false
             });
 
-            $content.handlebars('#template', {
+            $content.handlebars('add', '#template', {
                 name: 'Bob',
                 developer: 'Jim'
             }, {
@@ -52,12 +52,14 @@
 
             // This one will show in the content div
             // Notice how how all content before has been removed
-            $content.handlebars('#template', {
+            $content.handlebars('add', '#template', {
                 name: 'Cathy',
                 developer: 'Kim'
             }, {
-                remove: true
+                remove: false
             });
+
+            // $content.handlebars('remove', '#template');
 
         });
     </script>
