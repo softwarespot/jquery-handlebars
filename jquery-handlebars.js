@@ -94,7 +94,7 @@
 
     // Fields (Private)
 
-    // Store the compiled templates, using the selector string as the identifier i.e. key
+    // Store the compiled templates using the selector string as the identifier i.e. key
     var compiled = {};
 
     // Methods (Private)
@@ -103,15 +103,18 @@
     // Variables are called self instead of this, to avoid conflict
     var setElement = function(self, $self, options, compiled) {
         // Empty the previous contents of this, excluding all Handlebarjs template script elements
-        //
+
         // Previous implementations
         // $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
         // $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
         // Get all nodes apart from the Handlebarjs template script elements
         var filtered = $self.contents().filter(function() {
-            // Only filter those which don't have the handlebarsjs type and SCRIPT node name and not whitespace
-            return this.nodeType !== Node.COMMENT_NODE && this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template' && /[^\t\n\r ]/.test(this.textContent);
+
+            return this.nodeType !== Node.COMMENT_NODE && // Not a comment
+                (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
+                ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
+
         });
 
         // If set to not refill and nodes exist, then return this
