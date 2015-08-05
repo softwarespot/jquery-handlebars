@@ -18,8 +18,18 @@
             // jQuery object reference for this. Only select the first selector of the collection
             var $this = $(this).first(),
 
+                // The following was taken from sizzle.js, URL: https://github.com/jquery/sizzle/blob/master/dist/sizzle.js
+
+                // http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
+                identifier = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+',
+
+                rIdentifier = new RegExp('^#' + identifier + '$');
+
                 // Store whether the template is valid or not
-                isTemplate = typeof template === 'string' && /^#[\w\-]+$/.test(template);
+                isTemplate = typeof template === 'string' && rIdentifier.test(template);
+
+            // Debugging only
+            console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
             // These actions don't require any pre-processing
             if (typeof action === 'string') {
