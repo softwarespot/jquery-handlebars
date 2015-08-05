@@ -18,6 +18,15 @@
             // jQuery object reference for this. Only select the first selector of the collection
             var $this = $(this).first();
 
+            // If a 'get' action is provided, then get the template(s)
+            // The template string if not defined will return all template(s)
+            if (typeof action === 'string' && /^FIND|GET$/i.test(action)) {
+
+                // The include parameter will be true, if the template is a string and valid anchor
+                return getTemplate($this, template, typeof template === 'string' && /^#[\w\-]+$/.test(template));
+
+            }
+
             // Set our options from the defaults, overriding with the
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
@@ -52,7 +61,7 @@
 
             // END: Sanitize the options
 
-            // If a clear action is provided then remove the template
+            // If a 'clear' action is provided, then remove the template from the content element
             if (/^CLEAR|REMOVE$/i.test(action)) {
 
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
