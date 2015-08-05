@@ -55,15 +55,22 @@ The plugin has 4 actions, with a couple of aliases for some of those actions. By
 
 - add (default): Add a template to a content element, by either passing a template string id or a jQuery selector
 ```javascript
-    $content.handlebars('add', '#template-string' | $jQuerySelector, context, override_default_options [optional]);
+    $content.handlebars('add',
+        '#template-string' | $jQuerySelector,
+        context,
+        override_default_options [optional]);
 ```
 - clear/remove: Clear either a specified template or all templates for a content element
 ```javascript
-    $content.handlebars('clear', '#template-string' | $jQuerySelector [optional], override_default_options [optional]);
+    $content.handlebars('clear',
+        '#template-string' | $jQuerySelector [optional],
+        override_default_options [optional]);
 ```
 - get/find: Get either a collection of compiled templates from the DOM by template string or all compiled templates from the DOM
 ```javascript
-    $content.handlebars('get', '#template-string' | $jQuerySelector [optional], override_default_options [optional]);
+    $content.handlebars('get',
+        '#template-string' | $jQuerySelector [optional],
+        override_default_options [optional]);
 ```
 - compiled: Get all compiled templates stored by the plugin
 ```javascript
