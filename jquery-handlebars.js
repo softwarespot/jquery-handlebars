@@ -17,22 +17,28 @@
 
             // START: Sanitize the options
 
-            // Check if the option type is a string
-            if (typeof options.type === 'string') {
+            // Check if the option type is a string and valid
+            if (typeof options.type === 'string' && /^APPEND|FILL|REFILL$/i.test(options.type)) {
 
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
+
+            } else {
+
+                // Otherwise default to 'append' i.e. if null or simply is invalid
+                options.type = Type.APPEND;
 
             }
 
             // If the removal type is a string and valid, then set to uppercase
             if (typeof options.remove_type === 'string' && /^ALL|NONE|SAME$/i.test(options.remove_type)) {
 
+                // Set to uppercase
                 options.remove_type = options.remove_type.toUpperCase();
 
             } else {
 
-                // Otherwise default to 'none' i.e. if null or is simply invalid
+                // Otherwise default to 'none' i.e. if null or simply is invalid
                 options.remove_type = Remove.NONE;
 
             }
@@ -56,7 +62,9 @@
                 }
 
                 if (typeof template === 'undefined') {
+
                     template = null;
+
                 }
 
                 return removeTemplate(this, $this, template, options); // data is basically options in this instance
@@ -66,7 +74,7 @@
             // Assume it's an addition i.e. 'add'
 
             // The data object literal must contain data
-            if (options.validate && $.isEmptyObject(data_or_options)) {
+            if (typeof options.validate === 'boolean' && options.validate && $.isEmptyObject(data_or_options)) {
 
                 console.log('jquery-handlebars: Data was not passed or is simpley an empty plain object');
                 return this;
@@ -76,7 +84,7 @@
             // jQuery object reference
             var $selector = null;
 
-            // If a string is passed then check if it's compiled or get the jQuery object
+            // If a string is passed then check if it's compiled or get the jQuery object instead
             if (typeof template === 'string') {
 
                 // If compiled already
@@ -97,7 +105,9 @@
 
                 // If the selector doesn't exist for whatever reason, then set to null
                 if ($selector.length === 0) {
+
                     $selector = null;
+
                 }
 
                 // If a valid jQuery selector object
@@ -239,7 +249,7 @@
             }
 
             // If set to not refill and template node(s) exist, then return this
-            if (!options.refill) {
+            if (typeof options.refill === 'boolean' && !options.refill) {
 
                 // Get the template(s) after possible removal. include has been set to true, as we are checking if only
                 // the same template(s) exist
@@ -293,6 +303,13 @@
             ALL: 'ALL',
             NONE: 'NONE',
             SAME: 'SAME'
+        },
+
+        // Type constants
+        Type = {
+            APPEND: 'APPEND',
+            FILL: 'FILL',
+            REFILL: 'REFILL'
         };
 
     // Defaults
@@ -305,10 +322,10 @@
         // 'all': Remove all valid template(s)
         // 'same': Remove only those template(s) that match the provided template
         // 'none' (default): Don't remove any template(s)
-        remove_type: 'none',
+        remove_type: Remove.NONE,
 
         // Type of writing: fill, refill, append (default)
-        type: 'append',
+        type: Type.APPEND,
 
         // Check whether the data passed is empty
         validate: true
