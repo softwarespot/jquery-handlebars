@@ -2,7 +2,7 @@
 A jQuery plugin for taking the strain out of using the wonderful Handlebarsjs template framework
 
 ## Warning
-Documentation is to be finalised on 2015/08/06. Please refrain from using until the API has finally been stabilised. Thank you.
+Documentation is to be finalised on 2015/08/06, though the plugin is fully stable to start using in productions environments. The code is also heavily documented, if you feel this README is lacking somewhat.
 
 ## What is jQuery-handlebars?
 
@@ -44,8 +44,64 @@ As you can see, if you do this multiple times over the course of your project it
     $content.handlebars('add', '#my-template', context);
 ```
 
-The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
+The plugin will basically takes care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
 How easier could it be?
 
-## Options
-Coming soon
+## Plugin Options
+
+### Actions
+
+The plugin has 4 actions, with a couple of aliases for some of those actions. By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed. Please refer to the examples for each action.
+
+- add (default): Add a template to a content element, by either passing a template string id or a jQuery selector
+```javascript
+    $content.handlebars('add', '#template-string' | $jQuerySelector, context, override_default_options [optional]);
+```
+- clear/remove: Clear either a specified template or all templates for a content element
+```javascript
+    $content.handlebars('clear', '#template-string' | $jQuerySelector, override_default_options [optional]);
+```
+- get/find: Get either a collection of compiled templates from the DOM by template string or all compiled templates from the DOM
+```javascript
+    $content.handlebars('get', '#template-string' | $jQuerySelector [optional], override_default_options [optional]);
+```
+- compiled: Get all compiled templates stored by the plugin
+```javascript
+    $content.handlebars('compiled');
+```
+
+
+### Options
+
+Here are a few details on the plugin options available with jQuery-handlebars.
+
+#### `delete_compiled`
+
+Delete the template from the compiled store on removal. Accepts true (default) or false.
+
+#### `refill`
+
+Allow the option of adding multiple template(s) inside an element. Accepts true (default) or false.
+
+#### `remove_type`
+
+Remove pre-existing compiled templates from the content element.
+
+The following options are:
+- 'all': Remove all valid template(s) from the content element
+- 'none' (default): Don't remove any template(s)
+- 'same': Remove only those template(s) that match the provided template string
+
+#### `type`
+
+How to output the compiled template to the content element.
+
+The following options are:
+
+- 'append' (default): Append to the content element
+- 'compiled': Return a compiled template as HTML
+- 'raw': Return a compiled template as HTML
+
+#### `validate`
+
+Check whether the data passed to the plugin is empty. Accepts true (default) or false.
