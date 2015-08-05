@@ -52,12 +52,13 @@
                     options.remove_type = Remove.ALL;
 
                     // Debugging only
-                    console.log('jquery-handlebars: Overriding default removal type from "none" to "all"');
+                    console.log('jquery-handlebars: Overriding default removal type from "none" to "all" since the remove action was passed to the plugin');
                 }
 
                 if (typeof template === 'undefined') {
                     template = null;
                 }
+
                 return removeTemplate(this, $this, template, options); // data is basically options in this instance
 
             }
@@ -67,7 +68,7 @@
             // The data object literal must contain data
             if (options.validate && $.isEmptyObject(data_or_options)) {
 
-                console.log('jquery-handlebars: Data was not passed or is an empty plain object');
+                console.log('jquery-handlebars: Data was not passed or is simpley an empty plain object');
                 return this;
 
             }
@@ -144,7 +145,7 @@
 
     // Fields (Private)
 
-    // Store the compiled templates using the template string as the identifier i.e. key
+    // Store the compiled template(s) using the template string as the identifier i.e. key
     var compiled = {};
 
     // Methods (Private)
@@ -162,14 +163,14 @@
         },
 
         // Remove the specified template from the content selector. If a template is not provided
-        // then all templates that are contained within the content selector will be removed
+        // then all template(s) that are contained within the content selector will be removed
         removeTemplate = function (self, $self, template, options) {
 
             // If the option has been passed to remove 'none', then respect this choice
             if (options.remove_type === Remove.NONE) {
 
                 // Debugging only
-                console.log('jquery-handlebars: Templates not removed [' + options.remove_type + ']');
+                console.log('jquery-handlebars: Template(s) were not removed [' + options.remove_type + ']');
 
                 // Return self to maintain chaining if there is nothing to remove
                 return self;
@@ -180,7 +181,7 @@
             if (filtered.length === 0) {
 
                 // Debugging only
-                console.log('jquery-handlebars: Unable to find any templates to remove [' + options.remove_type + ']');
+                console.log('jquery-handlebars: Unable to find any template(s) for removal [' + options.remove_type + ']');
 
                 // Return self to maintain chaining if there is nothing to remove
                 return self;
@@ -190,6 +191,9 @@
             // Remove from the DOM
             filtered.remove();
 
+            // Debugging only
+            console.log('jquery-handlebars: Removing template(s) [' + options.remove_type + ']');
+
             // Remove the template from the compiled store, if a template is provided and the option of remove 'same'
             if (options.remove_type === Remove.SAME && template) {
 
@@ -197,7 +201,7 @@
                 compiled[template] = undefined;
 
                 // Debugging only
-                console.log('jquery-handlebars: Removed from the compiled store [' + options.remove_type + ']');
+                console.log('jquery-handlebars: Removed the template from the compiled store [' + template + ']');
 
             }
 
@@ -223,27 +227,27 @@
 
             var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
 
-            // Remove from the DOM if allowed
+            // Remove from the DOM if specified
             if (options.remove_type !== Remove.NONE) {
 
                 // Remove from the DOM
                 filtered.remove();
 
                 // Debugging only
-                console.log('jquery-handlebars: Removed previous templates [' + options.remove_type + ']');
+                console.log('jquery-handlebars: Removed previous template(s) [' + options.remove_type + ']');
 
             }
 
-            // If set to not refill and template nodes exist, then return this
+            // If set to not refill and template node(s) exist, then return this
             if (!options.refill) {
 
-                // Get the templates after possible removal. include has been set to true, as we are checking if only
-                // the same templates exist
+                // Get the template(s) after possible removal. include has been set to true, as we are checking if only
+                // the same template(s) exist
                 filtered = getTemplate($self, template, true);
                 if (filtered.length > 0) {
 
                     // Debugging only
-                    console.log('jquery-handlebars: Refill has been set to false and the content element is not empty');
+                    console.log('jquery-handlebars: Refill has been set to false and the content element contains template(s) [' + options.remove_type + ']');
 
                     return self;
 
@@ -255,7 +259,9 @@
             switch (options.type) {
                 case 'FILL':
                 case 'REFILL':
-                    // $self.html(compiled[template](data)); // Dangerous to do if handlebarsjs templates are embedded inside the element
+                    // $self.html(compiled[template](data)); // Dangerous to do if handlebarsjs template(s) are embedded inside the element
+                    // Debugging only
+                    console.log('jquery-handlebars: fill/refill is NOT IMPLEMENTED [' + template + ']');
                     break;
 
                 default:
@@ -268,6 +274,9 @@
 
                     // Append the div to self i.e. the content block
                     $self.append($div);
+
+                    // Debugging only
+                    console.log('jquery-handlebars: Appending template to the content element [' + template + ']');
                     break;
             }
 
@@ -289,13 +298,13 @@
     // Defaults
 
     $.fn.handlebars.options = {
-        // Allow the option of adding multiple templates inside an element
+        // Allow the option of adding multiple template(s) inside an element
         refill: true,
 
         // Removal options
-        // 'all': Remove all valid templates
-        // 'same': Remove only those templates that match the provided template
-        // 'none' (default): Don't remove any templates
+        // 'all': Remove all valid template(s)
+        // 'same': Remove only those template(s) that match the provided template
+        // 'none' (default): Don't remove any template(s)
         remove_type: 'none',
 
         // Type of writing: fill, refill, append (default)
