@@ -21,12 +21,21 @@
                 // Store whether the template is valid or not
                 isTemplate = typeof template === 'string' && /^#[\w\-]+$/.test(template);
 
-            // If a 'get' action is provided, then get the template(s)
-            // The template string if not defined will return all template(s)
-            if (typeof action === 'string' && /^FIND|GET$/i.test(action)) {
+            if (typeof action === 'string') {
 
-                // The include parameter will be true, if the template is a string and valid anchor
-                return getTemplate($this, template, isTemplate);
+                // If a 'get' action is provided, then get the template(s)
+                // The template string if not defined will return all template(s)
+                if (/^FIND|GET$/i.test(action)) {
+
+                    // The include parameter will be true, if the template is a string and valid anchor
+                    return getTemplate($this, template, isTemplate);
+
+                // If a 'compiled' action is provided, then return the compiled object literal
+                } else if (/^COMPILED$/i.test(action)) {
+
+                    return compiled;
+
+                }
 
             }
 
