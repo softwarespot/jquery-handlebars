@@ -59,7 +59,7 @@ The plugin has 4 actions, with a couple of aliases for some of those actions. By
 ```
 - clear/remove: Clear either a specified template or all templates for a content element
 ```javascript
-    $content.handlebars('clear', '#template-string' | $jQuerySelector, override_default_options [optional]);
+    $content.handlebars('clear', '#template-string' | $jQuerySelector [optional], override_default_options [optional]);
 ```
 - get/find: Get either a collection of compiled templates from the DOM by template string or all compiled templates from the DOM
 ```javascript
