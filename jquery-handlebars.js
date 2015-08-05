@@ -16,14 +16,17 @@
         handlebars: function (action, template, dataOrOptions, options) {
 
             // jQuery object reference for this. Only select the first selector of the collection
-            var $this = $(this).first();
+            var $this = $(this).first(),
+
+                // Store whether the template is valid or not
+                isTemplate = typeof template === 'string' && /^#[\w\-]+$/.test(template);
 
             // If a 'get' action is provided, then get the template(s)
             // The template string if not defined will return all template(s)
             if (typeof action === 'string' && /^FIND|GET$/i.test(action)) {
 
                 // The include parameter will be true, if the template is a string and valid anchor
-                return getTemplate($this, template, typeof template === 'string' && /^#[\w\-]+$/.test(template));
+                return getTemplate($this, template, isTemplate);
 
             }
 
@@ -70,7 +73,7 @@
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (template && options.remove_type !== Remove.SAME) {
+                if (isTemplate && options.remove_type !== Remove.SAME) {
 
                     options.remove_type = Remove.SAME;
 
@@ -82,7 +85,7 @@
                 }
 
                 // If the template is not defined, then set as null before removing
-                if (typeof template === 'undefined') {
+                if (!isTemplate) {
 
                     template = null;
 
@@ -105,8 +108,8 @@
             // jQuery object reference
             var $selector = null;
 
-            // If a string is passed then check if it's compiled or get the jQuery object instead
-            if (typeof template === 'string') {
+            // If a valid string template is passed then check if it's compiled or get the jQuery object instead
+            if (isTemplate) {
 
                 // If compiled already then no need to re-compile
                 if (typeof compiled[template] === 'function') {
