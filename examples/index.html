@@ -59,8 +59,9 @@
                 remove: false
             });
 
-            // $content.handlebars('remove', '#template');
-            console.log($content.handlebars('get'));
+            // $content.handlebars('remove', '#template'); // Remove single template id
+            // $content.handlebars('remove'); // Remove all
+            console.log('Rendered templates: %o', $content.handlebars('get')); // Get the rendered templates for the content element
 
         });
     </script>
