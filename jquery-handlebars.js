@@ -1,4 +1,4 @@
-; (function($, undefined) {
+; (function ($, undefined) {
 
     // Initial idea: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
@@ -6,7 +6,7 @@
     $.fn.extend({
 
         // date doubles up as options when the action is 'clear' or 'remove'
-        handlebars: function(action, template, data_or_options, options) {
+        handlebars: function (action, template, data_or_options, options) {
 
             // jQuery object reference for this. Only select the first selector of the collection
             var $this = $(this).first();
@@ -226,7 +226,7 @@
                 $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
                 // Get all nodes apart from the Handlebarjs template script elements
-                 var filtered = $self.contents().filter(function() {
+                 var filtered = $self.contents().filter(function () {
 
                     return this.nodeType !== Node.COMMENT_NODE && // Not a comment
                         (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
@@ -252,7 +252,7 @@
             if (typeof options.refill === 'boolean' && !options.refill) {
 
                 // Get the template(s) after possible removal. include has been set to true, as we are checking if only
-                // the same template(s) exist
+                // the same template(s) exists (perhaps an options could/should be created)
                 filtered = getTemplate($self, template, true);
                 if (filtered.length > 0) {
 
@@ -265,11 +265,12 @@
 
             }
 
-            // Append to this by checking the type. Default is append
+            // Append to this by checking the type. Default is 'append'
             switch (options.type) {
                 case 'FILL':
                 case 'REFILL':
                     // $self.html(compiled[template](data)); // Dangerous to do if handlebarsjs template(s) are embedded inside the element
+                    //
                     // Debugging only
                     console.log('jquery-handlebars: fill/refill is NOT IMPLEMENTED [' + template + ']');
                     break;
