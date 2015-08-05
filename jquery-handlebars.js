@@ -5,32 +5,67 @@
     // Plugin Logic
     $.fn.extend({
 
-        handlebars: function(action, template, data, options) {
+        // date doubles up as options when the action is 'clear' or 'remove'
+        handlebars: function(action, template, data_or_options, options) {
 
             // jQuery object reference for this. Only select the first selector of the collection
             var $this = $(this).first();
-
-            // If a clear action is provided then remove the templates
-            if (/^CLEAR|REMOVE$/i.test(action)) {
-
-                return removeTemplate(this, $this, template);
-
-            }
 
             // Set our options from the defaults, overriding with the
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
 
+            // START: Sanitize the options
+
             // Check if the option type is a string
             if (typeof options.type === 'string') {
 
-                // Set as uppercase
+                // Set to uppercase
                 options.type = options.type.toUpperCase();
 
             }
 
+            // If the removal type is a string and valid, then set to uppercase
+            if (typeof options.remove_type === 'string' && /^ALL|NONE|SAME$/i.test(options.remove_type)) {
+
+                options.remove_type = options.remove_type.toUpperCase();
+
+            } else {
+
+                // Otherwise default to 'none' i.e. if null or is simply invalid
+                options.remove_type = Remove.NONE;
+
+            }
+
+            // END: Sanitize the options
+
+            // If a clear action is provided then remove the template
+            if (/^CLEAR|REMOVE$/i.test(action)) {
+
+                // Extend the options again, as the data_or_options acts as an alias for options when removal is used
+                options = $.extend(options, data_or_options);
+
+                // If the options parameter was undefined and the default is 'none', then temporarily
+                // overwrite as 'all'; otherwise the user knows what they'e doing (I hope)
+                if ((typeof data_or_options === 'undefined' || typeof data_or_options.remove_type === 'undefined') && options.remove_type === Remove.NONE) {
+
+                    options.remove_type = Remove.ALL;
+
+                    // Debugging only
+                    console.log('jquery-handlebars: Overriding default removal type from "none" to "all"');
+                }
+
+                if (typeof template === 'undefined') {
+                    template = null;
+                }
+                return removeTemplate(this, $this, template, options); // data is basically options in this instance
+
+            }
+
+            // Assume it's an addition i.e. 'add'
+
             // The data object literal must contain data
-            if (options.validate && $.isEmptyObject(data)) {
+            if (options.validate && $.isEmptyObject(data_or_options)) {
 
                 console.log('jquery-handlebars: Data was not passed or is an empty plain object');
                 return this;
@@ -50,7 +85,7 @@
                     console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
-                    return setTemplate(this, $this, options, template, data);
+                    return setTemplate(this, $this, template, data_or_options, options);
 
                 }
 
@@ -81,7 +116,7 @@
                     console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
-                    return setTemplate(this, $this, options, template, data);
+                    return setTemplate(this, $this, template, data_or_options, options);
 
                 }
             }
@@ -102,7 +137,7 @@
             compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return setTemplate(this, $this, options, template, data);
+            return setTemplate(this, $this, template, data_or_options, options);
         }
 
     });
@@ -114,13 +149,40 @@
 
     // Methods (Private)
 
-    var removeTemplate = function(self, $self, template) {
+    // Note: Variable are called 'self' to avoid conflict with 'this'
 
-            // Get the template divs with the data attribute and optional value
-            var filtered = $self.find('div[' + DATA_ATTRIBUTE + (template ? '="' + template + '"' : '') + ']');
+    // Get the template in the content selector
+    // include refers to whether to include the template in the selection
+    var getTemplate = function ($self, template, include) {
+
+            // Get the divs with the template data attribute and optional specified template e.g. #some-template
+            var templateLocate = (include && template ? '="' + template + '"' : '');
+            return $self.find('div[' + DATA_ATTRIBUTE + templateLocate + ']');
+
+        },
+
+        // Remove the specified template from the content selector. If a template is not provided
+        // then all templates that are contained within the content selector will be removed
+        removeTemplate = function (self, $self, template, options) {
+
+            // If the option has been passed to remove 'none', then respect this choice
+            if (options.remove_type === Remove.NONE) {
+
+                // Debugging only
+                console.log('jquery-handlebars: Templates not removed [' + options.remove_type + ']');
+
+                // Return self to maintain chaining if there is nothing to remove
+                return self;
+
+            }
+
+            var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
             if (filtered.length === 0) {
 
-                // No point in removing if there is nothing to remove
+                // Debugging only
+                console.log('jquery-handlebars: Unable to find any templates to remove [' + options.remove_type + ']');
+
+                // Return self to maintain chaining if there is nothing to remove
                 return self;
 
             }
@@ -128,54 +190,64 @@
             // Remove from the DOM
             filtered.remove();
 
-            // Remove from the compiled store if a template is provided
-            if (template) {
+            // Remove the template from the compiled store, if a template is provided and the option of remove 'same'
+            if (options.remove_type === Remove.SAME && template) {
 
+                // Set to undefined to mimic deletion of the template
                 compiled[template] = undefined;
+
+                // Debugging only
+                console.log('jquery-handlebars: Removed from the compiled store [' + options.remove_type + ']');
 
             }
 
         },
 
-        // Helper function for setting an element with a template
-        // Variables are called self instead of this, to avoid conflict
-        setTemplate = function(self, $self, options, template, data) {
-
-            // Empty the previous contents of this, excluding all Handlebarjs template script elements
+        // Set the specified template to the content selector
+        setTemplate = function (self, $self, template, data, options) {
 
             // Previous implementations
-            // $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
-            // $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
+            /*
+                $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
+                $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
-            // Get all nodes apart from the Handlebarjs template script elements
-            // var filtered = $self.contents().filter(function() {
+                // Get all nodes apart from the Handlebarjs template script elements
+                 var filtered = $self.contents().filter(function() {
 
-            //    return this.nodeType !== Node.COMMENT_NODE && // Not a comment
-            //        (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
-            //        ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
+                    return this.nodeType !== Node.COMMENT_NODE && // Not a comment
+                        (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
+                        ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
 
-            // });
+                });
+             */
 
-            var filtered = $self.find('div[' + DATA_ATTRIBUTE + ']');
-
-            // If set to not refill and nodes exist, then return this
-            if (!options.refill && filtered.length > 0) {
-
-                // Debugging only
-                console.log('jquery-handlebars: Refill has been set to false and the content element is not empty');
-
-                return self;
-
-            }
+            var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
 
             // Remove from the DOM if allowed
-            if (options.remove) {
+            if (options.remove_type !== Remove.NONE) {
 
                 // Remove from the DOM
                 filtered.remove();
 
                 // Debugging only
-                console.log('jquery-handlebars: Removed previous content, ' + options.remove);
+                console.log('jquery-handlebars: Removed previous templates [' + options.remove_type + ']');
+
+            }
+
+            // If set to not refill and template nodes exist, then return this
+            if (!options.refill) {
+
+                // Get the templates after possible removal. include has been set to true, as we are checking if only
+                // the same templates exist
+                filtered = getTemplate($self, template, true);
+                if (filtered.length > 0) {
+
+                    // Debugging only
+                    console.log('jquery-handlebars: Refill has been set to false and the content element is not empty');
+
+                    return self;
+
+                }
 
             }
 
@@ -204,7 +276,15 @@
 
     // Constants
 
-    var DATA_ATTRIBUTE = 'data-jquery-handlebars';
+    // The data-* attribute name
+    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
+
+        // Removal constants. As who enjoys magic values?
+        Remove = {
+            ALL: 'ALL',
+            NONE: 'NONE',
+            SAME: 'SAME'
+        };
 
     // Defaults
 
@@ -212,9 +292,11 @@
         // Allow the option of adding multiple templates inside an element
         refill: true,
 
-        // Remove the previous contents excluding handlebarsjs templates and misc
-        // Only used when refill is set to false and no elements exist
-        remove: false,
+        // Removal options
+        // 'all': Remove all valid templates
+        // 'same': Remove only those templates that match the provided template
+        // 'none' (default): Don't remove any templates
+        remove_type: 'none',
 
         // Type of writing: fill, refill, append (default)
         type: 'append',
