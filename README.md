@@ -2,12 +2,12 @@
 A jQuery plugin for taking the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework
 
 ## Warning
-Documentation is to be finalised on 2015/08/06, though the plugin is fully stable to start using in productions environments. The code is also heavily documented, if you feel this README is lacking somewhat.
+Documentation is to be finalised by 2015/08/06, though the plugin is fully stable to start using in production environments. The code is also heavily documented, if you feel this README is lacking somewhat.
 
 ## What is jQuery-handlebars?
 
 How many times have you found yourself writing the following over and over again in your project? Quite laborious isn't it?
-Isn't using a template framework meant to make our developing lives a little easier? Instead of repeating the same things over and over again.
+Surely using a template framework is meant to make our "developing" lives a little easier? Instead of repeating the same things over and over again.
 ```javascript
 
     // Cache the jQuery object of where to append the template
