@@ -5,8 +5,9 @@
   "description": "TODO",
   "main": "jquery-handlebars.min.js",
   "keywords": [
-    "handlebarjs",
-    "templating"
+    "handlebarsjs",
+    "templating",
+    "template"
   ],
   "license": "MIT",
   "ignore": [
