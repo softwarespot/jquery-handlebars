@@ -115,7 +115,7 @@
                 if (typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: ' + template + ' already exists');
+                    console.log('jQuery-handlebars: %s has already been compiled', template);
 
                     // Return to continue chaining
                     return setTemplate(this, $this, template, dataOrOptions, options);
@@ -148,7 +148,7 @@
                 if (template !== null && typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: %s already exists', template);
+                    console.log('jQuery-handlebars: %s has already been compiled', template);
 
                     // Return to continue chaining
                     return setTemplate(this, $this, template, dataOrOptions, options);
