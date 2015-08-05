@@ -6,7 +6,7 @@
     $.fn.extend({
 
         // date doubles up as options when the action is 'clear' or 'remove'
-        handlebars: function (action, template, data_or_options, options) {
+        handlebars: function (action, template, dataOrOptions, options) {
 
             // jQuery object reference for this. Only select the first selector of the collection
             var $this = $(this).first();
@@ -48,12 +48,12 @@
             // If a clear action is provided then remove the template
             if (/^CLEAR|REMOVE$/i.test(action)) {
 
-                // Extend the options again, as the data_or_options acts as an alias for options when removal is used
-                options = $.extend(options, data_or_options);
+                // Extend the options again, as the dataOrOptions acts as an alias for options when removal is used
+                options = $.extend(options, dataOrOptions);
 
                 // If the options parameter was undefined and the default is 'none', then temporarily
                 // overwrite as 'all'; otherwise the user knows what they'e doing (I hope)
-                if ((typeof data_or_options === 'undefined' || typeof data_or_options.remove_type === 'undefined') && options.remove_type === Remove.NONE) {
+                if ((typeof dataOrOptions === 'undefined' || typeof dataOrOptions.remove_type === 'undefined') && options.remove_type === Remove.NONE) {
 
                     options.remove_type = Remove.ALL;
 
@@ -74,7 +74,7 @@
             // Assume it's an addition i.e. 'add'
 
             // The data object literal must contain data
-            if (typeof options.validate === 'boolean' && options.validate && $.isEmptyObject(data_or_options)) {
+            if (typeof options.validate === 'boolean' && options.validate && $.isEmptyObject(dataOrOptions)) {
 
                 console.log('jquery-handlebars: Data was not passed or is simpley an empty plain object');
                 return this;
@@ -94,7 +94,7 @@
                     console.log('jquery-handlebars: ' + template + ' already exists');
 
                     // Return to continue chaining
-                    return setTemplate(this, $this, template, data_or_options, options);
+                    return setTemplate(this, $this, template, dataOrOptions, options);
 
                 }
 
@@ -127,7 +127,7 @@
                     console.log('jquery-handlebars: %s already exists', template);
 
                     // Return to continue chaining
-                    return setTemplate(this, $this, template, data_or_options, options);
+                    return setTemplate(this, $this, template, dataOrOptions, options);
 
                 }
             }
@@ -148,7 +148,7 @@
             compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return setTemplate(this, $this, template, data_or_options, options);
+            return setTemplate(this, $this, template, dataOrOptions, options);
         }
 
     });
