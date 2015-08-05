@@ -1,5 +1,5 @@
 # jQuery-handlebars - v0.1.0-beta
-A jQuery plugin for taking the strain out of using the wonderful Handlebarsjs template framework
+A jQuery plugin for taking the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework
 
 ## Warning
 Documentation is to be finalised on 2015/08/06, though the plugin is fully stable to start using in productions environments. The code is also heavily documented, if you feel this README is lacking somewhat.
