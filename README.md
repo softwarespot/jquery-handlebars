@@ -46,8 +46,8 @@ As you can see, if you do this multiple times over the course of your project it
     // It's that easy!
 ```
 
-The plugin will basically takes care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
-How easier could it be?
+The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
+How easier could it be? It could probably even make you a sandwich if it wanted to =)
 
 ## Plugin Options
 
