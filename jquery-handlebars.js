@@ -21,6 +21,7 @@
                 // Store whether the template is valid or not
                 isTemplate = typeof template === 'string' && /^#[\w\-]+$/.test(template);
 
+            // These actions don't require any pre-processing
             if (typeof action === 'string') {
 
                 // If a 'get' action is provided, then get the template(s)
@@ -53,7 +54,7 @@
 
             } else {
 
-                // Otherwise default to 'append' i.e. if null or simply is invalid
+                // Otherwise default to 'append' i.e. if null or simply invalid
                 options.type = Type.APPEND;
 
             }
