@@ -57,7 +57,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (typeof options.type === 'string' && /^APPEND|FILL|REFILL$/i.test(options.type)) {
+            if (typeof options.type === 'string' && /^APPEND|COMPILED|RAW$/i.test(options.type)) {
 
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
@@ -332,15 +332,17 @@
 
             // Append to the content element by checking the type. Default is 'append'
             switch (options.type) {
-                case 'FILL':
-                case 'REFILL':
-                    // $self.html(compiled[template](data)); // Dangerous to do if Handlebars template(s) are embedded inside the element
+                case Type.COMPILED:
+                case Type.RAW:
 
                     // Debugging only
-                    console.log('jQuery-handlebars: The type fill/refill is NOT implemented [%s]', template);
-                    break;
+                    console.log('jQuery-handlebars: Returning raw HTML', template);
+
+                    // Return the compiled HTML
+                    return compiled[template](data);
 
                 default:
+
                     // Create a div element with the template appended to it
                     // This contains a data-* attribute called data-jquery-handlebars for easy association
                     // that it's a Handlebarjs template
@@ -354,6 +356,7 @@
                     // Debugging only
                     console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
                     break;
+
             }
 
             return self;
@@ -374,8 +377,8 @@
         // Type constants. Who enjoys magic values?
         Type = {
             APPEND: 'APPEND',
-            FILL: 'FILL',
-            REFILL: 'REFILL'
+            COMPILED: 'COMPILED',
+            RAW: 'RAW'
         };
 
     // Defaults
@@ -387,17 +390,23 @@
         // Allow the option of adding multiple template(s) inside an element
         refill: true,
 
-        // Remove pre-existing templates from the content element
+        // Remove pre-existing compiled templates from the content element
+        //
         // The following options are:
         //      'all': Remove all valid template(s) from the content element
-        //      'same': Remove only those template(s) that match the provided template string
         //      'none' (default): Don't remove any template(s)
+        //      'same': Remove only those template(s) that match the provided template string
         remove_type: Remove.NONE,
 
-        // Type of writing: fill, refill, append (default)
-        // type: Type.APPEND,
+        // How to output the compiled template to the content element
+        //
+        // The following options are:
+        //      'append' (default): Append to the content element
+        //      'compiled': Return a compiled template as HTML
+        //      'raw': Return a compiled template as HTML
+        type: Type.APPEND,
 
-        // Check whether the data passed is empty
+        // Check whether the data passed to the plugin is empty
         validate: true
     };
 
