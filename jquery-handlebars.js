@@ -324,7 +324,7 @@
             switch (options.type) {
                 case 'FILL':
                 case 'REFILL':
-                    // $self.html(compiled[template](data)); // Dangerous to do if handlebarsjs template(s) are embedded inside the element
+                    // $self.html(compiled[template](data)); // Dangerous to do if Handlebars template(s) are embedded inside the element
 
                     // Debugging only
                     console.log('jQuery-handlebars: The type fill/refill is NOT implemented [%s]', template);
