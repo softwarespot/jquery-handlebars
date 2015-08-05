@@ -42,6 +42,8 @@ As you can see, if you do this multiple times over the course of your project it
     //  '#my-template': template id string or jQuery selector object
     //  context: context data to pass to the template
     $content.handlebars('add', '#my-template', context);
+
+    // It's that easy!
 ```
 
 The plugin will basically takes care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
