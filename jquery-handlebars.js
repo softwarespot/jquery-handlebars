@@ -25,10 +25,10 @@
                 identifier = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+',
 
                 // Create a regular expression object to test valid id fragments
-                rIdentifier = new RegExp('^#' + identifier + '$');
+                rIdentifier = new RegExp('^#' + identifier + '$'),
 
-            // Store whether the template is valid or invalid
-            isTemplate = typeof template === 'string' && rIdentifier.test(template);
+                // Store whether the template is valid or invalid
+                isTemplate = typeof template === 'string' && rIdentifier.test(template);
 
             // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
