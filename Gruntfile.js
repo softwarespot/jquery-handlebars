@@ -46,7 +46,8 @@ module.exports = function(grunt) {
                 undef: true,
                 browser: true,
                 globals: {
-                  jQuery: true
+                  jQuery: true,
+                  '$': true
                 }
             }
         }
