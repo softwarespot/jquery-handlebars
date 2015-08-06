@@ -220,8 +220,8 @@
         // then all template(s) that are contained within the content selector will be removed
         removeTemplate = function (self, $self, template, options) {
 
-            // If the option has been passed to remove 'none', then respect this choice
-            if (options.remove_type === Remove.NONE) {
+            // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
+            if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
 
                 // Debugging only
                 console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
@@ -231,6 +231,7 @@
 
             }
 
+            // The include parameter will be set to true, when specifically looking for the provided template string
             var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
             if (filtered.length === 0) {
 
