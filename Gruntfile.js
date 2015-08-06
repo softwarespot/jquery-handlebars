@@ -37,7 +37,18 @@ module.exports = function(grunt) {
         },
 
         jshint: {
-            all: ['jquery-handlebars.js']
+            all: ['jquery-handlebars.js'],
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                notypeof: true,
+                undef: true,
+                browser: true,
+                globals: {
+                  jQuery: true
+                }
+            }
         }
 
     });
