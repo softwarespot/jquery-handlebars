@@ -27,8 +27,8 @@
                 // Create a regular expression object to test valid id fragments
                 rIdentifier = new RegExp('^#' + identifier + '$');
 
-                // Store whether the template is valid or invalid
-                isTemplate = typeof template === 'string' && rIdentifier.test(template);
+            // Store whether the template is valid or invalid
+            isTemplate = typeof template === 'string' && rIdentifier.test(template);
 
             // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
@@ -42,7 +42,7 @@
                     // The include parameter will be true, if the template is a string and valid anchor
                     return getTemplate($this, template, isTemplate);
 
-                // If a 'compiled' action is provided, then return the compiled object literal
+                    // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (/^COMPILED|STORE$/i.test(action)) {
 
                     return compiled;
@@ -213,149 +213,149 @@
     // include refers to whether to include the template in the selection
     var getTemplate = function ($self, template, include) {
 
-            // Get the divs with the template data attribute and optional specified template string e.g. #some-template
-            var templateFind = (include && template ? '="' + template + '"' : '');
-            return $self.find('div[' + DATA_ATTRIBUTE + templateFind + ']');
+        // Get the divs with the template data attribute and optional specified template string e.g. #some-template
+        var templateFind = (include && template ? '="' + template + '"' : '');
+        return $self.find('div[' + DATA_ATTRIBUTE + templateFind + ']');
 
-        },
+    };
 
-        // Remove the specified template from the content selector. If a template is not provided
-        // then all template(s) that are contained within the content selector will be removed
-        removeTemplate = function (self, $self, template, options) {
+    // Remove the specified template from the content selector. If a template is not provided
+    // then all template(s) that are contained within the content selector will be removed
+    var removeTemplate = function (self, $self, template, options) {
 
-            // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
-            if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
+        // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
+        if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
 
-                // console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
+            // console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
 
-                // Return self to maintain chaining if there is nothing to remove
-                return self;
+            // Return self to maintain chaining if there is nothing to remove
+            return self;
+
+        }
+
+        // The include parameter will be set to true, when specifically looking for the provided template string
+        var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
+        if (filtered.length === 0) {
+
+            // console.log('jQuery-handlebars: Unable to find any template(s) for removal [%s]', options.remove_type);
+
+            // Return self to maintain chaining if there is nothing to remove
+            return self;
+
+        }
+
+        // Remove from the DOM
+        filtered.remove();
+
+        // console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
+
+        // Remove the template from the compiled store, if the option is true
+        if (typeof options.delete_compiled === 'boolean' && options.delete_compiled) {
+
+            // Iterate through the filtered collection and remove from the template string from the compiled store
+            $.each(filtered, function (index, element) {
+
+                // Get the data attribute for the template string if it's not null or has already been removed
+                var attribute = $(this).attr(DATA_ATTRIBUTE);
+                if (attribute === null || compiled[attribute] === undefined) {
+
+                    return;
+
+                }
+
+                // Set to undefined to mimic deletion of the template
+                compiled[attribute] = undefined;
+
+                // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
+
+            });
+
+            if (template !== null) {
+
+                // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
 
             }
 
-            // The include parameter will be set to true, when specifically looking for the provided template string
-            var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
-            if (filtered.length === 0) {
+        }
 
-                // console.log('jQuery-handlebars: Unable to find any template(s) for removal [%s]', options.remove_type);
+    };
 
-                // Return self to maintain chaining if there is nothing to remove
-                return self;
+    // Set the specified template to the content selector
+    var setTemplate = function (self, $self, template, data, options) {
 
-            }
+        // Previous implementations
+        /*
+            $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
+            $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
+
+            // Get all nodes apart from the Handlebarjs template script elements
+             var filtered = $self.contents().filter(function () {
+
+                return this.nodeType !== Node.COMMENT_NODE && // Not a comment
+                    (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
+                    ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
+
+            });
+         */
+
+        // The include parameter will be set to true, when specifically looking for the provided template string
+        var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
+
+        // Remove from the DOM if specified to do so
+        if (options.remove_type !== Remove.NONE) {
 
             // Remove from the DOM
             filtered.remove();
 
-            // console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
+            // console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
 
-            // Remove the template from the compiled store, if the option is true
-            if (typeof options.delete_compiled === 'boolean' && options.delete_compiled) {
+        }
 
-                // Iterate through the filtered collection and remove from the template string from the compiled store
-                $.each(filtered, function (index, element) {
+        // If set to not refill and template node(s) exist, then return this
+        if (typeof options.refill === 'boolean' && !options.refill) {
 
-                    // Get the data attribute for the template string if it's not null or has already been removed
-                    var attribute = $(this).attr(DATA_ATTRIBUTE);
-                    if (attribute === null || compiled[attribute] === undefined) {
+            // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
+            // if only the same template(s) exists (perhaps an option could/should be created)
+            filtered = getTemplate($self, template, true);
+            if (filtered.length > 0) {
 
-                        return;
+                // console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
 
-                    }
-
-                    // Set to undefined to mimic deletion of the template
-                    compiled[attribute] = undefined;
-
-                    // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
-
-                });
-
-                if (template !== null) {
-
-                    // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
-
-                }
+                return self;
 
             }
 
-        },
+        }
 
-        // Set the specified template to the content selector
-        setTemplate = function (self, $self, template, data, options) {
+        // Append to the content element by checking the type. Default is 'append'
+        switch (options.type) {
+            case Type.COMPILED:
+            case Type.RAW:
 
-            // Previous implementations
-            /*
-                $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
-                $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
+                // console.log('jQuery-handlebars: Returning raw HTML', template);
 
-                // Get all nodes apart from the Handlebarjs template script elements
-                 var filtered = $self.contents().filter(function () {
+                // Return the compiled HTML
+                return compiled[template](data);
 
-                    return this.nodeType !== Node.COMMENT_NODE && // Not a comment
-                        (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
-                        ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
+            default:
 
-                });
-             */
+                // Create a div element with the template appended to it
+                // This contains a data-* attribute called data-jquery-handlebars for easy association
+                // that it's a Handlebarjs template
+                var $div = $('<div/>')
+                    .attr(DATA_ATTRIBUTE, template)
+                    .append(compiled[template](data));
 
-            // The include parameter will be set to true, when specifically looking for the provided template string
-            var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
+                // Append the div to content element
+                $self.append($div);
 
-            // Remove from the DOM if specified to do so
-            if (options.remove_type !== Remove.NONE) {
+                // console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
+                break;
 
-                // Remove from the DOM
-                filtered.remove();
+        }
 
-                // console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
-
-            }
-
-            // If set to not refill and template node(s) exist, then return this
-            if (typeof options.refill === 'boolean' && !options.refill) {
-
-                // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
-                // if only the same template(s) exists (perhaps an option could/should be created)
-                filtered = getTemplate($self, template, true);
-                if (filtered.length > 0) {
-
-                    // console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
-
-                    return self;
-
-                }
-
-            }
-
-            // Append to the content element by checking the type. Default is 'append'
-            switch (options.type) {
-                case Type.COMPILED:
-                case Type.RAW:
-
-                    // console.log('jQuery-handlebars: Returning raw HTML', template);
-
-                    // Return the compiled HTML
-                    return compiled[template](data);
-
-                default:
-
-                    // Create a div element with the template appended to it
-                    // This contains a data-* attribute called data-jquery-handlebars for easy association
-                    // that it's a Handlebarjs template
-                    var $div = $('<div/>')
-                        .attr(DATA_ATTRIBUTE, template)
-                        .append(compiled[template](data));
-
-                    // Append the div to content element
-                    $self.append($div);
-
-                    // console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
-                    break;
-
-            }
-
-            return self;
-        };
+        return self;
+    };
 
     // Constants
 
