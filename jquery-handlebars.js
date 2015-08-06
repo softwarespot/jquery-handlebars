@@ -86,7 +86,7 @@
             // END: Sanitize the options
 
             // If a 'clear' action is provided, then remove the template from the content element
-            if (/^CLEAR|REMOVE$/i.test(action)) {
+            if (/^CLEAR|EMPTY|REMOVE$/i.test(action)) {
 
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
                 // specified
