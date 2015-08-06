@@ -30,7 +30,7 @@
                 isTemplate = typeof template === 'string' && rIdentifier.test(template);
 
             // Debugging only
-            console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
+            // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
             // These actions don't require any pre-processing
             if (typeof action === 'string') {
@@ -121,7 +121,7 @@
             // The data object literal must contain data
             if (typeof options.validate === 'boolean' && options.validate && $.isEmptyObject(dataOrOptions)) {
 
-                console.log('jQuery-handlebars: Data was not passed to the plugin or is simply an empty plain object');
+                // console.log('jQuery-handlebars: Data was not passed to the plugin or is simply an empty plain object');
                 return this;
 
             }
@@ -136,7 +136,7 @@
                 if (typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: %s has already been compiled', template);
+                    // console.log('jQuery-handlebars: %s has already been compiled', template);
 
                     // Return to continue chaining
                     return setTemplate(this, $this, template, dataOrOptions, options);
@@ -169,7 +169,7 @@
                 if (template !== null && typeof compiled[template] === 'function') {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: %s has already been compiled', template);
+                    // console.log('jQuery-handlebars: %s has already been compiled', template);
 
                     // Return to continue chaining
                     return setTemplate(this, $this, template, dataOrOptions, options);
@@ -181,7 +181,7 @@
             if ($selector === null || template === null || $selector.length === 0) {
 
                 // Debugging only
-                console.log('jQuery-handlebars: Template cannot be found');
+                // console.log('jQuery-handlebars: Template cannot be found');
                 return this;
 
             }
@@ -225,7 +225,7 @@
             if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
 
                 // Debugging only
-                console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
+                // console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
 
                 // Return self to maintain chaining if there is nothing to remove
                 return self;
@@ -237,7 +237,7 @@
             if (filtered.length === 0) {
 
                 // Debugging only
-                console.log('jQuery-handlebars: Unable to find any template(s) for removal [%s]', options.remove_type);
+                // console.log('jQuery-handlebars: Unable to find any template(s) for removal [%s]', options.remove_type);
 
                 // Return self to maintain chaining if there is nothing to remove
                 return self;
@@ -248,7 +248,7 @@
             filtered.remove();
 
             // Debugging only
-            console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
+            // console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
 
             // Remove the template from the compiled store, if the option is true
             if (typeof options.delete_compiled === 'boolean' && options.delete_compiled) {
@@ -268,14 +268,14 @@
                     compiled[attribute] = undefined;
 
                     // Debugging only
-                    console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
+                    // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
 
                 });
 
                 if (template !== null) {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
+                    // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
 
                 }
 
@@ -311,7 +311,7 @@
                 filtered.remove();
 
                 // Debugging only
-                console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
+                // console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
 
             }
 
@@ -324,7 +324,7 @@
                 if (filtered.length > 0) {
 
                     // Debugging only
-                    console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
+                    // console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
 
                     return self;
 
@@ -338,7 +338,7 @@
                 case Type.RAW:
 
                     // Debugging only
-                    console.log('jQuery-handlebars: Returning raw HTML', template);
+                    // console.log('jQuery-handlebars: Returning raw HTML', template);
 
                     // Return the compiled HTML
                     return compiled[template](data);
@@ -356,7 +356,7 @@
                     $self.append($div);
 
                     // Debugging only
-                    console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
+                    // console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
                     break;
 
             }
