@@ -49,9 +49,23 @@ As you can see, if you do this multiple times over the course of your project it
 The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute and append to the content element.
 How easier could it be? It could probably even make you a sandwich if it wanted to =)
 
-## Plugin Options
+## Actions
 
-### Actions
+#### `add`
+
+Add a template to the content element
+
+#### `clear/empty/remove`
+
+Remove a specified template or all templates from the content element
+
+#### `find/get`
+
+Retrieve the HTML for a particular template
+
+#### `compiled/store`
+
+Get all the compiled templates stored by the plugin
 
 The plugin has 4 actions, with a couple of aliases for some of those actions. By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed. Please refer to the examples for each action.
 
@@ -78,7 +92,6 @@ The plugin has 4 actions, with a couple of aliases for some of those actions. By
 ```javascript
     $content.handlebars('compiled');
 ```
-
 
 ### Options
 
@@ -114,21 +127,3 @@ The following options are:
 #### `validate`
 
 Check whether the data passed to the plugin is empty. Accepts true (default) or false.
-
-## Actions
-
-`add`
-
-- Add a template to the content element
-
-`clear/empty/remove`
-
-- Remove a specified template or all templates from the content element
-
-`find/get`
-
-- Retrieve the HTML for a particular template
-
-`compiled/store`
-
-- Get all the compiled templates stored by the plugin
