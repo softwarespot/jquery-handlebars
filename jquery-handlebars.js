@@ -63,7 +63,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (isString(options.type) && /^APPEND|COMPILED|RAW$/i.test(options.type)) {
+            if (isString(options.type) && /^APPEND|COMPILED|HTML|RAW$/i.test(options.type)) {
 
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
@@ -350,6 +350,7 @@
         // Append to the content element by checking the type. Default is 'append'
         switch (options.type) {
             case Type.COMPILED:
+            case Type.HTML:
             case Type.RAW:
 
                 // console.log('jQuery-handlebars: Returning raw HTML', template);
@@ -393,6 +394,7 @@
         Type = {
             APPEND: 'APPEND',
             COMPILED: 'COMPILED',
+            HTML: 'HTML',
             RAW: 'RAW'
         };
 
