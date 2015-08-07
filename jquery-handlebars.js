@@ -138,7 +138,7 @@
             if (isTemplate) {
 
                 // If compiled already then no need to re-compile
-                if ($.isfunction(compiled[template])) {
+                if ($.isFunction(compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
@@ -170,7 +170,7 @@
                 template = $selector.selector !== undefined ? $selector.selector : null;
 
                 // If compiled already then no need to re-compile
-                if ($.isfunction(compiled[template])) {
+                if ($.isFunction(compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
