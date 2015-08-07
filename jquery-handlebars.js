@@ -223,10 +223,9 @@
     };
 
     // Check if a value is a string datatype
-    // Idea from lodash, URL: https://github.com/lodash/
     var isString = function (value) {
 
-        return typeof value === 'string' || ((!!value && typeof value === 'object') && Object.prototype.call(value) === '[object String]');
+        return $.type(value) === 'string';
 
     };
 
