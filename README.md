@@ -2,7 +2,7 @@
 A jQuery plugin for taking the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework
 
 ## Warning
-Documentation is to be finalised by 2015/08/06, though the plugin is fully stable to start using in production environments. The code is also heavily documented, if you feel this README is lacking somewhat.
+Documentation is to be finalised by 2015/08/08, though the plugin is fully stable to start using in production environments. The code is also heavily documented, if you feel this README is lacking somewhat.
 
 ## What is jQuery-handlebars?
 
@@ -114,3 +114,21 @@ The following options are:
 #### `validate`
 
 Check whether the data passed to the plugin is empty. Accepts true (default) or false.
+
+## Actions
+
+`add`
+
+- Add a template to the content element
+
+`clear/empty/remove`
+
+- Remove a specified template or all templates from the content element
+
+`find/get`
+
+- Retrieve the HTML for a particular template
+
+`compiled/store`
+
+- Get all the compiled templates stored by the plugin
