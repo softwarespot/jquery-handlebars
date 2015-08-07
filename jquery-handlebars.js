@@ -6,7 +6,7 @@
  * Licensed under the MIT license
  * Version: 0.1.0-beta
  */
-; (function ($, undefined) {
+; (function($, undefined) {
 
     // Initial idea from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
@@ -14,7 +14,7 @@
     $.fn.extend({
 
         // The parameter data doubles up as options when the action is either 'clear' or 'remove'
-        handlebars: function (action, template, dataOrOptions, options) {
+        handlebars: function(action, template, dataOrOptions, options) {
 
             // jQuery object reference for this. Only select the first selector of the jQuery collection
             var $this = $(this).first(),
@@ -28,12 +28,12 @@
                 rIdentifier = new RegExp('^#' + identifier + '$'),
 
                 // Store whether the template is valid or invalid
-                isTemplate = typeof template === 'string' && rIdentifier.test(template);
+                isTemplate = isString(template) && rIdentifier.test(template);
 
             // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
             // These actions don't require any pre-processing
-            if (typeof action === 'string' && action.length > 0) {
+            if (isString(action) && !isEmptyString(action)) {
 
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
@@ -51,7 +51,7 @@
 
             } else {
 
-                // An invalid action was passed. It must be a string with a length greater than zero
+                // An invalid action was passed. It must be a string with a length greater than zero to be considered valid
                 return this;
 
             }
@@ -63,7 +63,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (typeof options.type === 'string' && /^APPEND|COMPILED|RAW$/i.test(options.type)) {
+            if (isString(options.type) && /^APPEND|COMPILED|RAW$/i.test(options.type)) {
 
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
@@ -76,7 +76,7 @@
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (typeof options.remove_type === 'string' && /^ALL|NONE|SAME$/i.test(options.remove_type)) {
+            if (isString(options.remove_type) && /^ALL|NONE|SAME$/i.test(options.remove_type)) {
 
                 // Set to uppercase
                 options.remove_type = options.remove_type.toUpperCase();
@@ -124,7 +124,7 @@
             // Assume it's an addition i.e. 'add'
 
             // The data object literal must contain data
-            if (typeof options.validate === 'boolean' && options.validate && $.isEmptyObject(dataOrOptions)) {
+            if (isBoolean(options.validate) && options.validate && $.isEmptyObject(dataOrOptions)) {
 
                 // console.log('jQuery-handlebars: Data was not passed to the plugin or is simply an empty plain object');
                 return this;
@@ -138,7 +138,7 @@
             if (isTemplate) {
 
                 // If compiled already then no need to re-compile
-                if (typeof compiled[template] === 'function') {
+                if ($.isfunction(compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
@@ -160,17 +160,17 @@
                 }
 
                 // If a valid jQuery selector object
-            } else if (template instanceof $ && typeof template.length === 'number' && template.length > 0) {
+            } else if (template instanceof $ && $.isNumeric(template.length) && template.length > 0) {
 
                 // Get the first selection only
                 $selector = template.first();
 
                 // Get the selector name for using with the compiled object literal
                 // If the selector property doesn't exist, then this will be set to null
-                template = typeof $selector.selector !== 'undefined' ? $selector.selector : null;
+                template = $selector.selector !== undefined ? $selector.selector : null;
 
                 // If compiled already then no need to re-compile
-                if (template !== null && typeof compiled[template] === 'function') {
+                if ($.isfunction(compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
@@ -206,8 +206,29 @@
     var compiled = {};
 
     // Methods (Private)
-
     // Note: Variable are called 'self' to avoid conflict with 'this'
+
+    // Check if value is a boolean datatype
+    var isBoolean = function (value) {
+
+        return $.type(value) === 'boolean';
+
+    };
+
+    // Check if a value is a string datatype
+    var isEmptyString = function (value) {
+
+        return isString(value) && value.length === 0;
+
+    };
+
+    // Check if a value is a string datatype
+    // Idea from lodash, URL: https://github.com/lodash/
+    var isString = function (value) {
+
+        return typeof value === 'string' || ((!!value && typeof value === 'object') && Object.prototype.call(value) === '[object String]');
+
+    };
 
     // Get the template in the content selector
     // include refers to whether to include the template in the selection
@@ -250,10 +271,10 @@
         // console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
 
         // Remove the template from the compiled store, if the option is true
-        if (typeof options.delete_compiled === 'boolean' && options.delete_compiled) {
+        if (isBoolean(options.delete_compiled) && options.delete_compiled) {
 
             // Iterate through the filtered collection and remove from the template string from the compiled store
-            $.each(filtered, function (index, element) {
+            $.each(filtered, function(index, element) {
 
                 // Get the data attribute for the template string if it's not null or has already been removed
                 var attribute = $(this).attr(DATA_ATTRIBUTE);
@@ -289,7 +310,7 @@
             $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
 
             // Get all nodes apart from the Handlebarjs template script elements
-             var filtered = $self.contents().filter(function () {
+             var filtered = $self.contents().filter(function() {
 
                 return this.nodeType !== Node.COMMENT_NODE && // Not a comment
                     (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
@@ -312,7 +333,7 @@
         }
 
         // If set to not refill and template node(s) exist, then return this
-        if (typeof options.refill === 'boolean' && !options.refill) {
+        if (isBoolean(options.refill) && !options.refill) {
 
             // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
             // if only the same template(s) exists (perhaps an option could/should be created)
