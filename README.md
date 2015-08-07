@@ -51,6 +51,8 @@ How easier could it be? It could probably even make you a sandwich if it wanted 
 
 ## Actions
 
+The plugin has 4 actions, with a couple of aliases for some of those actions. By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed. Please refer to the examples for each action.
+
 #### `add`
 
 Add a template to the content element
@@ -67,7 +69,7 @@ Retrieve the HTML for a particular template
 
 Get all the compiled templates stored by the plugin
 
-The plugin has 4 actions, with a couple of aliases for some of those actions. By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed. Please refer to the examples for each action.
+## Demo of actions
 
 - add (default): Add a template to a content element, by either passing a template string id or a jQuery selector
 ```javascript
