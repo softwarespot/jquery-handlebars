@@ -350,13 +350,19 @@
         // Append to the content element by checking the type. Default is 'append'
         switch (options.type) {
             case Type.COMPILED:
-            case Type.HTML:
             case Type.RAW:
 
                 // console.log('jQuery-handlebars: Returning raw HTML', template);
 
                 // Return the compiled HTML
-                return compiled[template](data);
+                return $(compiled[template](data));
+
+            case Type.HTML:
+
+                // console.log('jQuery-handlebars: Returning as HTML', template);
+
+                // Return as HTML
+                return $(compiled[template](data));
 
             default:
 
