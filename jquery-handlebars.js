@@ -273,29 +273,27 @@
         // Remove the template from the compiled store, if the option is true
         if (isBoolean(options.delete_compiled) && options.delete_compiled) {
 
-            // Iterate through the filtered collection and remove from the template string from the compiled store
+            // Iterate through the filtered collection and remove the template string from the compiled store
             $.each(filtered, function(index, element) {
 
                 // Get the data attribute for the template string if it's not null or has already been removed
                 var attribute = $(this).attr(DATA_ATTRIBUTE);
-                if (attribute === null || compiled[attribute] === undefined) {
+                if (attribute !== null && compiled[attribute] !== undefined) {
 
-                    return;
+                    // Set to undefined to mimic deletion of the template
+                    compiled[attribute] = undefined;
+
+                    // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
 
                 }
 
-                // Set to undefined to mimic deletion of the template
-                compiled[attribute] = undefined;
-
-                // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
-
             });
 
-            if (template !== null) {
+            // if (template !== null) {
 
                 // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
 
-            }
+            // }
 
         }
 
