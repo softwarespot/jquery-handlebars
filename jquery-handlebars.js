@@ -9,7 +9,7 @@
  */
 ; (function($, undefined) {
 
-    // Initial idea from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
+    // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Plugin Logic
     $.fn.extend({
