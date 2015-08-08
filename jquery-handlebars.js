@@ -1,4 +1,5 @@
-/* global Handlebars */
+/* global jQuery, Handlebars */
+
 /*
  * jQuery-handlebars
  * https://github.com/softwarespot/jquery-handlebars
