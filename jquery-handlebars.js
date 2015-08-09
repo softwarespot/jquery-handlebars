@@ -66,13 +66,16 @@
                     // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (/^COMPILED|STORE$/i.test(action)) {
 
-                    return compiled;
+                    // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
+                    // end user to manipulate the internal store. Not a good idea!
+                    return $.extend({}, compiled);
 
                 }
 
             } else {
 
-                // An invalid action was passed. It must be a string with a length greater than zero to be considered valid
+                // An invalid action was passed. It must be a string with a length greater than zero to be
+                // considered valid
                 return this;
 
             }
