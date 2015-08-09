@@ -296,7 +296,7 @@
                 var attribute = $(this).attr(DATA_ATTRIBUTE);
                 if (attribute !== null && compiled[attribute] !== undefined) {
 
-                    // Set to undefined to mimic deletion of the template
+                    // Set to undefined to mimic deletion of the template. Using delete is not really required
                     compiled[attribute] = undefined;
 
                     // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
