@@ -11,6 +11,26 @@
 
     // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
+    // Constants
+
+    // The data-* attribute name
+    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
+
+        // Removal constants. Who enjoys magic values?
+        Remove = {
+            ALL: 'ALL',
+            NONE: 'NONE',
+            SAME: 'SAME'
+        },
+
+        // Type constants. Who enjoys magic values?
+        Type = {
+            APPEND: 'APPEND',
+            COMPILED: 'COMPILED',
+            HTML: 'HTML',
+            RAW: 'RAW'
+        };
+
     // Plugin Logic
     $.fn.extend({
 
@@ -382,26 +402,6 @@
 
         return self;
     };
-
-    // Constants
-
-    // The data-* attribute name
-    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
-
-        // Removal constants. Who enjoys magic values?
-        Remove = {
-            ALL: 'ALL',
-            NONE: 'NONE',
-            SAME: 'SAME'
-        },
-
-        // Type constants. Who enjoys magic values?
-        Type = {
-            APPEND: 'APPEND',
-            COMPILED: 'COMPILED',
-            HTML: 'HTML',
-            RAW: 'RAW'
-        };
 
     // Defaults
 
