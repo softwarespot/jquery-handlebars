@@ -54,7 +54,7 @@
             // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
             // These actions don't require any pre-processing
-            if (isString(action) && !isEmptyString(action)) {
+            if (isString(action)) {
 
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
@@ -239,17 +239,10 @@
 
     };
 
-    // Check if a value is a string datatype
-    var isEmptyString = function (value) {
-
-        return isString(value) && value.length === 0;
-
-    };
-
-    // Check if a value is a string datatype
+    // Check if a value is a string datatype with a length greater than zero
     var isString = function (value) {
 
-        return $.type(value) === 'string';
+        return $.type(value) === 'string' && value.length > 0;
 
     };
 
