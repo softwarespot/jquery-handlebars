@@ -1,5 +1,5 @@
 {
-  "name": "softwarespot/jquery-handlebars",
+  "name": "jquery-handlebars",
   "version": "1.0.0",
   "homepage": "https://github.com/softwarespot/jquery-handlebars/",
   "description": "jQuery plugin for easily create Handlebars templates",
