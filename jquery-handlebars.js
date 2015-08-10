@@ -32,6 +32,7 @@
         };
 
     // Plugin Logic
+
     $.fn.extend({
 
         // The parameter data doubles up as options when the action is either 'clear' or 'remove'
@@ -239,10 +240,10 @@
 
     };
 
-    // Check if a value is a string datatype with a length greater than zero
+    // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
     var isString = function (value) {
 
-        return $.type(value) === 'string' && value.length > 0;
+        return $.type(value) === 'string' && value.trim().length > 0;
 
     };
 
