@@ -294,8 +294,9 @@
             $.each(filtered, function(index, element) {
 
                 // Get the data attribute for the template string if it's not null or has already been removed
-                var attribute = $(this).attr(DATA_ATTRIBUTE);
-                if (attribute !== null && compiled[attribute] !== undefined) {
+                // var attribute = $(this).attr(DATA_ATTRIBUTE);
+                var attribute = this.getAttribute(DATA_ATTRIBUTE); // Returns null or '' on error
+                if (!attribute && compiled[attribute] !== undefined) {
 
                     // Set to undefined to mimic deletion of the template. Using delete is not really required
                     compiled[attribute] = undefined;
