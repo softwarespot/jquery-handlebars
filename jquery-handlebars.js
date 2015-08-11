@@ -231,7 +231,7 @@
     var compiled = {};
 
     // Methods (Private)
-    // Note: Variable are called 'self' to avoid conflict with 'this'
+    // Note: Variables are called 'self' to avoid conflict with 'this'
 
     // Check if value is a boolean datatype
     var isBoolean = function (value) {
