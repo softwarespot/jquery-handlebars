@@ -51,23 +51,26 @@ How easier could it be? It could probably even make you a sandwich if it wanted 
 
 ## Actions
 
-The plugin has 4 actions, with a couple of aliases for some of those actions. By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed. Please refer to the examples for each action.
+The plugin has 4 actions that are passed as the first parameter. For simplicity and semantics, the actions
+have multiple aliases.
+
+By default the plugin has 4 parameters, though these parameters have different roles depending on the action passed to the plugin. Please refer to the examples below as to what each parameter represents depending on the action. This is similar to jQuery in which functions appeared to be overloaded.
 
 #### `add`
 
-Add a template to the content element
+Add a template to the specified content element using the template string parameter.
 
 #### `clear/empty/remove`
 
-Remove a specified template or all templates from the content element
+Remove a specified template or all template(s) from the content element.
 
 #### `find/get`
 
-Retrieve the HTML for a particular template
+Retrieve the HTML for a particular template.
 
 #### `compiled/store`
 
-Get all the compiled templates stored by the plugin
+Get all the compiled templates stored by the plugin.
 
 ## Demo of actions
 
@@ -97,34 +100,34 @@ Get all the compiled templates stored by the plugin
 
 ### Options
 
-Here are a few details on the plugin options available with jQuery-handlebars.
+The following options can either be passed via the options parameter or by overriding the defaults using `$.fn.handlebars.options.[PROPERTY]`, in which the property is substituted for a particular option.
 
 #### `delete_compiled`
 
-Delete the template from the compiled store on removal. Accepts true (default) or false.
+Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
 
 #### `refill`
 
-Allow the option of adding multiple template(s) inside an element. Accepts true (default) or false.
+Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false.
 
 #### `remove_type`
 
-Remove pre-existing compiled templates from the content element.
+Remove pre-existing compiled templates from the specified content element when adding/appending a template.
 
 The following options are:
-- 'all': Remove all valid template(s) from the content element
 - 'none' (default): Don't remove any template(s)
+- 'all': Remove all valid template(s) from the content element
 - 'same': Remove only those template(s) that match the provided template string
 
 #### `type`
 
-How to output the compiled template to the content element.
+How to output the compiled template to the specified content element.
 
 The following options are:
 
-- 'append' (default): Append to the content element
-- 'compiled': Return a compiled template as HTML
-- 'raw': Return a compiled template as HTML
+- 'append' (default): Append to the specified content element
+- 'html': Return a compiled template as HTML
+- 'compiled'/'raw': Return a compiled template as HTML
 
 #### `validate`
 

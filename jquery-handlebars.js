@@ -404,26 +404,26 @@
     // Defaults
 
     $.fn.handlebars.options = {
-        // Delete the template from the compiled store on removal
+        // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
         delete_compiled: true,
 
-        // Allow the option of adding multiple template(s) inside an element
+        // Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false
         refill: true,
 
-        // Remove pre-existing compiled templates from the content element
+        // Remove pre-existing compiled templates from the specified content element when adding/appending a template
         //
         // The following options are:
-        //      'all': Remove all valid template(s) from the content element
         //      'none' (default): Don't remove any template(s)
+        //      'all': Remove all valid template(s) from the content element
         //      'same': Remove only those template(s) that match the provided template string
         remove_type: Remove.NONE,
 
-        // How to output the compiled template to the content element
+        // How to output the compiled template to the specified content element
         //
         // The following options are:
         //      'append' (default): Append to the content element
-        //      'compiled': Return a compiled template as HTML
-        //      'raw': Return a compiled template as HTML
+        //      'html': Return a compiled template as HTML
+        //      'compiled'/'raw': Return a compiled template as HTML
         type: Type.APPEND,
 
         // Check whether the data passed to the plugin is empty
