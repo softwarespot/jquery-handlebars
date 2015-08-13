@@ -5,7 +5,7 @@
  * https://github.com/softwarespot/jquery-handlebars
  * Author: softwarespot
  * Licensed under the MIT license
- * Version: 0.1.0-beta
+ * Version: 1.0.0
  */
 ; (function($, undefined) {
 
