@@ -2,10 +2,6 @@
 
 A jQuery plugin for alleviating the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework.
 
-## Warning
-Documentation is to be finalised (hopefully) by the 2015/08/15, though honestly the plugin is fully stable to start using in production environments.
-**NOTE:** The code is heavily documented, therefore if you feel this README is lacking content then please refer to that.
-
 ## What exactly is jQuery-handlebars?
 
 How many times have you found yourself writing the following code over and over again? Quite laborious isn't it?
