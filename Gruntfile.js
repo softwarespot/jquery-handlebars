@@ -34,7 +34,7 @@ module.exports = function(grunt) {
             }
         },
 
-        // Uglify aka minify the main sfile
+        // Uglify aka minify the main file
         uglify: {
             js: {
                 files: {
