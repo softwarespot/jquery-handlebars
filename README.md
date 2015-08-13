@@ -70,7 +70,7 @@ Remove a specified template or all template(s) from the content element.
 
 #### `find/get`
 
-Retrieve the HTML for a particular template in the content element. If no template is provided, then all templates will be found.
+Retrieve the HTML for a particular template in the content element. If no template string is provided, then all templates will be found.
 
 #### `compiled/store`
 
