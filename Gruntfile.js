@@ -1,7 +1,7 @@
 
 module.exports = function(grunt) {
 
-    // load all grunt tasks
+    // Load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     grunt.initConfig({
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ['jquery-handlebars.js'],
-                tasks: ['uglify','jshint'],
+                tasks: ['jshint', 'uglify'],
                 options: {
                     livereload: true,
                 },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
             }
         },
 
-        // Uglify aka minify the file
+        // Uglify aka minify the main sfile
         uglify: {
             js: {
                 files: {
@@ -56,9 +56,9 @@ module.exports = function(grunt) {
 
     });
 
-    // Register the default task to watch for any changes to jquery-handlebars.js
+    // Register the default task to watch for any changes to the main files
     grunt.registerTask('default', ['watch']);
 
     // 'grunt jshint' to check the syntax
-    // 'grunt uglify to uglify the jquery-handlebars.js file
+    // 'grunt uglify' to uglify the main file
 };
