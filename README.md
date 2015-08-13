@@ -33,19 +33,24 @@ As you can see, if you do this multiple times over the course of your project it
 ## jQuery-handlebars is as simple as 1-2-3, no really, it's that simple.
 
 ```javascript
-    // Cache the jQuery object of where to append the template
-    var $content = $('#content');
+    <!--Use the minified version for better performance-->
+    <script src="jquery-handlebars.min.js"></script>
 
-    // Data to pass to the template
-    var context = {demo: 'This is a simple demo'};
+    <script>
+        // Cache the jQuery object of where to append the template
+        var $content = $('#content');
 
-    // Append the template to the content element
-    //  'add': action
-    //  '#my-template': template id string or jQuery selector object
-    //  context: context data to pass to the template
-    $content.handlebars('add', '#my-template', context);
+        // Data to pass to the template
+        var context = {demo: 'This is a simple demo'};
 
-    // It's that easy!
+        // Append the template to the content element
+        //  'add': action
+        //  '#my-template': template id string or jQuery selector object
+        //  context: context data to pass to the template
+        $content.handlebars('add', '#my-template', context);
+
+        // It's that easy!
+    </script>
 ```
 The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute (`data-jquery-handlebars`) and append to the content element.
 How easier could it be? It could probably even make you a sandwich if it wanted to =)
@@ -148,23 +153,27 @@ Check whether the data passed to the plugin is empty. Accepts true (default) or 
 
 ## Contribution
 
-To contribute to the project, you will first need to install [grunt](gruntjs.com) globally on your system and then run the following command in jQuery-handlebars directory. This installs all the relevant modules related to hinting and uglification.
+To contribute to the project, you will first need to install [grunt](gruntjs.com) globally on your system and then from there run the following command in the jQuery-handlebars directory. This installs all the relevant modules related to hinting and uglification which are used to ensure the plugin meets sufficient standards.
 
+Once complete, code away and don't forget to submit a PR with all your wonderful changes =)
+
+##### Install all npm modules locally
 ```bash
 cd jquery-handlebars
 npm install
 ```
 
+##### Watching for changes to the main file
 Call the following command to start 'watching' for any changes to the main JS file i.e. jquery-handlebars.js.
 ```bash
 grunt
 ```
-
+##### JSHint the main file (automatically done whilst watching)
 Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
 ```bash
 grunt jshint
 ```
-
+##### Uglify the main file (automatically done whilst watching)
 Call the following command to invoke Uglify, which will uglify aka minify the main JS file i.e. jquery-handlbars.js.
 ```bash
 grunt uglify
