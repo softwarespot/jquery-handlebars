@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
-        // watch for changes and trigger compass, jshint, uglify and livereload
+        // Watch for changes to the main file to trigger uglification and hinting
         watch: {
             js: {
                 files: ['jquery-handlebars.js'],
@@ -17,25 +17,7 @@ module.exports = function(grunt) {
             }
         },
 
-        // uglify to concat & minify
-        uglify: {
-            js: {
-                files: {
-                    'jquery-handlebars.min.js': 'jquery-handlebars.js',
-                },
-                options: {
-                    compress: {
-                        comparisons: true,
-                        conditionals: true,
-                        dead_code: true,
-                        drop_console: true,
-                        unsafe: true,
-                        unused: true
-                    }
-                }
-            }
-        },
-
+        // Check the code meets the following standards
         jshint: {
             all: ['jquery-handlebars.js'],
             options: {
@@ -50,10 +32,33 @@ module.exports = function(grunt) {
                   '$': true
                 }
             }
-        }
+        },
+
+        // Uglify aka minify the file
+        uglify: {
+            js: {
+                files: {
+                    'jquery-handlebars.min.js': 'jquery-handlebars.js',
+                },
+                options: {
+                    // See the uglify documentation for more details
+                    compress: {
+                        comparisons: true,
+                        conditionals: true,
+                        dead_code: true,
+                        drop_console: true,
+                        unsafe: true,
+                        unused: true
+                    }
+                }
+            }
+        },
 
     });
 
-    // register task
+    // Register the default task to watch for any changes to jquery-handlebars.js
     grunt.registerTask('default', ['watch']);
+
+    // 'grunt jshint' to check the syntax
+    // 'grunt uglify to uglify the jquery-handlebars.js file
 };
