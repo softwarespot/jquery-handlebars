@@ -1,14 +1,13 @@
 # jQuery-handlebars - v0.1.0-beta
-A jQuery plugin for taking the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework
+A jQuery plugin for alleviating the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework.
 
 ## Warning
-Documentation is to be finalised hopefully by the 2015/08/15, though honestly the plugin is fully stable to start using in production environments.
+Documentation is to be finalised (hopefully) by the 2015/08/15, though honestly the plugin is fully stable to start using in production environments.
+**NOTE:** The code is heavily documented, therefore if you feel this README is lacking content then please refer to that.
 
-**NOTE:** The code is heavily documented, if you feel this README is lacking somewhat.
+## What exactly is jQuery-handlebars?
 
-## What is jQuery-handlebars?
-
-How many times have you found yourself writing the following code over and over again in your project? Quite laborious isn't it?
+How many times have you found yourself writing the following code over and over again? Quite laborious isn't it?
 Surely using a template framework is meant to make our "developing" lives a little easier?
 ```javascript
 
@@ -28,7 +27,7 @@ Surely using a template framework is meant to make our "developing" lives a litt
     $content.append(template(context));
 
 ```
-As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there =) ). Then there is the problem of injecting a template into an element with the ability to remove or replace it at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin that allowed me to specify a template, append to that content and keep record of those that have been compiled before? With the added bonus of being able to remove a single template or all templates. Well you're in luck...
+As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there =) ). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
 
 ## jQuery-handlebars is as simple as 1-2-3, no really, it's that simple.
 
@@ -47,11 +46,14 @@ As you can see, if you do this multiple times over the course of your project it
 
     // It's that easy!
 ```
-
 The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute (`data-jquery-handlebars`) and append to the content element.
 How easier could it be? It could probably even make you a sandwich if it wanted to =)
 
-## Actions
+##Documentation
+
+The following outlines in detail how to use following plugin, with the addition of thoroughly commented examples.
+
+### Actions
 
 The plugin has 4 actions that are passed as the first parameter. For simplicity and semantics, the actions
 have multiple aliases.
@@ -102,11 +104,19 @@ Get all the compiled templates stored by the plugin.
 
 ### Options
 
-The following options can either be passed via the options parameter or by overriding the defaults using `$.fn.handlebars.options.[PROPERTY]`, in which the property is substituted for a particular option.
+The following options below can either be passed via the `options` parameter or by overriding the defaults using `$.fn.handlebars.options.[PROPERTY]`, in which the property is substituted for a particular option.
+
+#### Example
+
+An example of overwriting the default options of the plugin.
+
+```javascript
+    $.fn.handlebars.delete_compiled = false;
+```
 
 #### `delete_compiled`
 
-Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
+Delete the template(s) from the compiled store when a `clear` action is specified. Accepts true (default) or false.
 
 #### `refill`
 
@@ -114,16 +124,16 @@ Allow the addition of multiple template(s) inside a content element. Accepts tru
 
 #### `remove_type`
 
-Remove pre-existing compiled templates from the specified content element when adding/appending a template.
+Remove pre-existing (compiled) templates from the specified content element when adding/appending a template.
 
 The following options are:
-- 'none' (default): Don't remove any template(s)
+- 'none' (default): Don't remove any template(s) from the content element
 - 'all': Remove all valid template(s) from the content element
-- 'same': Remove only those template(s) that match the provided template string
+- 'same': Remove only those template(s) that match the provided template string from the content element
 
 #### `type`
 
-How to output the compiled template to the specified content element.
+How to output the compiled template to the specified content element?
 
 The following options are:
 
@@ -134,3 +144,27 @@ The following options are:
 #### `validate`
 
 Check whether the data passed to the plugin is empty. Accepts true (default) or false.
+
+## Contribution
+
+To contribute to the project, you will first need to install [grunt](gruntjs.com) globally on your system and then run the following command in jQuery-handlebars directory. This installs all the relevant modules related to hinting and uglification.
+
+```bash
+cd jquery-handlebars
+npm install
+```
+
+Call the following command to start 'watching' for any changes to the main JS file i.e. jquery-handlebars.js.
+```bash
+grunt
+```
+
+Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
+```bash
+grunt jshint
+```
+
+Call the following command to invoke Uglify, which will uglify aka minify the main JS file i.e. jquery-handlbars.js.
+```bash
+grunt uglify
+```
