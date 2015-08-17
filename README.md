@@ -110,7 +110,7 @@ The following options below can either be passed via the `options` parameter or 
 
 #### Example
 
-An example of overwriting the default options of the plugin.
+An example of overwriting the default options of the plugin using `$.fn.handlebars`.
 
 ```javascript
     $.fn.handlebars.delete_compiled = false;
@@ -155,8 +155,8 @@ Once complete, code away and don't forget to submit a PR with all your wonderful
 
 ##### Install all npm modules locally
 ```bash
-cd jquery-handlebars
-npm install
+    cd jquery-handlebars
+    npm install
 ```
 
 ##### Watching for changes to the main file
@@ -167,10 +167,10 @@ grunt
 ##### JSHint the main file (automatically done whilst watching)
 Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
 ```bash
-grunt jshint
+    grunt jshint
 ```
 ##### Uglify the main file (automatically done whilst watching)
 Call the following command to invoke Uglify, which will uglify aka minify the main JS file i.e. jquery-handlbars.js.
 ```bash
-grunt uglify
+    grunt uglify
 ```
