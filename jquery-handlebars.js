@@ -11,26 +11,6 @@
 
     // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
-    // Constants
-
-    // The data-* attribute name
-    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
-
-        // Removal constants. Who enjoys magic values?
-        Remove = {
-            ALL: 'ALL',
-            NONE: 'NONE',
-            SAME: 'SAME'
-        },
-
-        // Type constants. Who enjoys magic values?
-        Type = {
-            APPEND: 'APPEND',
-            COMPILED: 'COMPILED',
-            HTML: 'HTML',
-            RAW: 'RAW'
-        };
-
     // Plugin Logic
 
     $.fn.extend({
@@ -47,10 +27,10 @@
                 identifier = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+',
 
                 // Create a regular expression object to test valid id fragments
-                rIdentifier = new RegExp('^#' + identifier + '$'),
+                reIdentifier = new RegExp('^#' + identifier + '$'),
 
                 // Store whether the template is valid or invalid
-                isTemplate = isString(template) && rIdentifier.test(template);
+                isTemplate = isString(template) && reIdentifier.test(template);
 
             // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
 
@@ -64,11 +44,11 @@
                     // The include parameter will be true, if the template is a string and valid anchor
                     return getTemplate($this, template, isTemplate);
 
-                    // If a 'compiled' action is provided, then return the compiled object literal
+                // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (/^COMPILED|STORE$/i.test(action)) {
 
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
-                    // end user to manipulate the internal store. Not a good idea!
+                    // end user to manipulate the internal store. Not a good idea if you ask me!
                     return $.extend({}, compiled);
 
                 }
@@ -225,6 +205,26 @@
 
     });
 
+    // Constants
+
+    // The data-* attribute name
+    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
+
+        // Removal constants. Who enjoys magic values?
+        Remove = {
+            ALL: 'ALL',
+            NONE: 'NONE',
+            SAME: 'SAME'
+        },
+
+        // Type constants. Who enjoys magic values?
+        Type = {
+            APPEND: 'APPEND',
+            COMPILED: 'COMPILED',
+            HTML: 'HTML',
+            RAW: 'RAW'
+        };
+
     // Fields (Private)
 
     // Store the compiled template(s) using the template string as the identifier i.e. key
@@ -320,7 +320,7 @@
     // Set the specified template to the content selector
     var setTemplate = function (self, $self, template, data, options) {
 
-        // Previous implementations
+        // Previous implementation for removing nodes that weren't 'handlebar' templates
         /*
             $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
             $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
