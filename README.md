@@ -1,4 +1,4 @@
-# jQuery-handlebars - v1.0.0
+# jQuery-handlebars - v1.0.2
 
 A jQuery plugin for alleviating the strain out of using the wonderful [Handlebars](http://handlebarsjs.com/) template framework.
 
