@@ -5,7 +5,7 @@
  * https://github.com/softwarespot/jquery-handlebars
  * Author: softwarespot
  * Licensed under the MIT license
- * Version: 1.0.0
+ * Version: 1.0.2
  */
 ; (function ($, undefined) {
 
@@ -345,14 +345,14 @@
 
                 // console.log('jQuery-handlebars: Returning raw HTML', template);
 
-                // Return the compiled HTML
-                return $(compiled[template](data));
+                // Return the compiled template
+                return compiled[template](data);
 
             case Type.HTML:
 
                 // console.log('jQuery-handlebars: Returning as HTML', template);
 
-                // Return as HTML
+                // Return as HTML data
                 return $(compiled[template](data));
 
             default:
