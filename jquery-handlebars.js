@@ -282,7 +282,7 @@
 
         }
 
-        // Remove from the DOM
+        // Remove filtered nodes from the DOM
         filtered.remove();
 
         // console.log('jQuery-handlebars: Removing template(s) [%s]', options.remove_type);
@@ -341,7 +341,7 @@
         // Remove from the DOM if specified to do so
         if (options.remove_type !== Remove.NONE) {
 
-            // Remove from the DOM
+            // Remove filtered nodes from the DOM
             filtered.remove();
 
             // console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
