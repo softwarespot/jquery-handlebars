@@ -307,11 +307,7 @@
 
             });
 
-            // if (template !== null) {
-
-                // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
-
-            // }
+            // console.log('jQuery-handlebars: Removed the template from the compiled store [%s]', template);
 
         }
 
@@ -319,21 +315,6 @@
 
     // Set the specified template to the content selector
     var setTemplate = function (self, $self, template, data, options) {
-
-        // Previous implementation for removing nodes that weren't 'handlebar' templates
-        /*
-            $self.children('*').not('script[type="text/x-handlebars-template"]').empty();
-            $self.children('*:not(script[type="text/x-handlebars-template"])').empty();
-
-            // Get all nodes apart from the Handlebarjs template script elements
-             var filtered = $self.contents().filter(function() {
-
-                return this.nodeType !== Node.COMMENT_NODE && // Not a comment
-                    (this.nodeName !== 'SCRIPT' && this.type !== 'text/x-handlebars-template') // Not a handlebars template
-                    ; // /[^\t\n\r ]/.test(this.textContent); // Not whitespace
-
-            });
-         */
 
         // The include parameter will be set to true, when specifically looking for the provided template string
         var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
