@@ -316,25 +316,18 @@
     // Set the specified template to the content selector
     var setTemplate = function (self, $self, template, data, options) {
 
-        // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
+        // Override deleting from the compiled stored before passing to removeTemplate
+        options.delete_compiled = false;
 
-        // Remove from the DOM if specified to do so
-        if (options.remove_type !== Remove.NONE) {
-
-            // Remove filtered nodes from the DOM
-            filtered.remove();
-
-            // console.log('jQuery-handlebars: Removed previous template(s) [%s]', options.remove_type);
-
-        }
+        // Remove template(s)
+        removeTemplate(self, $self, template, options);
 
         // If set to not refill and template node(s) exist, then return this
         if (isBoolean(options.refill) && !options.refill) {
 
             // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
             // if only the same template(s) exists (perhaps an option could/should be created)
-            filtered = getTemplate($self, template, true);
+            var filtered = getTemplate($self, template, true);
             if (filtered.length > 0) {
 
                 // console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
