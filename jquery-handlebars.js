@@ -15,7 +15,7 @@
 
     $.fn.extend({
 
-        // The parameter data doubles up as options when the action is either 'clear' or 'remove'
+        // The parameter data doubles up as options when the action is either 'clear' or 'remove' i.e. options param will be ignored
         handlebars: function(action, template, dataOrOptions, options) {
 
             // jQuery object reference for this. Only select the first selector of the jQuery collection
@@ -30,9 +30,9 @@
                 reIdentifier = new RegExp('^#' + identifier + '$'),
 
                 // Store whether the template is valid or invalid
-                isTemplate = isString(template) && reIdentifier.test(template);
+                isTemplateString = isString(template) && reIdentifier.test(template);
 
-            // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplate);
+            // console.log('jQuery-handlebars: Is a template? [%s, %s]', template, isTemplateString);
 
             // These actions don't require any pre-processing
             if (isString(action)) {
@@ -42,7 +42,7 @@
                 if (/^FIND|GET$/i.test(action)) {
 
                     // The include parameter will be true, if the template is a string and valid anchor
-                    return getTemplate($this, template, isTemplate);
+                    return getTemplate($this, template, isTemplateString);
 
                 // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (/^COMPILED|STORE$/i.test(action)) {
@@ -104,7 +104,7 @@
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (isTemplate && options.remove_type !== Remove.SAME) {
+                if (isTemplateString && options.remove_type !== Remove.SAME) {
 
                     options.remove_type = Remove.SAME;
 
@@ -116,7 +116,7 @@
                 }
 
                 // If the template is not defined, then set as null before removing
-                if (!isTemplate) {
+                if (!isTemplateString) {
 
                     template = null;
 
@@ -140,7 +140,7 @@
             var $selector = null;
 
             // If a valid string template is passed then check if it's compiled or get the jQuery object instead
-            if (isTemplate) {
+            if (isTemplateString) {
 
                 // If compiled already then no need to re-compile
                 if ($.isFunction(compiled[template])) {
