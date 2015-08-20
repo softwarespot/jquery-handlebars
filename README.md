@@ -141,7 +141,7 @@ The following options are:
 
 - 'append' (default): Append to the specified content element
 - 'html': Return a compiled template as HTML
-- 'compiled'/'raw': Return a compiled template as HTML
+- 'compiled'/'raw': Return a compiled template
 
 #### `validate`
 

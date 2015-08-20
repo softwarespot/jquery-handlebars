@@ -397,7 +397,7 @@
         // The following options are:
         //      'append' (default): Append to the content element
         //      'html': Return a compiled template as HTML
-        //      'compiled'/'raw': Return a compiled template as HTML
+        //      'compiled'/'raw': Return a compiled template
         type: Type.APPEND,
 
         // Check whether the data passed to the plugin is empty
