@@ -207,7 +207,7 @@
 
     // Constants
 
-    // The data-* attribute name
+    // The data-* attribute to distinguish a jQuery-handlebars template
     var DATA_ATTRIBUTE = 'data-jquery-handlebars',
 
         // Removal constants. Who enjoys magic values?
