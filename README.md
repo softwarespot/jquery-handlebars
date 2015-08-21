@@ -51,7 +51,16 @@ As you can see, if you do this multiple times over the course of your project it
 The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute (`data-jquery-handlebars`) and append to the content element.
 How easier could it be? It could probably even make you a sandwich if it wanted to =)
 
-##Documentation
+## How to install
+
+If you use bower, then just copy and paste the following command to the shell window. { **Note:** jQuery-handlebars was already taken =( }
+```shell
+	bower install jquery-handlarbars2
+```
+
+Otherwise just include `jquery-handlebars.min.js` somewhere in your document and preferable after jQuery (since it relies on jQuery).
+
+## Documentation
 
 The following outlines in detail how to use following plugin, with the addition of thoroughly commented examples.
 
@@ -166,7 +175,7 @@ Once complete, code away and don't forget to submit a PR with all your wonderful
 ##### Watching for changes to the main file
 Call the following command to start 'watching' for any changes to the main JS file i.e. jquery-handlebars.js.
 ```shell
-grunt
+	grunt
 ```
 ##### JSHint the main file (automatically done whilst watching)
 Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
