@@ -122,7 +122,7 @@ Delete the template(s) from the compiled store when a `clear` action is specifie
 
 #### `store_compiled`
 
-Store a compiled template. This improves efficiency if using the same template continuously. Accepts true (default) or false
+Store a compiled template. This improves efficiency if using the same template continuously. Accepts true (default) or false.
 
 #### `refill`
 
