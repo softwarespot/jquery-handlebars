@@ -338,6 +338,19 @@
 
         }
 
+        // Store the parsed template with data
+        var parsedTemplate = compiled[template](data);
+
+        // Remove the compiled template from the store if specified
+        if (isBoolean(options.store_compiled) && !options.store_compiled) {
+
+            // Set to undefined to mimic deletion of the template. Using delete is not really required
+            compiled[template] = undefined;
+
+            // console.log('jQuery-handlebars: Not stored in compiled storage [%s]', options.store_compiled);
+
+        }
+
         // Append to the content element by checking the type. Default is 'append'
         switch (options.type) {
             case Type.COMPILED:
@@ -346,14 +359,14 @@
                 // console.log('jQuery-handlebars: Returning raw HTML', template);
 
                 // Return the compiled template
-                return compiled[template](data);
+                return parsedTemplate;
 
             case Type.HTML:
 
                 // console.log('jQuery-handlebars: Returning as HTML', template);
 
                 // Return as HTML data
-                return $(compiled[template](data));
+                return $(parsedTemplate);
 
             default:
 
@@ -362,7 +375,7 @@
                 // that it's a Handlebarjs template
                 var $div = $('<div/>')
                     .attr(DATA_ATTRIBUTE, template)
-                    .append(compiled[template](data));
+                    .append(parsedTemplate);
 
                 // Append the div to content element
                 $self.append($div);
@@ -380,6 +393,9 @@
     $.fn.handlebars.options = {
         // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
         delete_compiled: true,
+
+        // Store a compiled template. This improves efficiency if using the same template continuously
+        store_compiled: true,
 
         // Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false
         refill: true,
