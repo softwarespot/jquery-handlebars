@@ -394,7 +394,7 @@
         // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
         delete_compiled: true,
 
-        // Store a compiled template. This improves efficiency if using the same template continuously
+        // Store a compiled template. This improves efficiency if using the same template continuously. Accepts true (default) or false
         store_compiled: true,
 
         // Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false
