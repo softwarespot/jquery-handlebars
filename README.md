@@ -24,7 +24,7 @@ Surely using a template framework is meant to make our "developing" lives a litt
     $content.append(template(context));
 
 ```
-As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there =) ). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
+As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there! ) ). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
 
 ## jQuery-handlebars is as simple as 1-2-3, no really, it's that simple.
 
@@ -49,11 +49,11 @@ As you can see, if you do this multiple times over the course of your project it
     </script>
 ```
 The plugin will basically take care of compiling the template (if it hasn't been done already), mark in the DOM that it's a template by wrapping in a div with a data-* attribute (`data-jquery-handlebars`) and append to the content element.
-How easier could it be? It could probably even make you a sandwich if it wanted to =)
+How easier could it be? It could probably even make you a sandwich if it wanted to!
 
 ## How to install
 
-If you use bower, then just copy and paste the following command to the shell window. { **Note:** jQuery-handlebars was already taken =( }
+If you use bower, then just copy and paste the following command to the shell window. (**Note:** jQuery-handlebars was already taken)
 ```shell
 	bower install jquery-handlarbars2
 ```
@@ -164,7 +164,7 @@ Check whether the data passed to the plugin is empty. Accepts true (default) or 
 
 To contribute to the project, you will first need to install [grunt](gruntjs.com) globally on your system and then from there run the following command in the jQuery-handlebars directory. This installs all the relevant modules related to hinting and uglification which are used to ensure the plugin meets sufficient standards.
 
-Once complete, code away and don't forget to submit a PR with all your wonderful changes =)
+Once complete, code away and don't forget to submit a PR with all your wonderful changes!
 
 ##### Install all npm modules locally
 ```shell
