@@ -158,23 +158,23 @@ To contribute to the project, you will first need to install [grunt](gruntjs.com
 Once complete, code away and don't forget to submit a PR with all your wonderful changes =)
 
 ##### Install all npm modules locally
-```bash
+```shell
     cd jquery-handlebars
     npm install
 ```
 
 ##### Watching for changes to the main file
 Call the following command to start 'watching' for any changes to the main JS file i.e. jquery-handlebars.js.
-```bash
+```shell
 grunt
 ```
 ##### JSHint the main file (automatically done whilst watching)
 Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
-```bash
+```shell
     grunt jshint
 ```
 ##### Uglify the main file (automatically done whilst watching)
 Call the following command to invoke Uglify, which will uglify aka minify the main JS file i.e. jquery-handlbars.js.
-```bash
+```shell
     grunt uglify
 ```
