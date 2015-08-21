@@ -49,7 +49,7 @@
 
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
                     // end user to manipulate the internal store. Not a good idea if you ask me!
-                    return $.extend({}, compiled);
+                    return $.extend({}, _compiled);
 
                 }
 
@@ -143,7 +143,7 @@
             if (isTemplateString) {
 
                 // If compiled already then no need to re-compile
-                if ($.isFunction(compiled[template])) {
+                if ($.isFunction(_compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
@@ -175,7 +175,7 @@
                 template = $selector.selector !== undefined ? $selector.selector : null;
 
                 // If compiled already then no need to re-compile
-                if ($.isFunction(compiled[template])) {
+                if ($.isFunction(_compiled[template])) {
 
                     // console.log('jQuery-handlebars: %s has already been compiled', template);
 
@@ -197,7 +197,7 @@
             var html = $selector.html();
 
             // Store the compiled template in the compiled store
-            compiled[template] = Handlebars.compile(html);
+            _compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
             return setTemplate(this, $this, template, dataOrOptions, options);
@@ -208,7 +208,7 @@
     // Constants
 
     // The data-* attribute to distinguish a jQuery-handlebars template
-    var DATA_ATTRIBUTE = 'data-jquery-handlebars',
+    var DATA_ATTR = 'data-jquery-handlebars',
 
         // Removal constants. Who enjoys magic values?
         Remove = {
@@ -228,7 +228,7 @@
     // Fields (Private)
 
     // Store the compiled template(s) using the template string as the identifier i.e. key
-    var compiled = {};
+    var _compiled = {};
 
     // Methods (Private)
     // Note: Variables are called 'self' to avoid conflict with 'this'
@@ -253,7 +253,7 @@
 
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
         var templateFind = (include && template ? '="' + template + '"' : '');
-        return $self.find('div[' + DATA_ATTRIBUTE + templateFind + ']');
+        return $self.find('div[' + DATA_ATTR + templateFind + ']');
 
     };
 
@@ -294,12 +294,12 @@
             $.each(filtered, function(index, element) {
 
                 // Get the data attribute for the template string if it's not null or has already been removed
-                // var attribute = $(this).attr(DATA_ATTRIBUTE);
-                var attribute = this.getAttribute(DATA_ATTRIBUTE); // Returns null or '' on error
-                if (!attribute && compiled[attribute] !== undefined) {
+                // var attribute = $(this).attr(DATA_ATTR);
+                var attribute = this.getAttribute(DATA_ATTR); // Returns null or '' on error
+                if (!attribute && _compiled[attribute] !== undefined) {
 
                     // Set to undefined to mimic deletion of the template. Using delete is not really required
-                    compiled[attribute] = undefined;
+                    _compiled[attribute] = undefined;
 
                     // console.log('jQuery-handlebars: Removing compiled template [%s]', attribute);
 
@@ -339,13 +339,13 @@
         }
 
         // Store the parsed template with data
-        var parsedTemplate = compiled[template](data);
+        var parsedTemplate = _compiled[template](data);
 
         // Remove the compiled template from the store if specified
         if (isBoolean(options.store_compiled) && !options.store_compiled) {
 
             // Set to undefined to mimic deletion of the template. Using delete is not really required
-            compiled[template] = undefined;
+            _compiled[template] = undefined;
 
             // console.log('jQuery-handlebars: Not stored in compiled storage [%s]', options.store_compiled);
 
@@ -374,7 +374,7 @@
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebarjs template
                 var $div = $('<div/>')
-                    .attr(DATA_ATTRIBUTE, template)
+                    .attr(DATA_ATTR, template)
                     .append(parsedTemplate);
 
                 // Append the div to content element
