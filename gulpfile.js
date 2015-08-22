@@ -1,3 +1,5 @@
+/* global require */
+
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
@@ -31,7 +33,7 @@ gulp.task('uglify', ['clean'], function () {
             }
         }))
         .pipe(rename('jquery-handlebars.min.js'))
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./'));
 });
 
 // Watch for changes to the main file to trigger hinting and minification
