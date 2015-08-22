@@ -160,30 +160,36 @@ The following options are:
 
 Check whether the data passed to the plugin is empty. Accepts true (default) or false.
 
-## Contribution
+## Contribute
 
-To contribute to the project, you will first need to install [grunt](gruntjs.com) globally on your system and then from there run the following command in the jQuery-handlebars directory. This installs all the relevant modules related to hinting and uglification which are used to ensure the plugin meets sufficient standards.
+To contribute to the project, you will first need to install [gulp](gulpjs.com) globally on your system. Once complete change the directory to the plugin and run the following command:
 
-Once complete, code away and don't forget to submit a PR with all your wonderful changes!
-
-##### Install all npm modules locally
 ```shell
-    cd jquery-handlebars
     npm install
 ```
 
-##### Watching for changes to the main file
-Call the following command to start 'watching' for any changes to the main JS file i.e. jquery-handlebars.js.
+Once installation of the local modules has finally completed, you're ready to start contributing to the project. Before you submit your PR, please don't forget to call `gulp`, which will run against [JSHint](jshint.com) for any errors, but will also minify the plugin.
+
+##### Watch
+Call the following command to start 'watching' for any changes to the main JavaScript file. This will automatically invoke JSHint and Uglify.
 ```shell
-	grunt
+	gulp watch
 ```
-##### JSHint the main file (automatically done whilst watching)
-Call the following command to invoke JSHint and check that your changes meet good quality standards for JavaScript.
+
+##### JSHint
+Call the following command to invoke JSHint and check that your changes meet the requirements set in .jshintrc.
 ```shell
-    grunt jshint
+    gulp jshint
 ```
+
 ##### Uglify the main file (automatically done whilst watching)
-Call the following command to invoke Uglify, which will uglify aka minify the main JS file i.e. jquery-handlbars.js.
+Call the following command to invoke Uglify, which will minify the main JavaScript file and output to a .min.js file.
 ```shell
-    grunt uglify
+    gulp uglify
+```
+
+#### Build
+Call the following command to invoke both JSHint and Uglify.
+```shell
+    gulp
 ```
