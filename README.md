@@ -6,8 +6,8 @@ A jQuery plugin for alleviating the strain out of using the wonderful [Handlebar
 
 How many times have you found yourself writing the following code over and over again? Quite laborious isn't it?
 Surely using a template framework is meant to make our "developing" lives a little easier?
-```javascript
 
+```javascript
     // Cache the jQuery object of where to append the template
     var $content = $('#content');
 
@@ -22,8 +22,8 @@ Surely using a template framework is meant to make our "developing" lives a litt
 
     // Append the template to the content element
     $content.append(template(context));
-
 ```
+
 As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there! ) ). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
 
 ## jQuery-handlebars is as simple as 1-2-3, no really, it's that simple.
