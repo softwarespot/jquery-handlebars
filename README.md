@@ -24,7 +24,7 @@ Surely using a template framework is meant to make our "developing" lives a litt
     $content.append(template(context));
 ```
 
-As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive ( seems I repeated myself there! ) ). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
+As you can see, if you do this multiple times over the course of your project it can become bloated and quite repetitive (seems I repeated myself there!). Then there is the issue of injecting a template into an element with the ability to remove or replace at some point. Then you're talking about a lot more boilerplate code and for what? Wouldn't it be great if there was a jQuery plugin (there is) that allowed me to specify a template, append to the content element and keep record of those that have been compiled before? With the additional bonus of being able to remove a single template or all templates from the content element. Well you're in luck...
 
 ## jQuery-handlebars is as simple as 1-2-3, no really, it's that simple.
 
@@ -53,7 +53,7 @@ How easier could it be? It could probably even make you a sandwich if it wanted 
 
 ## How to install
 
-If you use bower, then just copy and paste the following command to the shell window. (**Note:** jQuery-handlebars was already taken)
+If you use bower, then just copy and paste the following command to the shell window. (**Note:** jQuery-handlebars was already taken so I had to opt for 2)
 ```shell
 	bower install jquery-handlarbars2
 ```
