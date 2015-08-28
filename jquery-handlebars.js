@@ -16,7 +16,7 @@
     $.fn.extend({
 
         // The parameter data doubles up as options when the action is either 'clear' or 'remove' i.e. options param will be ignored
-        handlebars: function(action, template, dataOrOptions, options) {
+        handlebars: function (action, template, dataOrOptions, options) {
 
             // jQuery object reference for this. Only select the first selector of the jQuery collection
             var $this = $(this).first(),
@@ -44,7 +44,7 @@
                     // The include parameter will be true, if the template is a string and valid anchor
                     return getTemplate($this, template, isTemplateString);
 
-                // If a 'compiled' action is provided, then return the compiled object literal
+                    // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (/^COMPILED|STORE$/i.test(action)) {
 
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
@@ -291,7 +291,7 @@
         if (isBoolean(options.delete_compiled) && options.delete_compiled) {
 
             // Iterate through the filtered collection and remove the template string from the compiled store
-            $.each(filtered, function(index, element) {
+            $.each(filtered, function (index, element) {
 
                 // Get the data attribute for the template string if it's not null or has already been removed
                 // var attribute = $(this).attr(DATA_ATTR);
