@@ -208,22 +208,22 @@
     // Constants
 
     // The data-* attribute to distinguish a jQuery-handlebars template
-    var DATA_ATTR = 'data-jquery-handlebars',
+    var DATA_ATTR = 'data-jquery-handlebars';
 
-        // Removal constants. Who enjoys magic values?
-        Remove = {
-            ALL: 'ALL',
-            NONE: 'NONE',
-            SAME: 'SAME'
-        },
+    // Removal constants. Who enjoys magic values?
+    var Remove = {
+        ALL: 'ALL',
+        NONE: 'NONE',
+        SAME: 'SAME'
+    };
 
-        // Type constants. Who enjoys magic values?
-        Type = {
-            APPEND: 'APPEND',
-            COMPILED: 'COMPILED',
-            HTML: 'HTML',
-            RAW: 'RAW'
-        };
+    // Type constants. Who enjoys magic values?
+    var Type = {
+        APPEND: 'APPEND',
+        COMPILED: 'COMPILED',
+        HTML: 'HTML',
+        RAW: 'RAW'
+    };
 
     // Fields (Private)
 
@@ -234,32 +234,32 @@
     // Note: Variables are called 'self' to avoid conflict with 'this'
 
     // Check if value is a boolean datatype
-    var isBoolean = function (value) {
+    function isBoolean(value) {
 
         return $.type(value) === 'boolean';
 
-    };
+    }
 
     // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
-    var isString = function (value) {
+    function isString(value) {
 
         return $.type(value) === 'string' && value.trim().length > 0;
 
-    };
+    }
 
     // Get the template in the content selector
     // include refers to whether to include the template in the selection
-    var getTemplate = function ($self, template, include) {
+    function getTemplate($self, template, include) {
 
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
         var templateFind = (include && template ? '="' + template + '"' : '');
         return $self.find('div[' + DATA_ATTR + templateFind + ']');
 
-    };
+    }
 
     // Remove the specified template from the content selector. If a template is not provided
     // then all template(s) that are contained within the content selector will be removed
-    var removeTemplate = function (self, $self, template, options) {
+    function removeTemplate(self, $self, template, options) {
 
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
         if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
@@ -311,10 +311,10 @@
 
         }
 
-    };
+    }
 
     // Set the specified template to the content selector
-    var setTemplate = function (self, $self, template, data, options) {
+    function setTemplate(self, $self, template, data, options) {
 
         // Override deleting from the compiled stored before passing to removeTemplate
         options.delete_compiled = false;
@@ -386,7 +386,7 @@
         }
 
         return self;
-    };
+    }
 
     // Defaults
 
