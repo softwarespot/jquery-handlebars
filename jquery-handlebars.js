@@ -231,7 +231,6 @@
     var _compiled = {};
 
     // Methods (Private)
-    // Note: Variables are called 'self' to avoid conflict with 'this'
 
     // Check if value is a boolean datatype
     function isBoolean(value) {
@@ -249,36 +248,36 @@
 
     // Get the template in the content selector
     // include refers to whether to include the template in the selection
-    function getTemplate($self, template, include) {
+    function getTemplate($this, template, include) {
 
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
         var templateFind = (include && template ? '="' + template + '"' : '');
-        return $self.find('div[' + DATA_ATTR + templateFind + ']');
+        return $this.find('div[' + DATA_ATTR + templateFind + ']');
 
     }
 
     // Remove the specified template from the content selector. If a template is not provided
     // then all template(s) that are contained within the content selector will be removed
-    function removeTemplate(self, $self, template, options) {
+    function removeTemplate(_this, $this, template, options) {
 
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
         if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
 
             // console.log('jQuery-handlebars: Template(s) were not removed [%s]', options.remove_type);
 
-            // Return self to maintain chaining if there is nothing to remove
-            return self;
+            // Return this to maintain chaining if there is nothing to remove
+            return _this;
 
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = getTemplate($self, template, options.remove_type === Remove.SAME);
+        var filtered = getTemplate($this, template, options.remove_type === Remove.SAME);
         if (filtered.length === 0) {
 
             // console.log('jQuery-handlebars: Unable to find any template(s) for removal [%s]', options.remove_type);
 
-            // Return self to maintain chaining if there is nothing to remove
-            return self;
+            // Return this to maintain chaining if there is nothing to remove
+            return _this;
 
         }
 
@@ -314,25 +313,25 @@
     }
 
     // Set the specified template to the content selector
-    function setTemplate(self, $self, template, data, options) {
+    function setTemplate(_this, $this, template, data, options) {
 
         // Override deleting from the compiled stored before passing to removeTemplate
         options.delete_compiled = false;
 
         // Remove template(s)
-        removeTemplate(self, $self, template, options);
+        removeTemplate(_this, $this, template, options);
 
         // If set to not refill and template node(s) exist, then return this
         if (isBoolean(options.refill) && !options.refill) {
 
             // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
             // if only the same template(s) exists (perhaps an option could/should be created)
-            var filtered = getTemplate($self, template, true);
+            var filtered = getTemplate($this, template, true);
             if (filtered.length > 0) {
 
                 // console.log('jQuery-handlebars: Refill has been set to false and the content element contains template(s) [%s]', options.remove_type);
 
-                return self;
+                return _this;
 
             }
 
@@ -378,14 +377,14 @@
                     .append(parsedTemplate);
 
                 // Append the div to content element
-                $self.append($div);
+                $this.append($div);
 
                 // console.log('jQuery-handlebars: Appending template to the content element [%s]', template);
                 break;
 
         }
 
-        return self;
+        return _this;
     }
 
     // Defaults
