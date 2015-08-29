@@ -7,7 +7,8 @@
  * Licensed under the MIT license
  * Version: 1.1.2
  */
-; (function ($, undefined) {
+; // jshint ignore:line
+(function ($, undefined) {
 
     // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
