@@ -58,7 +58,7 @@ If you use bower, then just copy and paste the following command to the shell wi
 	bower install jquery-handlarbars2
 ```
 
-Otherwise just include `jquery-handlebars.min.js` somewhere in your document and preferable after jQuery (since it relies on jQuery).
+Otherwise just include `jquery-handlebars.min.js` somewhere in your document and preferably after jQuery (since it relies on jQuery).
 
 ## Documentation
 
