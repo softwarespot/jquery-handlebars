@@ -53,9 +53,9 @@ How easier could it be? It could probably even make you a sandwich if it wanted 
 
 ## How to install
 
-If you use bower, then just copy and paste the following command to the shell window. (**Note:** jQuery-handlebars was already taken so I had to opt for 2)
+If you use bower, then just copy and paste the following command to the shell window. (**Note:** jQuery-handlebars was already taken.)
 ```shell
-	bower install jquery-handlarbars2
+	bower install jquery-handlebars-plugin
 ```
 
 Otherwise just include `jquery-handlebars.min.js` somewhere in your document and preferably after jQuery (since it relies on jQuery).
