@@ -1,12 +1,15 @@
 {
     "curly": true,
     "eqeqeq": true,
-    "eqnull": true,
-    "notypeof": true,
+    "forin": true,
+    "latedef": true,
+    "noarg": true,
+    "nocomma": true,
+    "nonew": true,
     "undef": true,
+    "unused": true,
+    "esnext": true,
     "browser": true,
-    "globals": {
-        "jQuery": true,
-        "$": true
-    }
+    "jquery": true,
+    "node": true
 }
