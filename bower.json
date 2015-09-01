@@ -1,7 +1,7 @@
 {
   "name": "jquery-handlebars",
   "homepage": "https://github.com/softwarespot/jquery-handlebars/",
-  "description": "jQuery plugin for easily create Handlebars templates",
+  "description": "A jQuery plugin for easily creating Handlebars templates",
   "main": "jquery-handlebars.js",
   "keywords": [
     "handlebarsjs",
