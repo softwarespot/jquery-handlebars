@@ -44,12 +44,12 @@ gulp.task('uglify', ['clean'], function () {
         .pipe(gulp.dest('./'));
 });
 
-// Watch for changes to the main file to trigger hinting and minification
+// Watch for changes to the main file
 gulp.task('watch', function () {
     gulp.watch('./' + Assets.main, ['jshint', 'uglify']);
 });
 
-// Register the default task to hinting and minification
+// Register the default task
 gulp.task('default', ['jshint', 'uglify']);
 
 // 'gulp jshint' to check the syntax
