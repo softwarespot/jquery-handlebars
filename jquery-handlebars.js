@@ -1,4 +1,4 @@
-/* global jQuery, Handlebars */
+/* global Handlebars */
 
 /*
  * jQuery-handlebars
