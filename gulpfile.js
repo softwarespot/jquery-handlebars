@@ -6,21 +6,27 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var del = require('del');
 
+// Assets for the project
+var Assets = {
+    main: 'jquery-handlebars.js',
+    minified: 'jquery-handlebars.min.js'
+};
+
 // Clean the current directory
 gulp.task('clean', function (cb) {
-    del(['jquery-handlebars.min.js'], cb);
+    del([Assets.minified], cb);
 });
 
 // Check the code meets the following standards outlined in .jshintrc
 gulp.task('jshint', function () {
-    return gulp.src('./jquery-handlebars.js')
+    return gulp.src('./' + Assets.main)
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
 
 // Uglify aka minify the main file
 gulp.task('uglify', ['clean'], function () {
-    return gulp.src('./jquery-handlebars.js')
+    return gulp.src('./' + Assets.main)
         .pipe(uglify({
             // See the uglify documentation for more details
             compress: {
@@ -40,7 +46,7 @@ gulp.task('uglify', ['clean'], function () {
 
 // Watch for changes to the main file to trigger hinting and minification
 gulp.task('watch', function () {
-    gulp.watch('./jquery-handlebars.js', ['jshint', 'uglify']);
+    gulp.watch('./' + Assets.main, ['jshint', 'uglify']);
 });
 
 // Register the default task to hinting and minification
