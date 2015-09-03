@@ -62,7 +62,7 @@ Otherwise just include `jquery-handlebars.min.js` somewhere in your document and
 
 ## Documentation
 
-The following outlines in detail how to use following plugin, with the addition of thoroughly commented examples.
+The following documentation outlines in detail how to use the following plugin, with the addition of thoroughly commented examples.
 
 ### Actions
 
