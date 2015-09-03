@@ -279,7 +279,7 @@
             default:
                 // Create a div element with the template appended to it
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
-                // that it's a Handlebarjs template
+                // that it's a Handlebars template
                 var $div = $('<div/>')
                     .attr(DATA_ATTR, template)
                     .append(parsedTemplate);
