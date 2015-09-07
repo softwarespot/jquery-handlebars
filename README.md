@@ -162,28 +162,28 @@ Check whether the data passed to the plugin is empty. Accepts true (default) or 
 
 ## Contribute
 
-To contribute to the project, you will first need to install [gulp](gulpjs.com) globally on your system. Once complete change the working directory to the plugin and run the following command:
+To contribute to the project, you will first need to install [gulp](gulpjs.com) globally on your system. Once installation has completed, change the working directory to the plugin's location and run the following command:
 
 ```shell
     npm install
 ```
 
-Once installation of the local modules has finally completed, you're ready to start contributing to the project. Before you submit your PR, please don't forget to call `gulp`, which will run against [JSHint](jshint.com) for any errors, but will also minify the plugin.
+After installation of the local modules, you're ready to start contributing to the project. Before you submit your PR, please don't forget to call `gulp`, which will run against [JSHint](jshint.com) for any errors, but will also minify the plugin.
 
 ##### Watch
-Call the following command to start 'watching' for any changes to the main JavaScript file. This will automatically invoke JSHint and Uglify.
+Call the following command to start 'watching' for any changes to the main JavaScript file(s). This will automatically invoke JSHint and Uglify.
 ```shell
 	gulp watch
 ```
 
 ##### JSHint
-Call the following command to invoke JSHint and check that your changes meet the requirements set in .jshintrc.
+Call the following command to invoke JSHint and check that the changes meet the requirements set in .jshintrc.
 ```shell
     gulp jshint
 ```
 
-##### Uglify the main file (automatically done whilst watching)
-Call the following command to invoke Uglify, which will minify the main JavaScript file and output to a .min.js file.
+##### Uglify
+Call the following command to invoke Uglify, which will minify the main JavaScript file(s) and output to a .min.js file respectively.
 ```shell
     gulp uglify
 ```
