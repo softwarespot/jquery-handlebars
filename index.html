@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>jQuery-handlebars Example</title>
+
+    <!--Font-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+
+    <!--Mobile Specific Metas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <style>
+        /*Body styling*/
+        body {
+            font-family: 'Open Sans', sans-serif, Arial;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Demo of jQuery-handlebars</h1>
+
+    <!--START: Content element-->
+    <div id="content">
+        <p>Example shouldn't be flashy, when all they're trying to do is demonstrate how to use the thing they demonstrating.</p>
+        <p>So without further ado, please check out the three lines below that were generate on the fly by using a Handlebars template.</p>
+
+        <!--This will NOT be removed from the DOM-->
+        <script id="template" type="text/x-handlebars-template">
+            Hello, {{name}}, how are you? My name is {{developer}} and I am a developer.
+            <br/>
+        </script>
+
+        <script>
+            // This will NOT be removed from the DOM
+            document.getElementById('content');
+        </script>
+
+        <!--The following nodes will not be destroyed-->
+        This TEXT node will NOT be destroyed each time the plugin is called
+        <p>This P ELEMENT node will NOT be destroyed</p>
+    </div>
+    <!--END: Content element-->
+
+    <button id="remove-templates">Remove</button>
+
+    <!--Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
+    <script src="jquery-handlebars.min.js"></script>
+
+    <script>
+        $(function() {
+
+            // Cache the jQuery object
+            var $content = $('#content');
+
+            // Data to pass to the template
+            var context = {
+                name: 'Alan',
+                developer: 'Ian'
+            };
+
+            // Append the template known as '#template' and pass the following data
+            // Do not remove previous templates
+            $content.handlebars('add', '#template', context, { remove: false });
+
+            // Data to pass to the template
+            context = {
+                name: 'Bob',
+                developer: 'Jim'
+            };
+
+            // Append the template known as '#template' and pass the following data
+            // Do not remove previous templates
+            $content.handlebars('add', '#template', context, { remove: false });
+
+            // Data to pass to the template
+            context = {
+                name: 'Cathy',
+                developer: 'Kim'
+            };
+
+            // Append the template known as '#template' and pass the following data
+            // Do not remove previous templates
+            $content.handlebars('add', '#template', context, { remove: false });
+
+            // Create a click event to only run once
+            $('#remove-templates').one('click.jquery.handlebars', function () {
+                $content.handlebars('remove', '#template');
+                window.alert('Templates inside the content element have been removed.\n\nThis event will now self destruct in 5...4...3...2...1...*');
+            });
+
+            // Testing only!
+
+            // $content.handlebars('remove', '#template'); // Remove single template id
+            // $content.handlebars('remove'); // Remove all templates
+            console.log('Rendered templates: %o', $content.handlebars('get')); // Get the rendered templates for the content element
+            console.log('Compiled templates: %o', $content.handlebars('compiled')); // Get the compiled templates for the content element
+
+        });
+    </script>
+
+</body>
+
+</html>
