@@ -28,7 +28,7 @@
         <p>So without further ado, please check out the three lines below that were generate on the fly by using a Handlebars template.</p>
 
         <!--This will NOT be removed from the DOM-->
-        <script id="template" type="text/x-handlebars-template">
+        <script id="template" type="text/x-handlebars-template" data-template-example="">
             Hello, {{name}}, how are you? My name is {{developer}} and I am a developer.
             <br/>
         </script>
@@ -83,9 +83,9 @@
                 developer: 'Kim'
             };
 
-            // Append the template known as '#template' and pass the following data
+            // Append the template using the data-template-example="" attribute and pass the following data
             // Do not remove previous templates
-            $content.handlebars('add', '#template', context, { remove: false });
+            $content.handlebars('add', '[data-template-example=""]', context, { remove: false });
 
             // Create a click event to only run once
             $('#remove-templates').one('click.jquery.handlebars', function () {
