@@ -20,16 +20,8 @@
             // jQuery object reference for this. Only select the first selector of the jQuery collection
             var $this = $(this).first();
 
-            // The following was taken from sizzle.js, URL: https://github.com/jquery/sizzle/blob/master/dist/sizzle.js
-
-            // http://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
-            var identifier = '(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+';
-
-            // Create a regular expression object to test valid id fragments
-            var reIdentifier = new RegExp('^#' + identifier + '$');
-
             // Store whether the template is valid or invalid
-            var isTemplateString = isString(template) && reIdentifier.test(template);
+            var isTemplateString = isString(template);
 
             // These actions don't require any pre-processing
             if (isString(action)) {
