@@ -83,7 +83,7 @@ gulp.task('watch', function () {
 });
 
 // Register the default task
-gulp.task('default', ['jshint', 'uglify']);
+gulp.task('default', ['version', 'jshint', 'uglify']);
 
 // 'gulp jshint' to check the syntax
 // 'gulp uglify' to uglify the main file
