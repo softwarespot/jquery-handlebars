@@ -21,7 +21,7 @@ gulp.task('clean', function (cb) {
 gulp.task('jshint', function () {
     return gulp.src('./' + Assets.main)
         .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+        .pipe(jshint.reporter('jshint-stylish'));
 });
 
 // Uglify aka minify the main file
