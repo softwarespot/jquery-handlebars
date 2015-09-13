@@ -6,6 +6,18 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var del = require('del');
 
+// See the uglify documentation for more details
+var uglifySettings = {
+    compress: {
+        comparisons: true,
+        conditionals: true,
+        dead_code: true,
+        drop_console: true,
+        unsafe: true,
+        unused: true
+    }
+};
+
 // Assets for the project
 var Assets = {
     main: 'jquery-handlebars.js',
@@ -27,20 +39,8 @@ gulp.task('jshint', function () {
 // Uglify aka minify the main file
 gulp.task('uglify', ['clean'], function () {
     return gulp.src('./' + Assets.main)
-        .pipe(uglify({
-            // See the uglify documentation for more details
-            compress: {
-                comparisons: true,
-                conditionals: true,
-                dead_code: true,
-                drop_console: true,
-                unsafe: true,
-                unused: true
-            }
-        }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
+        .pipe(uglify(uglifySettings))
+        .pipe(rename(Assets.minified))
         .pipe(gulp.dest('./'));
 });
 
