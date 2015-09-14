@@ -5,7 +5,7 @@
  * https://github.com/softwarespot/jquery-handlebars
  * Author: softwarespot
  * Licensed under the MIT license
- * Version: 1.2.4
+ * Version: 1.2.5
  */
 ; // jshint ignore:line
 (function (window, $, undefined) {
