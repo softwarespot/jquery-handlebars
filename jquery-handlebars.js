@@ -192,7 +192,7 @@
     // include refers to whether to include the template in the selection
     function getTemplate($this, template, include) {
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
-        var templateFind = (include && template ? '="' + template + '"' : '');
+        var templateFind = (include && template ? '="' + sanitizeQuotes(template) + '"' : '');
         return $this.find('div[' + DATA_ATTR + templateFind + ']');
     }
 
@@ -228,6 +228,11 @@
                 }
             });
         }
+    }
+
+    // Replace double quotes with single quotes. Workaround for jQuery issue
+    function sanitizeQuotes(value) {
+        return value.replace(/"/g, '\'');
     }
 
     // Set the specified template to the content selector
@@ -273,7 +278,7 @@
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebars template
                 var $div = $('<div/>')
-                    .attr(DATA_ATTR, template)
+                    .attr(DATA_ATTR, sanitizeQuotes(template))
                     .append(parsedTemplate);
 
                 // Append the div to content element
