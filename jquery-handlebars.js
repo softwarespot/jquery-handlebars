@@ -8,7 +8,7 @@
  * Version: 1.2.4
  */
 ; // jshint ignore:line
-(function ($, undefined) {
+(function (window, $, undefined) {
 
     // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
@@ -316,4 +316,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true
     };
-})(jQuery);
+})(this, this.jQuery);
