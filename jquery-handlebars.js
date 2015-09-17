@@ -54,7 +54,7 @@
                 options.type = options.type.toUpperCase();
             } else {
                 // Otherwise default to 'append' i.e. if null or simply invalid
-                options.type = Type.APPEND;
+                options.type = _type.APPEND;
             }
 
             // If the removal type is a string and valid, then set to uppercase
@@ -63,7 +63,7 @@
                 options.remove_type = options.remove_type.toUpperCase();
             } else {
                 // Otherwise default to 'none' i.e. if null or simply is invalid
-                options.remove_type = Remove.NONE;
+                options.remove_type = _remove.NONE;
             }
 
             // END: Sanitize the options
@@ -76,11 +76,11 @@
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (isTemplateString && options.remove_type !== Remove.SAME) {
-                    options.remove_type = Remove.SAME;
+                if (isTemplateString && options.remove_type !== _remove.SAME) {
+                    options.remove_type = _remove.SAME;
                 } else {
                     // Otherwise use 'all'
-                    options.remove_type = Remove.ALL;
+                    options.remove_type = _remove.ALL;
                 }
 
                 // If the template is not defined, then set as null before removing
@@ -157,14 +157,14 @@
     var DATA_ATTR = 'data-jquery-handlebars';
 
     // Removal constants. Who enjoys magic values?
-    var Remove = {
+    var _remove = {
         ALL: 'ALL',
         NONE: 'NONE',
         SAME: 'SAME'
     };
 
     // Type constants. Who enjoys magic values?
-    var Type = {
+    var _type = {
         APPEND: 'APPEND',
         COMPILED: 'COMPILED',
         HTML: 'HTML',
@@ -200,13 +200,13 @@
     // then all template(s) that are contained within the content selector will be removed
     function removeTemplate(_this, $this, template, options) {
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
-        if (options.remove_type === Remove.NONE || (template === null && options.remove_type === Remove.SAME)) {
+        if (options.remove_type === _remove.NONE || (template === null && options.remove_type === _remove.SAME)) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = getTemplate($this, template, options.remove_type === Remove.SAME);
+        var filtered = getTemplate($this, template, options.remove_type === _remove.SAME);
         if (filtered.length === 0) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
@@ -264,12 +264,12 @@
 
         // Append to the content element by checking the type. Default is 'append'
         switch (options.type) {
-            case Type.COMPILED:
-            case Type.RAW:
+            case _type.COMPILED:
+            case _type.RAW:
                 // Return the compiled template
                 return parsedTemplate;
 
-            case Type.HTML:
+            case _type.HTML:
                 // Return as HTML data
                 return $(parsedTemplate);
 
@@ -308,7 +308,7 @@
         //      'none' (default): Don't remove any template(s)
         //      'all': Remove all valid template(s) from the content element
         //      'same': Remove only those template(s) that match the provided template string
-        remove_type: Remove.NONE,
+        remove_type: _remove.NONE,
 
         // How to output the compiled template to the specified content element
         //
@@ -316,7 +316,7 @@
         //      'append' (default): Append to the content element
         //      'html': Return a compiled template as HTML
         //      'compiled'/'raw': Return a compiled template
-        type: Type.APPEND,
+        type: _type.APPEND,
 
         // Check whether the data passed to the plugin is empty
         validate: true
