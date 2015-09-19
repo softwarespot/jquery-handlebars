@@ -10,7 +10,7 @@
 ; // jshint ignore:line
 (function (window, $, undefined) {
 
-    // Initial idea by: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
+    // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Plugin Logic
 
