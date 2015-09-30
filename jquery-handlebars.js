@@ -158,11 +158,11 @@
 
     // Regular expressions
     var _regExp = {
-        CLEAR: /^CLEAR|EMPTY|REMOVE$/i,
-        COMPILED: /^COMPILED|STORE$/i,
-        GET: /^FIND|GET$/i,
-        REMOVE_TYPE: /^ALL|NONE|SAME$/i,
-        TYPE: /^APPEND|COMPILED|HTML|RAW$/i
+        CLEAR: /^(?:CLEAR|EMPTY|REMOVE)$/i,
+        COMPILED: /^(?:COMPILED|STORE)$/i,
+        GET: /^(?:FIND|GET)$/i,
+        REMOVE_TYPE: /^(?:ALL|NONE|SAME)$/i,
+        TYPE: /^(?:APPEND|COMPILED|HTML|RAW)$/i
     };
 
     // Removal constants. Who enjoys magic values?
