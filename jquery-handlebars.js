@@ -27,11 +27,11 @@
             if (isString(action)) {
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
-                if (/^FIND|GET$/i.test(action)) {
+                if (_regExp.GET.test(action)) {
                     // The include parameter will be true, if the template is a string and valid anchor
                     return getTemplate($this, template, isTemplateString);
                     // If a 'compiled' action is provided, then return the compiled object literal
-                } else if (/^COMPILED|STORE$/i.test(action)) {
+                } else if (_regExp.COMPILED.test(action)) {
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
                     // end user to manipulate the internal store. Not a good idea if you ask me!
                     return $.extend({}, _compiled);
@@ -49,7 +49,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (isString(options.type) && /^APPEND|COMPILED|HTML|RAW$/i.test(options.type)) {
+            if (isString(options.type) && _regExp.TYPE.test(options.type)) {
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
             } else {
@@ -58,7 +58,7 @@
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (isString(options.remove_type) && /^ALL|NONE|SAME$/i.test(options.remove_type)) {
+            if (isString(options.remove_type) && _regExp.REMOVE_TYPE.test(options.remove_type)) {
                 // Set to uppercase
                 options.remove_type = options.remove_type.toUpperCase();
             } else {
@@ -69,7 +69,7 @@
             // END: Sanitize the options
 
             // If a 'clear' action is provided, then remove the template from the content element
-            if (/^CLEAR|EMPTY|REMOVE$/i.test(action)) {
+            if (_regExp.CLEAR.test(action)) {
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
                 // specified
                 options = $.extend(options, dataOrOptions);
@@ -155,6 +155,15 @@
 
     // The data-* attribute to distinguish a jQuery-handlebars template
     var DATA_ATTR = 'data-jquery-handlebars';
+
+    // Regular expressions
+    var _regExp = {
+        CLEAR: /^CLEAR|EMPTY|REMOVE$/i,
+        COMPILED: /^COMPILED|STORE$/i,
+        GET: /^FIND|GET$/i,
+        REMOVE_TYPE: /^ALL|NONE|SAME$/i,
+        TYPE: /^APPEND|COMPILED|HTML|RAW$/i
+    };
 
     // Removal constants. Who enjoys magic values?
     var _remove = {
