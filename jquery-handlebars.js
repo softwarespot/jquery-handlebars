@@ -16,7 +16,7 @@
 
     $.fn.extend({
         // The parameter data doubles up as options when the action is either 'clear' or 'remove' i.e. options param will be ignored
-        handlebars: function (action, template, dataOrOptions, options) {
+        handlebars: function handlebars(action, template, dataOrOptions, options) {
             // jQuery object reference for this. Only select the first selector of the jQuery collection
             var $this = $(this).first();
 
