@@ -227,7 +227,7 @@
         // Remove the template from the compiled store, if the option is true
         if (isBoolean(options.delete_compiled) && options.delete_compiled) {
             // Iterate through the filtered collection and remove the template string from the compiled store
-            $.each(filtered, function (index, element) {
+            $.each(filtered, function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
                 // var attribute = $(element).attr(DATA_ATTR);
                 var attribute = element.getAttribute(DATA_ATTR); // Returns null or '' on error
