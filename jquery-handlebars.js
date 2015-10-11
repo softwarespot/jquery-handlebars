@@ -21,15 +21,15 @@
             var $this = $(this).first();
 
             // Store whether the template is valid or invalid
-            var isTemplateString = isString(template);
+            var isTemplateString = _isString(template);
 
             // These actions don't require any pre-processing
-            if (isString(action)) {
+            if (_isString(action)) {
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
                 if (_regExp.GET.test(action)) {
                     // The include parameter will be true, if the template is a string and valid anchor
-                    return getTemplate($this, template, isTemplateString);
+                    return _getTemplate($this, template, isTemplateString);
 
                     // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (_regExp.COMPILED.test(action)) {
@@ -48,6 +48,7 @@
             options = $.extend({}, $.fn.handlebars.options, options);
 
             /* jscs: disable */
+
             // jscs only workaround
             options.deleteCompiled = options.delete_compiled;
             options.storeCompiled = options.store_compiled;
@@ -57,7 +58,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (isString(options.type) && _regExp.TYPE.test(options.type)) {
+            if (_isString(options.type) && _regExp.TYPE.test(options.type)) {
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
             } else {
@@ -66,7 +67,7 @@
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (isString(options.removeType) && _regExp.REMOVE_TYPE.test(options.removeType)) {
+            if (_isString(options.removeType) && _regExp.REMOVE_TYPE.test(options.removeType)) {
                 // Set to uppercase
                 options.removeType = options.removeType.toUpperCase();
             } else {
@@ -96,13 +97,13 @@
                     template = null;
                 }
 
-                return removeTemplate(this, $this, template, options);
+                return _removeTemplate(this, $this, template, options);
             }
 
             // Assume it's an addition i.e. 'add'
 
             // The data object literal must contain data
-            if (isBoolean(options.validate) && options.validate && $.isEmptyObject(dataOrOptions)) {
+            if (_isBoolean(options.validate) && options.validate && $.isEmptyObject(dataOrOptions)) {
                 return this;
             }
 
@@ -114,7 +115,7 @@
                 // If compiled already then no need to re-compile
                 if ($.isFunction(_compiled[template])) {
                     // Return to continue chaining
-                    return setTemplate(this, $this, template, dataOrOptions, options);
+                    return _setTemplate(this, $this, template, dataOrOptions, options);
                 }
 
                 // Not compiled
@@ -139,7 +140,7 @@
                 // If compiled already then no need to re-compile
                 if ($.isFunction(_compiled[template])) {
                     // Return to continue chaining
-                    return setTemplate(this, $this, template, dataOrOptions, options);
+                    return _setTemplate(this, $this, template, dataOrOptions, options);
                 }
             }
 
@@ -155,8 +156,8 @@
             _compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return setTemplate(this, $this, template, dataOrOptions, options);
-        }
+            return _setTemplate(this, $this, template, dataOrOptions, options);
+        },
 
     });
 
@@ -171,14 +172,14 @@
         COMPILED: /^(?:COMPILED|STORE)$/i,
         GET: /^(?:FIND|GET)$/i,
         REMOVE_TYPE: /^(?:ALL|NONE|SAME)$/i,
-        TYPE: /^(?:APPEND|COMPILED|HTML|RAW)$/i
+        TYPE: /^(?:APPEND|COMPILED|HTML|RAW)$/i,
     };
 
     // Removal constants. Who enjoys magic values?
     var _remove = {
         ALL: 'ALL',
         NONE: 'NONE',
-        SAME: 'SAME'
+        SAME: 'SAME',
     };
 
     // Type constants. Who enjoys magic values?
@@ -186,7 +187,7 @@
         APPEND: 'APPEND',
         COMPILED: 'COMPILED',
         HTML: 'HTML',
-        RAW: 'RAW'
+        RAW: 'RAW',
     };
 
     // Fields (Private)
@@ -197,26 +198,26 @@
     // Methods (Private)
 
     // Check if value is a boolean datatype
-    function isBoolean(value) {
+    function _isBoolean(value) {
         return $.type(value) === 'boolean';
     }
 
     // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
-    function isString(value) {
+    function _isString(value) {
         return $.type(value) === 'string' && value.trim().length > 0;
     }
 
     // Get the template in the content selector
     // include refers to whether to include the template in the selection
-    function getTemplate($this, template, include) {
+    function _getTemplate($this, template, include) {
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
-        var templateFind = (include && template ? '="' + sanitizeQuotes(template) + '"' : '');
+        var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
         return $this.find('div[' + DATA_ATTR + templateFind + ']');
     }
 
     // Remove the specified template from the content selector. If a template is not provided
     // then all template(s) that are contained within the content selector will be removed
-    function removeTemplate(_this, $this, template, options) {
+    function _removeTemplate(_this, $this, template, options) {
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
         if (options.removeType === _remove.NONE || (template === null && options.removeType === _remove.SAME)) {
             // Return this to maintain chaining if there is nothing to remove
@@ -224,7 +225,7 @@
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = getTemplate($this, template, options.removeType === _remove.SAME);
+        var filtered = _getTemplate($this, template, options.removeType === _remove.SAME);
         if (filtered.length === 0) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
@@ -234,7 +235,7 @@
         filtered.remove();
 
         // Remove the template from the compiled store, if the option is true
-        if (isBoolean(options.deleteCompiled) && options.deleteCompiled) {
+        if (_isBoolean(options.deleteCompiled) && options.deleteCompiled) {
             // Iterate through the filtered collection and remove the template string from the compiled store
             $.each(filtered, function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
@@ -249,23 +250,23 @@
     }
 
     // Replace double quotes with single quotes. Workaround for jQuery issue
-    function sanitizeQuotes(value) {
+    function _sanitizeQuotes(value) {
         return value.replace(/"/g, '\'');
     }
 
     // Set the specified template to the content selector
-    function setTemplate(_this, $this, template, data, options) {
-        // Override deleting from the compiled stored before passing to removeTemplate
+    function _setTemplate(_this, $this, template, data, options) {
+        // Override deleting from the compiled stored before passing to _removeTemplate
         options.deleteCompiled = false;
 
         // Remove template(s)
-        removeTemplate(_this, $this, template, options);
+        _removeTemplate(_this, $this, template, options);
 
         // If set to not refill and template node(s) exist, then return this
-        if (isBoolean(options.refill) && !options.refill) {
+        if (_isBoolean(options.refill) && !options.refill) {
             // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
             // if only the same template(s) exists (perhaps an option could/should be created)
-            var filtered = getTemplate($this, template, true);
+            var filtered = _getTemplate($this, template, true);
             if (filtered.length > 0) {
                 return _this;
             }
@@ -275,7 +276,7 @@
         var parsedTemplate = _compiled[template](data);
 
         // Remove the compiled template from the store if specified
-        if (isBoolean(options.storeCompiled) && !options.storeCompiled) {
+        if (_isBoolean(options.storeCompiled) && !options.storeCompiled) {
             // Set to undefined to mimic deletion of the template. Using delete is not really required
             _compiled[template] = undefined;
         }
@@ -299,7 +300,7 @@
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebars template
                 var $div = $('<div/>')
-                    .attr(DATA_ATTR, sanitizeQuotes(template))
+                    .attr(DATA_ATTR, _sanitizeQuotes(template))
                     .append(parsedTemplate);
 
                 // Append the div to content element
@@ -341,7 +342,7 @@
         type: _type.APPEND,
 
         // Check whether the data passed to the plugin is empty
-        validate: true
+        validate: true,
     };
     /* jscs: enable */
 })(this, this.jQuery);
