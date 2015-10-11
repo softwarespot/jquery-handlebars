@@ -30,6 +30,7 @@
                 if (_regExp.GET.test(action)) {
                     // The include parameter will be true, if the template is a string and valid anchor
                     return getTemplate($this, template, isTemplateString);
+
                     // If a 'compiled' action is provided, then return the compiled object literal
                 } else if (_regExp.COMPILED.test(action)) {
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
@@ -118,6 +119,7 @@
                 if ($selector.length === 0) {
                     $selector = null;
                 }
+
                 // If a valid jQuery selector object
             } else if (template instanceof $ && $.isNumeric(template.length) && template.length > 0) {
                 // Get the first selection only
@@ -275,14 +277,17 @@
         switch (options.type) {
             case _type.COMPILED:
             case _type.RAW:
+
                 // Return the compiled template
                 return parsedTemplate;
 
             case _type.HTML:
+
                 // Return as HTML data
                 return $(parsedTemplate);
 
             default:
+
                 // Create a div element with the template appended to it
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebars template
