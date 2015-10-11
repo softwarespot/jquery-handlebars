@@ -47,6 +47,13 @@
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
 
+            /* jscs: disable */
+            // jscs only workaround
+            options.deleteCompiled = options.delete_compiled;
+            options.storeCompiled = options.store_compiled;
+            options.removeType = options.remove_type;
+            /* jscs: enable */
+
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
@@ -59,12 +66,12 @@
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (isString(options.remove_type) && _regExp.REMOVE_TYPE.test(options.remove_type)) {
+            if (isString(options.removeType) && _regExp.REMOVE_TYPE.test(options.removeType)) {
                 // Set to uppercase
-                options.remove_type = options.remove_type.toUpperCase();
+                options.removeType = options.removeType.toUpperCase();
             } else {
                 // Otherwise default to 'none' i.e. if null or simply is invalid
-                options.remove_type = _remove.NONE;
+                options.removeType = _remove.NONE;
             }
 
             // END: Sanitize the options
@@ -77,11 +84,11 @@
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (isTemplateString && options.remove_type !== _remove.SAME) {
-                    options.remove_type = _remove.SAME;
+                if (isTemplateString && options.removeType !== _remove.SAME) {
+                    options.removeType = _remove.SAME;
                 } else {
                     // Otherwise use 'all'
-                    options.remove_type = _remove.ALL;
+                    options.removeType = _remove.ALL;
                 }
 
                 // If the template is not defined, then set as null before removing
@@ -211,13 +218,13 @@
     // then all template(s) that are contained within the content selector will be removed
     function removeTemplate(_this, $this, template, options) {
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
-        if (options.remove_type === _remove.NONE || (template === null && options.remove_type === _remove.SAME)) {
+        if (options.removeType === _remove.NONE || (template === null && options.removeType === _remove.SAME)) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = getTemplate($this, template, options.remove_type === _remove.SAME);
+        var filtered = getTemplate($this, template, options.removeType === _remove.SAME);
         if (filtered.length === 0) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
@@ -227,7 +234,7 @@
         filtered.remove();
 
         // Remove the template from the compiled store, if the option is true
-        if (isBoolean(options.delete_compiled) && options.delete_compiled) {
+        if (isBoolean(options.deleteCompiled) && options.deleteCompiled) {
             // Iterate through the filtered collection and remove the template string from the compiled store
             $.each(filtered, function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
@@ -249,7 +256,7 @@
     // Set the specified template to the content selector
     function setTemplate(_this, $this, template, data, options) {
         // Override deleting from the compiled stored before passing to removeTemplate
-        options.delete_compiled = false;
+        options.deleteCompiled = false;
 
         // Remove template(s)
         removeTemplate(_this, $this, template, options);
@@ -268,7 +275,7 @@
         var parsedTemplate = _compiled[template](data);
 
         // Remove the compiled template from the store if specified
-        if (isBoolean(options.store_compiled) && !options.store_compiled) {
+        if (isBoolean(options.storeCompiled) && !options.storeCompiled) {
             // Set to undefined to mimic deletion of the template. Using delete is not really required
             _compiled[template] = undefined;
         }
@@ -306,6 +313,7 @@
 
     // Defaults
 
+    /* jscs: disable */
     $.fn.handlebars.options = {
         // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
         delete_compiled: true,
@@ -335,4 +343,5 @@
         // Check whether the data passed to the plugin is empty
         validate: true
     };
+    /* jscs: enable */
 })(this, this.jQuery);
