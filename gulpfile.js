@@ -5,7 +5,6 @@ var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 var uglify = require('gulp-uglify');
-var del = require('del');
 var fs = require('fs');
 var merge = require('merge2');
 
@@ -14,8 +13,10 @@ var uglifySettings = {
     compress: {
         comparisons: true,
         conditionals: true,
+        /* jscs: disable */
         dead_code: true,
         drop_console: true,
+        /* jscs: enable */
         unsafe: true,
         unused: true
     }
@@ -26,10 +27,6 @@ var Assets = {
     main: 'jquery-handlebars.js',
     minified: 'jquery-handlebars.min.js'
 };
-
-// Clean the current directory
-gulp.task('clean', function (cb) {
-});
 
 // Check the code meets the following standards outlined in .jshintrc
 gulp.task('jshint', function () {
@@ -52,10 +49,11 @@ gulp.task('version', function () {
 
     var reVersion = /\n\s*\*\s+Version:\s+((?:\d+\.){2}\d+)/;
     var version = fs.readFileSync('./' + Assets.main, {
-            encoding: 'utf8'
-        })
-        // Match is found in the 2nd element
-        .match(reVersion)[1];
+        encoding: 'utf8'
+    })
+
+    // Match is found in the 2nd element
+    .match(reVersion)[1];
 
     var streams = merge();
 
