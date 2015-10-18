@@ -197,6 +197,14 @@
 
     // Methods (Private)
 
+    // Get the template in the content selector
+    // include refers to whether to include the template in the selection
+    function _getTemplate($this, template, include) {
+        // Get the divs with the template data attribute and optional specified template string e.g. #some-template
+        var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
+        return $this.find('div[' + DATA_ATTR + templateFind + ']');
+    }
+
     // Check if value is a boolean datatype
     function _isBoolean(value) {
         return $.type(value) === 'boolean';
@@ -205,14 +213,6 @@
     // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
     function _isString(value) {
         return $.type(value) === 'string' && value.trim().length > 0;
-    }
-
-    // Get the template in the content selector
-    // include refers to whether to include the template in the selection
-    function _getTemplate($this, template, include) {
-        // Get the divs with the template data attribute and optional specified template string e.g. #some-template
-        var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
-        return $this.find('div[' + DATA_ATTR + templateFind + ']');
     }
 
     // Remove the specified template from the content selector. If a template is not provided
