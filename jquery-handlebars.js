@@ -170,6 +170,7 @@
     var _regExp = {
         CLEAR: /^(?:CLEAR|EMPTY|REMOVE)$/i,
         COMPILED: /^(?:COMPILED|STORE)$/i,
+        DOUBLE_QUOTE: /"/g,
         GET: /^(?:FIND|GET)$/i,
         REMOVE_TYPE: /^(?:ALL|NONE|SAME)$/i,
         TYPE: /^(?:APPEND|COMPILED|HTML|RAW)$/i,
@@ -251,7 +252,7 @@
 
     // Replace double quotes with single quotes. Workaround for jQuery issue
     function _sanitizeQuotes(value) {
-        return value.replace(/"/g, '\'');
+        return value.replace(_regExp.DOUBLE_QUOTE, '\'');
     }
 
     // Set the specified template to the content selector
