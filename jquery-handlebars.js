@@ -5,7 +5,7 @@
  * https://github.com/softwarespot/jquery-handlebars
  * Author: softwarespot
  * Licensed under the MIT license
- * Version: 1.3.6
+ * Version: 1.3.7
  */
 ; // jshint ignore:line
 (function jQueryHandlebarsNamespace(window, $, undefined) {
