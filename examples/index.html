@@ -89,7 +89,9 @@
 
             // Create a click event to only run once
             $('#remove-templates').one('click.jquery.handlebars', function clickOnce() {
+                // Remove using the selector originally passed during creation
                 $content.handlebars('remove', '#template');
+                $content.handlebars('remove', '[data-template-example=""]');
                 window.alert('Templates inside the content element have been removed.\n\nThis event will now self destruct in 5...4...3...2...1...*');
             });
 
