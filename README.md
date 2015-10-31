@@ -125,11 +125,11 @@ An example of overwriting the default options of the plugin using `$.fn.handleba
     $.fn.handlebars.delete_compiled = false;
 ```
 
-#### `delete_compiled`
+#### `deleteCompiled`
 
 Delete the template(s) from the compiled store when a `clear` action is specified. Accepts true (default) or false.
 
-#### `store_compiled`
+#### `storeCompiled`
 
 Store a compiled template. This improves efficiency if using the same template continuously. Accepts true (default) or false.
 
@@ -137,7 +137,7 @@ Store a compiled template. This improves efficiency if using the same template c
 
 Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false.
 
-#### `remove_type`
+#### `removeType`
 
 Remove pre-existing (compiled) templates from the specified content element when adding/appending a template.
 

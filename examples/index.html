@@ -88,7 +88,7 @@
             $content.handlebars('add', '[data-template-example=""]', context, { remove: false });
 
             // Create a click event to only run once
-            $('#remove-templates').one('click.jquery.handlebars', function () {
+            $('#remove-templates').one('click.jquery.handlebars', function clickOnce() {
                 $content.handlebars('remove', '#template');
                 window.alert('Templates inside the content element have been removed.\n\nThis event will now self destruct in 5...4...3...2...1...*');
             });
@@ -97,8 +97,8 @@
 
             // $content.handlebars('remove', '#template'); // Remove single template id
             // $content.handlebars('remove'); // Remove all templates
-            console.log('Rendered templates: %o', $content.handlebars('get')); // Get the rendered templates for the content element
-            console.log('Compiled templates: %o', $content.handlebars('compiled')); // Get the compiled templates for the content element
+            window.console.log('Rendered templates: %o', $content.handlebars('get')); // Get the rendered templates for the content element
+            window.console.log('Compiled templates: %o', $content.handlebars('compiled')); // Get the compiled templates for the content element
 
         });
     </script>
