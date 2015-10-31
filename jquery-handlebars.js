@@ -8,7 +8,7 @@
  * Version: 1.2.5
  */
 ; // jshint ignore:line
-(function (window, $, undefined) {
+(function jQueryHandlebarsNamespace(window, $, undefined) {
 
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
@@ -49,10 +49,10 @@
 
             /* jscs: disable */
 
-            // jscs only workaround
-            options.deleteCompiled = options.delete_compiled;
-            options.storeCompiled = options.store_compiled;
-            options.removeType = options.remove_type;
+            // jscs only workaround for checking old style properties
+            options.deleteCompiled = options.delete_compiled || options.deleteCompiled;
+            options.storeCompiled = options.store_compiled || options.storeCompiled;
+            options.removeType = options.remove_type || options.removeType;
             /* jscs: enable */
 
             // START: Sanitize the options
@@ -315,13 +315,12 @@
 
     // Defaults
 
-    /* jscs: disable */
     $.fn.handlebars.options = {
         // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
-        delete_compiled: true,
+        deleteCompiled: true,
 
         // Store a compiled template. This improves efficiency if using the same template continuously. Accepts true (default) or false
-        store_compiled: true,
+        storeCompiled: true,
 
         // Allow the addition of multiple template(s) inside a content element. Accepts true (default) or false
         refill: true,
@@ -332,7 +331,7 @@
         //      'none' (default): Don't remove any template(s)
         //      'all': Remove all valid template(s) from the content element
         //      'same': Remove only those template(s) that match the provided template string
-        remove_type: _remove.NONE,
+        removeType: _remove.NONE,
 
         // How to output the compiled template to the specified content element
         //
@@ -345,5 +344,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true,
     };
-    /* jscs: enable */
-})(this, this.jQuery);
+})(window, window.jQuery);
