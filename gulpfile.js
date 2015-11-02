@@ -18,25 +18,25 @@ var uglifySettings = {
         drop_console: true,
         /* jscs: enable */
         unsafe: true,
-        unused: true
-    }
+        unused: true,
+    },
 };
 
 // Assets for the project
 var Assets = {
     main: 'jquery-handlebars.js',
-    minified: 'jquery-handlebars.min.js'
+    minified: 'jquery-handlebars.min.js',
 };
 
 // Check the code meets the following standards outlined in .jshintrc
-gulp.task('jshint', function () {
+gulp.task('jshint', function() {
     return gulp.src('./' + Assets.main)
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });
 
 // Uglify aka minify the main file
-gulp.task('uglify', function () {
+gulp.task('uglify', function() {
     return gulp.src('./' + Assets.main)
         .pipe(uglify(uglifySettings))
         .pipe(rename(Assets.minified))
@@ -44,12 +44,12 @@ gulp.task('uglify', function () {
 });
 
 // Update version numbers based on the main file version comment
-gulp.task('version', function () {
+gulp.task('version', function() {
     // SemVer matching is done using (?:\d+\.){2}\d+
 
     var reVersion = /\n\s*\*\s+Version:\s+((?:\d+\.){2}\d+)/;
     var version = fs.readFileSync('./' + Assets.main, {
-        encoding: 'utf8'
+        encoding: 'utf8',
     })
 
     // Match is found in the 2nd element
@@ -75,7 +75,7 @@ gulp.task('version', function () {
 });
 
 // Watch for changes to the main file
-gulp.task('watch', function () {
+gulp.task('watch', function() {
     gulp.watch('./' + Assets.main, ['jshint', 'uglify']);
 });
 
