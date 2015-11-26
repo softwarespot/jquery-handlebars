@@ -27,12 +27,12 @@
             if (_isString(action)) {
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
-                if (_regExpGet.test(action)) {
+                if (_reGet.test(action)) {
                     // The include parameter will be true, if the template is a string and valid anchor
                     return _getTemplate($this, template, isTemplateString);
 
                     // If a 'compiled' action is provided, then return the compiled object literal
-                } else if (_regExpCompiled.test(action)) {
+                } else if (_reCompiled.test(action)) {
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
                     // end user to manipulate the internal store. Not a good idea if you ask me!
                     return $.extend({}, _compiled);
@@ -58,7 +58,7 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (_isString(options.type) && _regExpType.test(options.type)) {
+            if (_isString(options.type) && _reType.test(options.type)) {
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
             } else {
@@ -67,7 +67,7 @@
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (_isString(options.removeType) && _regExpRemoveType.test(options.removeType)) {
+            if (_isString(options.removeType) && _reRemoveType.test(options.removeType)) {
                 // Set to uppercase
                 options.removeType = options.removeType.toUpperCase();
             } else {
@@ -78,7 +78,7 @@
             // END: Sanitize the options
 
             // If a 'clear' action is provided, then remove the template from the content element
-            if (_regExpClear.test(action)) {
+            if (_reClear.test(action)) {
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
                 // specified
                 options = $.extend(options, dataOrOptions);
@@ -167,12 +167,12 @@
     var DATA_ATTRIBUTE = 'data-jquery-handlebars';
 
     // Regular expressions
-    var _regExpClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
-    var _regExpCompiled = /^(?:COMPILED|STORE)$/i;
-    var _regExpDoubleQuote = /"/g;
-    var _regExpGet = /^(?:FIND|GET)$/i;
-    var _regExpRemoveType = /^(?:ALL|NONE|SAME)$/i;
-    var _regExpType = /^(?:APPEND|COMPILED|HTML|RAW)$/i;
+    var _reClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
+    var _reCompiled = /^(?:COMPILED|STORE)$/i;
+    var _reDoubleQuote = /"/g;
+    var _reGet = /^(?:FIND|GET)$/i;
+    var _reRemoveType = /^(?:ALL|NONE|SAME)$/i;
+    var _reType = /^(?:APPEND|COMPILED|HTML|RAW)$/i;
 
     // Removal constants. Who enjoys magic values?
     var _removeAll = 'ALL';
@@ -246,7 +246,7 @@
 
     // Replace double quotes with single quotes. Workaround for jQuery issue
     function _sanitizeQuotes(value) {
-        return value.replace(_regExpDoubleQuote, '\'');
+        return value.replace(_reDoubleQuote, '\'');
     }
 
     // Set the specified template to the content selector
