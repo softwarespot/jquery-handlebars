@@ -27,12 +27,12 @@
             if (_isString(action)) {
                 // If a 'get' action is provided, then get the template(s)
                 // The template string if not defined will return all template(s)
-                if (_regExp.GET.test(action)) {
+                if (_regExpGet.test(action)) {
                     // The include parameter will be true, if the template is a string and valid anchor
                     return _getTemplate($this, template, isTemplateString);
 
                     // If a 'compiled' action is provided, then return the compiled object literal
-                } else if (_regExp.COMPILED.test(action)) {
+                } else if (_regExpCompiled.test(action)) {
                     // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
                     // end user to manipulate the internal store. Not a good idea if you ask me!
                     return $.extend({}, _compiled);
@@ -58,38 +58,38 @@
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (_isString(options.type) && _regExp.TYPE.test(options.type)) {
+            if (_isString(options.type) && _regExpType.test(options.type)) {
                 // Set to uppercase
                 options.type = options.type.toUpperCase();
             } else {
                 // Otherwise default to 'append' i.e. if null or simply invalid
-                options.type = _type.APPEND;
+                options.type = _typeAppend;
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (_isString(options.removeType) && _regExp.REMOVE_TYPE.test(options.removeType)) {
+            if (_isString(options.removeType) && _regExpRemoveType.test(options.removeType)) {
                 // Set to uppercase
                 options.removeType = options.removeType.toUpperCase();
             } else {
                 // Otherwise default to 'none' i.e. if null or simply is invalid
-                options.removeType = _remove.NONE;
+                options.removeType = _removeNone;
             }
 
             // END: Sanitize the options
 
             // If a 'clear' action is provided, then remove the template from the content element
-            if (_regExp.CLEAR.test(action)) {
+            if (_regExpClear.test(action)) {
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
                 // specified
                 options = $.extend(options, dataOrOptions);
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (isTemplateString && options.removeType !== _remove.SAME) {
-                    options.removeType = _remove.SAME;
+                if (isTemplateString && options.removeType !== _removeSame) {
+                    options.removeType = _removeSame;
                 } else {
                     // Otherwise use 'all'
-                    options.removeType = _remove.ALL;
+                    options.removeType = _removeAll;
                 }
 
                 // If the template is not defined, then set as null before removing
@@ -164,32 +164,26 @@
     // Constants
 
     // The data-* attribute to distinguish a jQuery-handlebars template
-    var DATA_ATTR = 'data-jquery-handlebars';
+    var DATA_ATTRIBUTE = 'data-jquery-handlebars';
 
     // Regular expressions
-    var _regExp = {
-        CLEAR: /^(?:CLEAR|EMPTY|REMOVE)$/i,
-        COMPILED: /^(?:COMPILED|STORE)$/i,
-        DOUBLE_QUOTE: /"/g,
-        GET: /^(?:FIND|GET)$/i,
-        REMOVE_TYPE: /^(?:ALL|NONE|SAME)$/i,
-        TYPE: /^(?:APPEND|COMPILED|HTML|RAW)$/i,
-    };
+    var _regExpClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
+    var _regExpCompiled = /^(?:COMPILED|STORE)$/i;
+    var _regExpDoubleQuote = /"/g;
+    var _regExpGet = /^(?:FIND|GET)$/i;
+    var _regExpRemoveType = /^(?:ALL|NONE|SAME)$/i;
+    var _regExpType = /^(?:APPEND|COMPILED|HTML|RAW)$/i;
 
     // Removal constants. Who enjoys magic values?
-    var _remove = {
-        ALL: 'ALL',
-        NONE: 'NONE',
-        SAME: 'SAME',
-    };
+    var _removeAll = 'ALL';
+    var _removeNone = 'NONE';
+    var _removeSame = 'SAME';
 
     // Type constants. Who enjoys magic values?
-    var _type = {
-        APPEND: 'APPEND',
-        COMPILED: 'COMPILED',
-        HTML: 'HTML',
-        RAW: 'RAW',
-    };
+    var _typeAppend = 'APPEND';
+    var _typeCompiled = 'COMPILED';
+    var _typeHTML = 'HTML';
+    var _typeRaw = 'RAW';
 
     // Fields (Private)
 
@@ -203,7 +197,7 @@
     function _getTemplate($this, template, include) {
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
         var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
-        return $this.find('div[' + DATA_ATTR + templateFind + ']');
+        return $this.find('div[' + DATA_ATTRIBUTE + templateFind + ']');
     }
 
     // Check if value is a boolean datatype
@@ -220,13 +214,13 @@
     // then all template(s) that are contained within the content selector will be removed
     function _removeTemplate(_this, $this, template, options) {
         // If the option has been passed to remove 'none', then respect this choice or if the template is null but the option is set to 'same'
-        if (options.removeType === _remove.NONE || (template === null && options.removeType === _remove.SAME)) {
+        if (options.removeType === _removeNone || (template === null && options.removeType === _removeSame)) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = _getTemplate($this, template, options.removeType === _remove.SAME);
+        var filtered = _getTemplate($this, template, options.removeType === _removeSame);
         if (filtered.length === 0) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
@@ -240,8 +234,8 @@
             // Iterate through the filtered collection and remove the template string from the compiled store
             $.each(filtered, function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
-                // var attribute = $(element).attr(DATA_ATTR);
-                var attribute = element.getAttribute(DATA_ATTR); // Returns null or '' on error
+                // var attribute = $(element).attr(DATA_ATTRIBUTE);
+                var attribute = element.getAttribute(DATA_ATTRIBUTE); // Returns null or '' on error
                 if (!attribute && _compiled[attribute] !== undefined) {
                     // Set to undefined to mimic deletion of the template. Using delete is not really required
                     _compiled[attribute] = undefined;
@@ -252,7 +246,7 @@
 
     // Replace double quotes with single quotes. Workaround for jQuery issue
     function _sanitizeQuotes(value) {
-        return value.replace(_regExp.DOUBLE_QUOTE, '\'');
+        return value.replace(_regExpDoubleQuote, '\'');
     }
 
     // Set the specified template to the content selector
@@ -284,13 +278,13 @@
 
         // Append to the content element by checking the type. Default is 'append'
         switch (options.type) {
-            case _type.COMPILED:
-            case _type.RAW:
+            case _typeCompiled:
+            case _typeRaw:
 
                 // Return the compiled template
                 return parsedTemplate;
 
-            case _type.HTML:
+            case _typeHTML:
 
                 // Return as HTML data
                 return $(parsedTemplate);
@@ -301,7 +295,7 @@
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebars template
                 var $div = $('<div/>')
-                    .attr(DATA_ATTR, _sanitizeQuotes(template))
+                    .attr(DATA_ATTRIBUTE, _sanitizeQuotes(template))
                     .append(parsedTemplate);
 
                 // Append the div to content element
@@ -331,7 +325,7 @@
         //      'none' (default): Don't remove any template(s)
         //      'all': Remove all valid template(s) from the content element
         //      'same': Remove only those template(s) that match the provided template string
-        removeType: _remove.NONE,
+        removeType: _removeNone,
 
         // How to output the compiled template to the specified content element
         //
@@ -339,7 +333,7 @@
         //      'append' (default): Append to the content element
         //      'html': Return a compiled template as HTML
         //      'compiled'/'raw': Return a compiled template
-        type: _type.APPEND,
+        type: _typeAppend,
 
         // Check whether the data passed to the plugin is empty
         validate: true,
