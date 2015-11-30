@@ -8,8 +8,11 @@
     "nonew": true,
     "undef": true,
     "unused": true,
-    "esnext": true,
+    "eqnull": false,
     "browser": true,
+    "devel": false,
+    "jasmine": true,
     "jquery": true,
-    "node": true
+    "node": true,
+    "esnext": true
 }
