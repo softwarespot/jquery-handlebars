@@ -12,6 +12,11 @@
 
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
+    // Check if jQuery exists
+    if (_isNil($)) {
+        return;
+    }
+
     // Plugin Logic
 
     $.fn.extend({
@@ -164,7 +169,7 @@
     // Constants
 
     // The data-* attribute to distinguish a jQuery-handlebars template
-    var DATA_ATTRIBUTE = 'data-jquery-handlebars';
+    var DATA_ATTRIBUTE_HANDLEBARS = 'data-jquery-handlebars';
 
     // Regular expressions
     var _reClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
@@ -197,10 +202,10 @@
     function _getTemplate($this, template, include) {
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
         var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
-        return $this.find('div[' + DATA_ATTRIBUTE + templateFind + ']');
+        return $this.find('div[' + DATA_ATTRIBUTE_HANDLEBARS + templateFind + ']');
     }
 
-    // Check if value is a boolean datatype
+    // Check if a value is a boolean datatype
     function _isBoolean(value) {
         return $.type(value) === 'boolean';
     }
@@ -208,6 +213,11 @@
     // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
     function _isString(value) {
         return $.type(value) === 'string' && value.trim().length > 0;
+    }
+
+    // Check if a value is undefined
+    function _isNil(value) {
+        return value === null || value === undefined;
     }
 
     // Remove the specified template from the content selector. If a template is not provided
@@ -234,8 +244,8 @@
             // Iterate through the filtered collection and remove the template string from the compiled store
             $.each(filtered, function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
-                // var attribute = $(element).attr(DATA_ATTRIBUTE);
-                var attribute = element.getAttribute(DATA_ATTRIBUTE); // Returns null or '' on error
+                // var attribute = $(element).attr(DATA_ATTRIBUTE_HANDLEBARS);
+                var attribute = element.getAttribute(DATA_ATTRIBUTE_HANDLEBARS); // Returns null or '' on error
                 if (!attribute && _compiled[attribute] !== undefined) {
                     // Set to undefined to mimic deletion of the template. Using delete is not really required
                     _compiled[attribute] = undefined;
@@ -295,7 +305,7 @@
                 // This contains a data-* attribute called data-jquery-handlebars for easy association
                 // that it's a Handlebars template
                 var $div = $('<div/>')
-                    .attr(DATA_ATTRIBUTE, _sanitizeQuotes(template))
+                    .attr(DATA_ATTRIBUTE_HANDLEBARS, _sanitizeQuotes(template))
                     .append(parsedTemplate);
 
                 // Append the div to content element
