@@ -246,7 +246,7 @@
                 // Get the data attribute for the template string if it's not null or has already been removed
                 // var attribute = $(element).attr(DATA_ATTRIBUTE_HANDLEBARS);
                 var attribute = element.getAttribute(DATA_ATTRIBUTE_HANDLEBARS); // Returns null or '' on error
-                if (!attribute && _compiled[attribute] !== undefined) {
+                if (attribute && !_isNil(_compiled[attribute])) {
                     // Set to undefined to mimic deletion of the template. Using delete is not really required
                     _compiled[attribute] = undefined;
                 }
