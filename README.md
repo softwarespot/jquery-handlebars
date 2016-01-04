@@ -122,7 +122,7 @@ The following options below can either be passed via the `options` parameter or 
 An example of overwriting the default options of the plugin using `$.fn.handlebars`.
 
 ```javascript
-    $.fn.handlebars.delete_compiled = false;
+    $.fn.handlebars.deleteCompiled = false;
 ```
 
 #### `deleteCompiled`
