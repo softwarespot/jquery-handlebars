@@ -9,7 +9,6 @@
  */
 ; // jshint ignore:line
 (function jQueryHandlebarsNamespace(window, $, undefined) {
-
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Check if a value is undefined
