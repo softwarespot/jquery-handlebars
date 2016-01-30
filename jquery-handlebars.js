@@ -7,8 +7,7 @@
  * Licensed under the MIT license
  * Version: 1.3.7
  */
-; // jshint ignore:line
-(function jQueryHandlebarsNamespace(window, $, undefined) {
+(function jQueryHandlebarsNamespace(window, $) {
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Check if a value is null or undefined
@@ -56,13 +55,10 @@
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
 
-            /* jscs: disable */
-
             // jscs only workaround for checking old style properties
             options.deleteCompiled = options.delete_compiled || options.deleteCompiled;
             options.storeCompiled = options.store_compiled || options.storeCompiled;
             options.removeType = options.remove_type || options.removeType;
-            /* jscs: enable */
 
             // START: Sanitize the options
 
@@ -197,7 +193,7 @@
     // Fields (Private)
 
     // Store the compiled template(s) using the template string as the identifier i.e. key
-    var _compiled = {};
+    var _compiled = window.Object.create(null);
 
     // Methods (Private)
 
@@ -229,19 +225,19 @@
         }
 
         // The include parameter will be set to true, when specifically looking for the provided template string
-        var filtered = _getTemplate($this, template, options.removeType === _removeSame);
-        if (filtered.length === 0) {
+        var $filtered = _getTemplate($this, template, options.removeType === _removeSame);
+        if ($filtered.length === 0) {
             // Return this to maintain chaining if there is nothing to remove
             return _this;
         }
 
         // Remove filtered nodes from the DOM
-        filtered.remove();
+        $filtered.remove();
 
         // Remove the template from the compiled store, if the option is true
         if (_isBoolean(options.deleteCompiled) && options.deleteCompiled) {
             // Iterate through the filtered collection and remove the template string from the compiled store
-            $.each(filtered, function filteredEach(index, element) {
+            $filtered.each(function filteredEach(index, element) {
                 // Get the data attribute for the template string if it's not null or has already been removed
                 // var attribute = $(element).attr(DATA_ATTRIBUTE_HANDLEBARS);
                 var attribute = element.getAttribute(DATA_ATTRIBUTE_HANDLEBARS); // Returns null or '' on error
@@ -347,4 +343,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true,
     };
-})(window, window.jQuery);
+}(window, window.jQuery));

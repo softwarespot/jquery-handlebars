@@ -168,18 +168,18 @@ To contribute to the project, you will first need to install [gulp](http://gulpj
     npm install
 ```
 
-After installation of the local modules, you're ready to start contributing to the project. Before you submit your PR, please don't forget to call `gulp`, which will run against [JSHint](http://jshint.com) for any errors, but will also minify the plugin.
+After installation of the local modules, you're ready to start contributing to the project. Before you submit your PR, please don't forget to call `gulp`, which will run against [ESlint](http://eslint.org) for any errors, but will also minify the plugin.
 
 ##### Watch
-Call the following command to start 'watching' for any changes to the main JavaScript file(s). This will automatically invoke JSHint and Uglify.
+Call the following command to start 'watching' for any changes to the main JavaScript file(s). This will automatically invoke ESLint and Uglify.
 ```shell
 	gulp watch
 ```
 
-##### JSHint
-Call the following command to invoke JSHint and check that the changes meet the requirements set in .jshintrc.
+##### ESLint
+Call the following command to invoke ESLint and check that the changes meet the requirements set in .eslintrc.
 ```shell
-    gulp jshint
+    gulp eslint
 ```
 
 ##### Uglify
@@ -189,7 +189,7 @@ Call the following command to invoke Uglify, which will minify the main JavaScri
 ```
 
 ##### Build
-Call the following command to invoke both JSHint and Uglify.
+Call the following command to invoke both ESLint and Uglify.
 ```shell
     gulp
 ```
