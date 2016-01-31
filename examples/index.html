@@ -48,8 +48,8 @@
 
     <!--Scripts-->
     <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
-    <script src="../jquery-handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="../jquery-handlebars.js"></script>
 
     <script>
         $(function domReady($) {
@@ -85,6 +85,14 @@
             // Append the template using the data-template-example="" attribute and pass the following data
             // Do not remove previous templates
             $content.handlebars('add', '[data-template-example=""]', context, { remove: false });
+
+            // Data to pass to the template
+            context = {
+                name: 'Ajax',
+                developer: 'Async'
+            };
+
+            $content.handlebars('ajax-loaded.js', 'loaded-template', context, { remove: false });
 
             // Create a click event to only run once
             $('#remove-templates').one('click.jquery.handlebars', function clickOnce() {

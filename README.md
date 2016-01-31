@@ -75,6 +75,10 @@ By default the plugin has 4 parameters, though these parameters have different r
 
 Add a template to the specified content element using the template string parameter.
 
+#### `ajax-`
+
+Add an external template by prefixing `ajax-` to the url of where the external template is stored e.g. `ajax-external-template.js`. This will then asynchronously load the template.
+
 #### `clear/empty/remove`
 
 Remove a specified template or all template(s) from the content element.

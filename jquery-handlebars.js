@@ -7,7 +7,7 @@
  * Licensed under the MIT license
  * Version: 1.3.7
  */
-(function jQueryHandlebarsNamespace(window, $) {
+(function jQueryHandlebarsNamespace(window, document, $) {
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Check if a value is null or undefined
@@ -40,13 +40,26 @@
             // These actions don't require any pre-processing
 
             // If a 'get' action is provided, then get the template(s)
-            // The template string if not defined will return all template(s)
-            if (_reGet.test(action)) {
+            if (_reAjax.test(action)) {
+                // Strip the AJAX- part from the action
+                var url = action.replace(_reAjax, '');
+
+                var promise = _load(url);
+
+                // On successful resolution
+                promise.then(function then() {
+                    // Continue as normal with the template
+                    $this.handlebars('ADD', template, dataOrOptions, options);
+                });
+
+                return this;
+            } else if (_reGet.test(action)) {
+                // The template string if not defined will return all template(s)
+
                 // The include parameter will be true, if the template is a string and valid anchor
                 return _getTemplate($this, template, isTemplateString);
-
-                // If a 'compiled' action is provided, then return the compiled object literal
             } else if (_reCompiled.test(action)) {
+                // If a 'compiled' action is provided, then return the compiled object literal
                 // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
                 // end user to manipulate the internal store. Not a good idea if you ask me!
                 return $.extend({}, _compiled);
@@ -173,6 +186,7 @@
     var DATA_ATTRIBUTE_HANDLEBARS = 'data-jquery-handlebars';
 
     // Regular expressions
+    var _reAjax = /^(?:AJAX-)/i;
     var _reClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
     var _reCompiled = /^(?:COMPILED|STORE)$/i;
     var _reDoubleQuote = /"/g;
@@ -193,8 +207,13 @@
 
     // Fields (Private)
 
+    var _$body = $('body');
+
     // Store the compiled template(s) using the template string as the identifier i.e. key
     var _compiled = window.Object.create(null);
+
+    // Store the external templates previously loaded
+    var _externalUrls = window.Object.create(null);
 
     // Methods (Private)
 
@@ -214,6 +233,34 @@
     // Check if a value is a string datatype with a length greater than zero when whitespace is stripped
     function _isString(value) {
         return $.type(value) === 'string' && $.trim(value).length > 0;
+    }
+
+    // Load a script and append to the body of the current document
+    function _load(url) {
+        // Create a jQuery deferred object
+        var defer = $.Deferred(function deferred(defer) { // eslint-disable-line new-cap
+            if (!_isString(url)) {
+                defer.reject();
+
+                return;
+            }
+
+            // Chech if the template was loaded before
+            if (!_isNil(_externalUrls[url])) {
+                defer.resolve();
+            } else {
+                // When the external template has has successfully loaded
+                _$body.load(url, function load() {
+                    defer.resolve();
+                });
+            }
+
+            // Store the url
+            _externalUrls[url] = url;
+        });
+
+        // Retrieve the promise interface so as not to expose resolve and reject
+        return defer.promise();
     }
 
     // Remove the specified template from the content selector. If a template is not provided
@@ -344,4 +391,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true,
     };
-}(window, window.jQuery));
+}(window, window.document, window.jQuery));
