@@ -52,8 +52,7 @@
     <script src="../jquery-handlebars.min.js"></script>
 
     <script>
-        $(function() {
-
+        $(function domReady($) {
             // Cache the jQuery object
             var $content = $('#content');
 
@@ -101,7 +100,6 @@
             // $content.handlebars('remove'); // Remove all templates
             window.console.log('Rendered templates: %o', $content.handlebars('get')); // Get the rendered templates for the content element
             window.console.log('Compiled templates: %o', $content.handlebars('compiled')); // Get the compiled templates for the content element
-
         });
     </script>
 
