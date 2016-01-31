@@ -6,7 +6,6 @@ var gulpIf = require('gulp-if');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 var uglify = require('gulp-uglify');
-var fs = require('fs');
 var merge = require('merge2');
 var pkg = require('./package.json');
 
