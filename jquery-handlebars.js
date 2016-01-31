@@ -25,6 +25,12 @@
     $.fn.extend({
         // The parameter data doubles up as options when the action is either 'clear' or 'remove' i.e. options param will be ignored
         handlebars: function handlebars(action, template, dataOrOptions, options) {
+            if (!_isString(action)) {
+                // An invalid action was passed. It must be a string with a length greater than zero to be
+                // considered valid
+                return this;
+            }
+
             // jQuery object reference for this. Only select the first selector of the jQuery collection
             var $this = $(this).first();
 
@@ -32,23 +38,18 @@
             var isTemplateString = _isString(template);
 
             // These actions don't require any pre-processing
-            if (_isString(action)) {
-                // If a 'get' action is provided, then get the template(s)
-                // The template string if not defined will return all template(s)
-                if (_reGet.test(action)) {
-                    // The include parameter will be true, if the template is a string and valid anchor
-                    return _getTemplate($this, template, isTemplateString);
 
-                    // If a 'compiled' action is provided, then return the compiled object literal
-                } else if (_reCompiled.test(action)) {
-                    // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
-                    // end user to manipulate the internal store. Not a good idea if you ask me!
-                    return $.extend({}, _compiled);
-                }
-            } else {
-                // An invalid action was passed. It must be a string with a length greater than zero to be
-                // considered valid
-                return this;
+            // If a 'get' action is provided, then get the template(s)
+            // The template string if not defined will return all template(s)
+            if (_reGet.test(action)) {
+                // The include parameter will be true, if the template is a string and valid anchor
+                return _getTemplate($this, template, isTemplateString);
+
+                // If a 'compiled' action is provided, then return the compiled object literal
+            } else if (_reCompiled.test(action)) {
+                // Shallow copy the compiled store, otherwise returning compiled would provide a reference and allow the
+                // end user to manipulate the internal store. Not a good idea if you ask me!
+                return $.extend({}, _compiled);
             }
 
             // Set our options from the defaults, overriding with the
