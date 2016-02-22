@@ -3,6 +3,7 @@
   "rules": {
     // Override Airbnb's style guide defaults for ES5
     "camelcase": [2, {"properties": "always"}],
+    "comma-dangle": [2, "always-multiline"],
     "indent": [2, 4, {"SwitchCase": 1}],
     "max-len": [2, 256, 4],
     "no-param-reassign": 0,

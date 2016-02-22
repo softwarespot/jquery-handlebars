@@ -295,6 +295,8 @@
                 }
             });
         }
+
+        return _this;
     }
 
     // Replace double quotes with single quotes. Workaround for jQuery issue
