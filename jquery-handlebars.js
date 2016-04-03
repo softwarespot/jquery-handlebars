@@ -69,7 +69,7 @@
             // parameter we pass into this function
             options = $.extend({}, $.fn.handlebars.options, options);
 
-            // jscs only workaround for checking old style properties
+            // eslint only workaround for checking old style properties
             options.deleteCompiled = options.delete_compiled || options.deleteCompiled;
             options.storeCompiled = options.store_compiled || options.storeCompiled;
             options.removeType = options.remove_type || options.removeType;
@@ -78,7 +78,7 @@
 
             // Check if the option type is a string and valid
             if (_isString(options.type) && _reType.test(options.type)) {
-                // Set to uppercase
+                // Set to upper-case
                 options.type = options.type.toUpperCase();
             } else {
                 // Otherwise default to 'append' i.e. if null or simply invalid
@@ -87,7 +87,7 @@
 
             // If the removal type is a string and valid, then set to uppercase
             if (_isString(options.removeType) && _reRemoveType.test(options.removeType)) {
-                // Set to uppercase
+                // Set to upper-case
                 options.removeType = options.removeType.toUpperCase();
             } else {
                 // Otherwise default to 'none' i.e. if null or simply is invalid
