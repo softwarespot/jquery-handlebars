@@ -7,7 +7,7 @@
  * Licensed under the MIT license
  * Version: 1.3.7
  */
-(function jQueryHandlebarsNamespace(window, document, $) {
+(function jQueryHandlebarsNamespace(window, document, $, Object) {
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Check if a value is null or undefined
@@ -185,6 +185,8 @@
     // The data-* attribute to distinguish a jQuery-handlebars template
     var DATA_ATTRIBUTE_HANDLEBARS = 'data-jquery-handlebars';
 
+    // Fields (Private)
+
     // Regular expressions
     var _reAjax = /^(?:AJAX-)/i;
     var _reClear = /^(?:CLEAR|EMPTY|REMOVE)$/i;
@@ -205,15 +207,18 @@
     var _typeHTML = 'HTML';
     var _typeRaw = 'RAW';
 
-    // Fields (Private)
+    var _$body;
 
-    var _$body = $('body');
+    _nativeObjectCreate = Object.create;
+    var _nativeObjectCreate = _isNil(_nativeObjectCreate) ? function _objectCreate() {
+        return {};
+    } : _nativeObjectCreate;
 
     // Store the compiled template(s) using the template string as the identifier i.e. key
-    var _compiled = window.Object.create(null);
+    var _compiled = _nativeObjectCreate(null);
 
     // Store the external templates previously loaded
-    var _externalUrls = window.Object.create(null);
+    var _externalUrls = _nativeObjectCreate(null);
 
     // Methods (Private)
 
@@ -245,10 +250,14 @@
                 return;
             }
 
-            // Chech if the template was loaded before
+            // Check if the template was loaded before
             if (!_isNil(_externalUrls[url])) {
                 defer.resolve();
             } else {
+                if (_isNil(_$body) || _$body.length === 0) {
+                    _$body = $('body');
+                }
+
                 // When the external template has has successfully loaded
                 _$body.load(url, function load() {
                     defer.resolve();
@@ -393,4 +402,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true,
     };
-}(window, window.document, window.jQuery));
+}(window, window.document, window.jQuery, window.Object));
