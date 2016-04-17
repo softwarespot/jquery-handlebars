@@ -92,7 +92,7 @@
                 developer: 'Async'
             };
 
-            $content.handlebars('ajax-loaded.js', 'loaded-template', context, { remove: false });
+            $content.handlebars('ajax-loaded.js', '#loaded-template', context, { remove: false });
 
             // Create a click event to only run once
             $('#remove-templates').one('click.jquery.handlebars', function clickOnce() {
