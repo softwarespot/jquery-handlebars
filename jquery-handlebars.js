@@ -44,7 +44,7 @@
                 // Strip the AJAX- part from the action
                 var url = action.replace(_reAjax, '');
 
-                var promise = _load(url);
+                var promise = _loadTemplate(url);
 
                 // On successful resolution
                 promise.then(function then() {
@@ -207,8 +207,6 @@
     var _typeHTML = 'HTML';
     var _typeRaw = 'RAW';
 
-    var _$body;
-
     _nativeObjectCreate = Object.create;
     var _nativeObjectCreate = _isNil(_nativeObjectCreate) ? function _objectCreate() {
         return {};
@@ -241,35 +239,30 @@
     }
 
     // Load a script and append to the body of the current document
-    function _load(url) {
+    function _loadTemplate(url) {
         // Create a jQuery deferred object
-        var defer = $.Deferred(function deferred(defer) { // eslint-disable-line new-cap
-            if (!_isString(url)) {
-                defer.reject();
+        var defer = $.Deferred(); // eslint-disable-line new-cap
+        var promise = defer.promise();
 
-                return;
-            }
+        if (!_isString(url)) {
+            return promise.reject();
+        }
 
-            // Check if the template was loaded before
-            if (!_isNil(_externalUrls[url])) {
-                defer.resolve();
-            } else {
-                if (_isNil(_$body) || _$body.length === 0) {
-                    _$body = $('body');
-                }
+        // Check if the template was loaded before
+        if (!_isNil(_externalUrls[url])) {
+            return promise.resolve();
+        }
 
-                // When the external template has has successfully loaded
-                _$body.load(url, function load() {
-                    defer.resolve();
-                });
-            }
-
-            // Store the url
-            _externalUrls[url] = url;
+        // When the external template has has successfully loaded, resolve the promise
+        $.getScript(url, function getScript() {
+            defer.resolve();
         });
 
+        // Store the url
+        _externalUrls[url] = url;
+
         // Retrieve the promise interface so as not to expose resolve and reject
-        return defer.promise();
+        return promise;
     }
 
     // Remove the specified template from the content selector. If a template is not provided
