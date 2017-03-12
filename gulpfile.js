@@ -19,7 +19,7 @@ var Assets = {
 };
 
 // See the uglify documentation for more details
-var _uglifySettings = {
+var UglifySettings = {
     compress: {
         comparisons: true,
         conditionals: true,
@@ -51,7 +51,7 @@ gulp.task('eslint', function esLintTask() {
 // Uglify aka minify the main file
 gulp.task('uglify', function uglifyTask() {
     return gulp.src(Assets.main)
-        .pipe(uglify(_uglifySettings))
+        .pipe(uglify(UglifySettings))
         .pipe(rename(Assets.minified))
         .pipe(gulp.dest(Assets.source));
 });
