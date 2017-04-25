@@ -7,7 +7,7 @@
  * Licensed under the MIT license
  * Version: 1.3.7
  */
-(function jQueryHandlebarsNamespace(window, document, $, Object) {
+(function jQueryHandlebarsNamespace($) {
     // Initial idea came from: http://blog.teamtreehouse.com/handlebars-js-part-3-tips-and-tricks
 
     // Check if a value is null or undefined
@@ -67,31 +67,31 @@
 
             // Set our options from the defaults, overriding with the
             // parameter we pass into this function
-            options = $.extend({}, $.fn.handlebars.options, options);
+            var extendedOptions = $.extend({}, $.fn.handlebars.options, options);
 
             // eslint only workaround for checking old style properties
-            options.deleteCompiled = options.delete_compiled || options.deleteCompiled;
-            options.storeCompiled = options.store_compiled || options.storeCompiled;
-            options.removeType = options.remove_type || options.removeType;
+            extendedOptions.deleteCompiled = extendedOptions.delete_compiled || extendedOptions.deleteCompiled;
+            extendedOptions.storeCompiled = extendedOptions.store_compiled || extendedOptions.storeCompiled;
+            extendedOptions.removeType = extendedOptions.remove_type || extendedOptions.removeType;
 
             // START: Sanitize the options
 
             // Check if the option type is a string and valid
-            if (_isString(options.type) && _reType.test(options.type)) {
+            if (_isString(extendedOptions.type) && _reType.test(extendedOptions.type)) {
                 // Set to upper-case
-                options.type = options.type.toUpperCase();
+                extendedOptions.type = extendedOptions.type.toUpperCase();
             } else {
                 // Otherwise default to 'append' i.e. if null or simply invalid
-                options.type = _typeAppend;
+                extendedOptions.type = _typeAppend;
             }
 
             // If the removal type is a string and valid, then set to uppercase
-            if (_isString(options.removeType) && _reRemoveType.test(options.removeType)) {
+            if (_isString(extendedOptions.removeType) && _reRemoveType.test(extendedOptions.removeType)) {
                 // Set to upper-case
-                options.removeType = options.removeType.toUpperCase();
+                extendedOptions.removeType = extendedOptions.removeType.toUpperCase();
             } else {
                 // Otherwise default to 'none' i.e. if null or simply is invalid
-                options.removeType = _removeNone;
+                extendedOptions.removeType = _removeNone;
             }
 
             // END: Sanitize the options
@@ -100,29 +100,29 @@
             if (_reClear.test(action)) {
                 // Extend the options again, as the dataOrOptions acts as an alias for options when a removal action is
                 // specified
-                options = $.extend(options, dataOrOptions);
+                extendedOptions = $.extend(extendedOptions, dataOrOptions);
 
                 // If the options parameter is not the 'same' and a template string exists, the
                 // temporarily override
-                if (isTemplateString && options.removeType !== _removeSame) {
-                    options.removeType = _removeSame;
+                if (isTemplateString && extendedOptions.removeType !== _removeSame) {
+                    extendedOptions.removeType = _removeSame;
                 } else {
                     // Otherwise use 'all'
-                    options.removeType = _removeAll;
+                    extendedOptions.removeType = _removeAll;
                 }
 
                 // If the template is not defined, then set as null before removing
-                if (!isTemplateString) {
-                    template = null;
-                }
+                template = isTemplateString ? // eslint-disable-line no-param-reassign
+                    template :
+                    null;
 
-                return _removeTemplate(this, $this, template, options);
+                return _removeTemplate(this, $this, template, extendedOptions);
             }
 
             // Assume it's an addition i.e. 'add'
 
             // The data object literal must contain data
-            if (_isBoolean(options.validate) && options.validate && $.isEmptyObject(dataOrOptions)) {
+            if (_isBoolean(extendedOptions.validate) && extendedOptions.validate && $.isEmptyObject(dataOrOptions)) {
                 return this;
             }
 
@@ -134,7 +134,7 @@
                 // If compiled already then no need to re-compile
                 if ($.isFunction(_compiled[template])) {
                     // Return to continue chaining
-                    return _setTemplate(this, $this, template, dataOrOptions, options);
+                    return _setTemplate(this, $this, template, dataOrOptions, extendedOptions);
                 }
 
                 // Not compiled
@@ -154,12 +154,14 @@
 
                 // Get the selector name for using with the compiled object literal
                 // If the selector property doesn't exist, then this will be set to null
-                template = $selector.selector !== undefined ? $selector.selector : null;
+                template = $selector.selector !== undefined ? // eslint-disable-line no-param-reassign
+                    $selector.selector :
+                    null;
 
                 // If compiled already then no need to re-compile
                 if ($.isFunction(_compiled[template])) {
                     // Return to continue chaining
-                    return _setTemplate(this, $this, template, dataOrOptions, options);
+                    return _setTemplate(this, $this, template, dataOrOptions, extendedOptions);
                 }
             }
 
@@ -175,7 +177,7 @@
             _compiled[template] = Handlebars.compile(html);
 
             // Return to continue chaining
-            return _setTemplate(this, $this, template, dataOrOptions, options);
+            return _setTemplate(this, $this, template, dataOrOptions, extendedOptions);
         },
 
     });
@@ -207,16 +209,11 @@
     var _typeHTML = 'HTML';
     var _typeRaw = 'RAW';
 
-    _nativeObjectCreate = Object.create;
-    var _nativeObjectCreate = _isNil(_nativeObjectCreate) ? function _objectCreate() {
-        return {};
-    } : _nativeObjectCreate;
-
     // Store the compiled template(s) using the template string as the identifier i.e. key
-    var _compiled = _nativeObjectCreate(null);
+    var _compiled = {};
 
     // Store the external templates previously loaded
-    var _externalUrls = _nativeObjectCreate(null);
+    var _externalUrls = {};
 
     // Methods (Private)
 
@@ -224,7 +221,8 @@
     // include refers to whether to include the template in the selection
     function _getTemplate($this, template, include) {
         // Get the divs with the template data attribute and optional specified template string e.g. #some-template
-        var templateFind = (include && template ? '="' + _sanitizeQuotes(template) + '"' : '');
+        var templateFind = include && template ? '="' + _sanitizeQuotes(template) + '"' : '';
+
         return $this.find('div[' + DATA_ATTRIBUTE_HANDLEBARS + templateFind + ']');
     }
 
@@ -308,14 +306,16 @@
 
     // Set the specified template to the content selector
     function _setTemplate(_this, $this, template, data, options) {
+        var extendedOptions = $.extend({}, options);
+
         // Override deleting from the compiled stored before passing to _removeTemplate
-        options.deleteCompiled = false;
+        extendedOptions.deleteCompiled = false;
 
         // Remove template(s)
-        _removeTemplate(_this, $this, template, options);
+        _removeTemplate(_this, $this, template, extendedOptions);
 
         // If set to not refill and template node(s) exist, then return this
-        if (_isBoolean(options.refill) && !options.refill) {
+        if (_isBoolean(extendedOptions.refill) && !extendedOptions.refill) {
             // Get the template(s) after potential removal. The parameter include has been set to true, as we are checking
             // if only the same template(s) exists (perhaps an option could/should be created)
             var filtered = _getTemplate($this, template, true);
@@ -328,13 +328,13 @@
         var parsedTemplate = _compiled[template](data);
 
         // Remove the compiled template from the store if specified
-        if (_isBoolean(options.storeCompiled) && !options.storeCompiled) {
+        if (_isBoolean(extendedOptions.storeCompiled) && !extendedOptions.storeCompiled) {
             // Set to undefined to mimic deletion of the template. Using delete is not really required
             _compiled[template] = undefined;
         }
 
         // Append to the content element by checking the type. Default is 'append'
-        switch (options.type) {
+        switch (extendedOptions.type) {
             case _typeCompiled:
             case _typeRaw:
 
@@ -357,16 +357,15 @@
 
                 // Append the div to content element
                 $this.append($div);
-                break;
+
+                return _this;
 
         }
-
-        return _this;
     }
 
     // Defaults
 
-    $.fn.handlebars.options = {
+    $.fn.handlebars.options = { // eslint-disable-line no-param-reassign
         // Delete the template from the compiled store when a removal action is specified. Accepts true (default) or false
         deleteCompiled: true,
 
@@ -395,4 +394,4 @@
         // Check whether the data passed to the plugin is empty
         validate: true,
     };
-}(window, window.document, window.jQuery, window.Object));
+}(window.jQuery));

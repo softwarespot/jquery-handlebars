@@ -2,16 +2,14 @@
   "extends": "airbnb-base/legacy",
   "rules": {
     // Override Airbnb's style guide defaults for ES5
-    "camelcase": [2, {"properties": "always"}],
-    "comma-dangle": [2, "always-multiline"],
-    "indent": [2, 4, {"SwitchCase": 1}],
-    "max-len": [2, 256, 4],
-    "no-underscore-dangle": 0,
-    "no-param-reassign": 0,
-    "no-shadow": 0,
-    "no-use-before-define": 0,
-    // "padded-blocks": 0,
-    // "spaced-comment": 0,
-    "vars-on-top": 0
+    "camelcase": ["error", {"properties": "always"}],
+    "comma-dangle": ["error", "always-multiline"],
+    "indent": ["error", 4, {"SwitchCase": 1}],
+    "max-len": ["error", 256, 4],
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    // "padded-blocks": "off",
+    // "spaced-comment": "off",
+    "vars-on-top": "off"
   }
 }
