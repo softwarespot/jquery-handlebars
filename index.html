@@ -24,7 +24,7 @@
 
     <!--START: Content element-->
     <div id="content">
-        <p>Example shouldn't be flashy, when all they're trying to do is demonstrate how to use the thing they demonstrating.</p>
+        <p>Example shouldn't be flashy, when all they're trying to do is demonstrate how to use the thing they're' demonstrating.</p>
         <p>So without further ado, please check out the three lines below that were generated on the fly by using a Handlebars template.</p>
 
         <!--This will NOT be removed from the DOM-->
@@ -47,9 +47,9 @@
     <button id="remove-templates">Remove</button>
 
     <!--Scripts-->
-    <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-    <script src="jquery-handlebars.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    <script src="../jquery-handlebars.js"></script>
 
     <script>
         $(function domReady($) {
@@ -92,7 +92,7 @@
                 developer: 'Async'
             };
 
-            $content.handlebars('ajax-loaded.js', '#loaded-template', context, { remove: false });
+            $content.handlebars('ajax-loaded.js', 'loaded-template', context, { remove: false });
 
             // Create a click event to only run once
             $('#remove-templates').one('click.jquery.handlebars', function clickOnce() {
