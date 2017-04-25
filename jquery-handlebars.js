@@ -359,7 +359,6 @@
                 $this.append($div);
 
                 return _this;
-
         }
     }
 
