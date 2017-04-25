@@ -252,9 +252,12 @@
         }
 
         // When the external template has has successfully loaded, resolve the promise
-        $.getScript(url, function getScript() {
-            defer.resolve();
-        });
+        $.ajax({
+            url: url,
+            dataType: 'text',
+        })
+        .done(defer.resolve)
+        .fail(defer.reject);
 
         // Store the url
         _externalUrls[url] = url;
